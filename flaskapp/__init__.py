@@ -49,6 +49,5 @@ from .report import report as report_blueprint
 app.register_blueprint(report_blueprint)
      
 if __name__ == '__main__':
-     
      app.jinja_env.cache = {}
      app.run()
