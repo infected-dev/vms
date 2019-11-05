@@ -2,16 +2,14 @@
 
 {% block title %}Search {% endblock %}
 
-{% block linktitle%} 
-    Results
-{% endblock %}
 
 {% block body %}
-    <div class="container text-center text-monospace">
-        <h5>Search Results For: </h5>
+    <div class="container text-monospace">
+        <h4><span class="mr-1 text-danger">{{count}}</span>Search Results For: </h4>
         <p>{{text_search}}</p>
         <p>{{date_search}}</p>
         <p>{{time_search}}</p>
+        <hr>
     </div>
 
 <div class="container">
@@ -20,8 +18,15 @@
 {%if text_search %}
 <div class="container">
     {%if search_visitor%}
-        <h5>Visitors</h5>
-        <p>{{search_visitor.visitor_name}}, {{search_visitor.visitor_contact}}</p>
+    <div class="card">
+            <h5 class="card-header">Visitors</h5>
+            <div class="card-body">
+                    {% for visitor in search_visitor %}
+                    <p><strong>{{visitor.visitor_name}}</strong></p>
+                    <p class="mt-n3"> {{visitor.visitor_contact}}</p>
+                    {% endfor %}
+            </div>
+    </div>
         {%endif%}
     
         {%if search_vehicle%}

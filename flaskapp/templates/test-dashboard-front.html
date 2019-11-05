@@ -9,17 +9,7 @@ Summary Dashboard
 {% block body %}
 
 <div class="container-fulid">
-        <div class="accordian" id="adminpanel">
-                <div class=" justify-content-center mt-4 mr-auto ml-auto mb-2 row">
-                        <div class="btn-toolbar"  role="toolbar" aria-label="Toolbar with button groups">
-                            <div class="btn-group mr-2 btn-group-lg" role="group" aria-label="First group">
-                              <button type="button" class="btn btn-warning" data-toggle="collapse" data-target="#visitor_card"> Visitors </button>
-                              <button type="button" class="btn btn-warning"  data-toggle="collapse" data-target="#vehicle_card">Vehicles </button>
-                            </div>
-                        </div>
-                    </div>
-
-    <div id="visitor_card" class="row collapse" data-parent='#adminpanel'>
+    <div id="visitor_card">
         <div class="col">
             <div class="card">
                 <h5 class="card-header"> Visitors Summary</h5>
@@ -47,33 +37,6 @@ Summary Dashboard
         </div> 
     </div>
 
-    <div id="vehicle_card" class="row collapse mt-2"  data-parent='#adminpanel'>
-            <div class="col">
-                    <div class="card">
-                        <h5 class="card-header"> Vehicles Summary</h5>
-                        <div class="card-body">
-                            <div class="card-text">
-                                <h4 class="card-title">Today's Count</h4>
-                                <p class="display-4">{{query_vehicles_today}}</p>
-                                <h4 class="card-title"> Total Vehicles</h4>
-                                <p class="display-4">{{query_vehicles_all}}</p>
-        
-                            </div>
-        
-                        </div>
-                    </div>
-                </div>
-            <div class="mr-4 col">
-                <div class="card">
-                    <h5 class="card-header">Date Wise Summary</h5>
-                    <div class="card-body">
-
-                    </div>
-                </div>
-                
-            </div>
-    </div>
-    
 </div>
 
 {% endblock %}

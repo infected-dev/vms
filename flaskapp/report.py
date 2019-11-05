@@ -10,11 +10,11 @@ report = Blueprint('report', __name__)
 def dashboard():
     today = datetime.now().date()
     ## Daily Vehicles and Visitors Count ##
-    query_vehicles_today = Vehicle.query.filter_by(VeEntryDate=today).count()
+    
     query_visitors_today = Visitor.query.filter_by(entry_date=today).count()
     
     ## All Vheicles and Visitor Count ##
-    query_vehicles_all = Vehicle.query.count()
+    
     query_visitors_all = Visitor.query.count()
     ## Department Count Queries ##
     query_department_all = Department.query.all()
@@ -27,9 +27,16 @@ def dashboard():
         count = Visitor.query.filter_by(entry_date=i).count()
         total_count.append([i.strftime("%d/%m/%Y"), count])
 
-    return render_template('test-dashboard-front.html',legend=legend, total_count=total_count, query_department_visitor=query_department_visitor,
-        query_vehicles_all=query_vehicles_all, query_vehicles_today=query_vehicles_today, 
+    return render_template('test-dashboard-front.html',legend=legend, total_count=total_count, query_department_visitor=query_department_visitor, 
         query_visitors_all=query_visitors_all, query_visitors_today=query_visitors_today)
+
+@report.route('/dashbaord/vehicles')
+def dashboard_vehicle():
+    today = datetime.now().date()
+    ## Daily Vehicles and Visitors Count ##
+    query_vehicles_today = Vehicle.query.filter_by(VeEntryDate=today).count()
+    query_vehicles_all = Vehicle.query.count()
+    return render_template('dashboard-vehicles.html', query_vehicles_all=query_vehicles_all, query_vehicles_today=query_vehicles_today)
 
 
 @report.route('/test-dashboard-report/')

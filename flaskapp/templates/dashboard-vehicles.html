@@ -1,0 +1,46 @@
+{% extends 'test-dashboard.html' %}
+
+{% block pagetitle %}
+Vehicle Dashboard
+{% endblock %}
+<!-- End of Page Title BLock-->
+
+
+<!--Title Block-->
+{% block title %}
+DashBoard for 
+{% endblock %}
+<!--End of Title Block-->
+
+{% block linktitle %}
+ Vehicle Data 
+{% endblock %}
+
+{% block body %}
+<div id="vehicle_card">
+        <div class="col">
+                <div class="card">
+                    <h5 class="card-header"> Vehicles Summary</h5>
+                    <div class="card-body">
+                        <div class="card-text">
+                            <h4 class="card-title">Today's Count</h4>
+                            <p class="display-4">{{query_vehicles_today}}</p>
+                            <h4 class="card-title"> Total Vehicles</h4>
+                            <p class="display-4">{{query_vehicles_all}}</p>
+    
+                        </div>
+    
+                    </div>
+                </div>
+            </div>
+        <div class="mr-4 col">
+            <div class="card">
+                <h5 class="card-header">Date Wise Summary</h5>
+                <div class="card-body">
+
+                </div>
+            </div>
+            
+        </div>
+</div>
+{%endblock%}

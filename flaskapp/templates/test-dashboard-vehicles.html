@@ -10,9 +10,13 @@
     .form-group{
         margin-right: 5px;
         box-shadow: brown;
+        
     }
     #visitorform {
         margin-left: 5px;
+    }
+    label{
+        font-weight: 500;
     }
 </style>
 {%endblock%}
@@ -38,21 +42,20 @@ Data Entry
 
 {% block body %}
 <div  class="container-fulid">
-<!-- Start of Vehicle Data Entry Form-->
+<!-- Start of Vehicle Data Entry Form   -->
 
-    <div class="row">
+  <div class="row">
         
-                <div class="col-3">
-                    
+                <div class="col-4">  
                     <div class="card">
                         <!--Company Vehicle Form-->
                         <h5 class="card-header">
-                            Company Vehicle
+                            Company Vehicle Data Entry
                         </h5>
                         <div class="card-body">
                                 <form action="/vehicles/mill" method="POST" class="mb-2">
                                 
-                                    <!--Compnay Vehicle Entry Date Input :-->
+                                    <!--Company Vehicle Entry Date Input :-->
                                         <div class="form-group form-row">
                                             <label class="col-form-label" for="date">Date:</label>
                                             <div class="col-9">
@@ -69,187 +72,170 @@ Data Entry
                                                 </div>
                                                 
                                         </div>
-                                    <div class="form-row">
-                                            <div class=" col form-group">
-                                                <!-- Compnay Vehicle Select Input-->
-                                                    <label class="sr-only" for="name">Compnay Vehicles:</label>
-                                                    <select class="form-control" name="comp_id">
-                                                            {% for v in comp_vehicles %}
-                                                            
-                                                            <option class="form-control" value="{{v.id}}">
-                                                                {{v.comp_vehicle_no}} </option>
-                                                            {% endfor %}
-                                                    </select>
-                                                </div>
+                                    <div class="form-row form-group">
+                                            
+                                                <!-- Company Vehicle Select Input-->
+                                                    <label class="col-form-label" for="name">Company Vehicles:</label>
+                                                    <div class="col">
+                                                            <select class="form-control" name="comp_id">
+                                                                    {% for v in comp_vehicles %}
+                                                                    
+                                                                    <option class="form-control" value="{{v.id}}">
+                                                                        {{v.comp_vehicle_no}} </option>
+                                                                    {% endfor %}
+                                                            </select>
+                                                    </div>                                                
                                             </div>
-                                        <!-- Compnay vehicle Out Time Input-->
+                                        <!-- Company vehicle Out Time Input-->
                                         
                                     <div class="form-group">
                                             <input class="btn btn-block btn-primary" type="submit">
                                     </div>
                                 </form>
                         </div>
+                    </div>
 
-
-                        <h5 class="card-header">
-                            Outside Vehicle
-                        </h5>
-                        <div class="card-body">
-                            <form action="/vehicles" method="POST" class="mb-4 ">
-                                <div class="form-row form-group">
-                                    <label class="col-form-label">Date:</label>
-                                    <div class="col-9">
-                                        <input type="date" class="form-control" id="date" name="entry_date" value="{{today_date}}">
-                                    </div>
-                                </div>
-
-                                <div class="form-group form-row">
-                                        <label class="col-form-label">In Time:</label>
-                                        <div class="col-5">
-                                                <input name="intime" class="form-control" type="time" value="{{today_time}}">
-                                        </div>
-                                    </div>
-                                
-                                    <div class="form-row form-group">
-                        
-                                            <label class="col-form-label">Vehicle No:</label>
-                                            <div class="col-7">
-                                                    <input style="text-transform:uppercase;" placeholder="(XX-99-XX-9999)" type="text" class="form-control"
-                                                    id="name" name="veno" required>
-    
-                                            </div>
-                                    </div>
-
-                                    <div class="form-group form-row">
-                                            <label class="col-form-label">Vehicle Type</label>
-                                        <div class="col-7">
-                                                <select class="form-control" name="vehicletype">
-                                                        {% for type in types %}
-                                                        <option value={{type.id}}>
-                                                            {{type.typename}}
-                                                        </option>
-                                                        {% endfor %}
-                                                    </select>
-                                        </div>
-                                            
-                                    </div>
-                        
-                                <div class="form-group form-row">
-                                    <label class="sr-only">Vendor Name</label>
-                                    <input style="text-transform:uppercase;" name="vendorname" class="form-control" type="text"
-                                        placeholder="Vendor Name" required>
-                                </div>
-                        
-                                
-                        
-                                
-                        
-                                
-                                <div class="form-group">
-                                    <label class="sr-only">Submit</label>
-                                    <input class="btn btn-block btn-primary" type="submit">
-                                </div>
-                        
-                            </form>
-                        </div>
-                                    
-                               
-                </div>
-            </div>
-                        
-                            </div>
-                        
-
-                        <div class="card table-responsive">
-                                <h5 class="card-header">Update Mill Vehicles</h5>
+                    <div class="card">
+                            <h5 class="card-header">
+                                    Outside Vehicle Data Entry 
+                                </h5>
                                 <div class="card-body">
-                                        <table class="table table-sm">
-                                                <thead>
-                                                    <th>Vehicle No</th>
-                                                    <th>Out Time</th>
-                                                    <th>In Time</th>
-                                                    <th>Actions</th>
-                                                </thead>
-                                                <tbody>
-                                                        {% for v in comp_vehicles_today %}
-                                                        <tr>
-                                                            
-                                                            <td><strong>{{v.comp_timesheet.comp_vehicle_no}}</strong><span>
-                                                                    ({{v.comp_timesheet.model_name}})</span></td>
-                                                            
-                                                            <td>{{v.OutTime}}</td>
-                                                            <form action="/vehicles/mill/update" method="POST">
-                                                                <input type="hidden" value="{{v.id}}" name="vid">
-                                                                <td><input value="{{v.InTime}}" class="form-control" type="time"
-                                                                        name="intime"></td>
-                                                                <td><input type="submit" class="btn btn-sm  btn-warning" value="UPDATE"
-                                                                        </td> 
-                                                                    </form> 
-                                                                </tr> 
-                                                                {% endfor %}
-                                                </tbody>
-                                            </table>
-                                </div>
-                            </div>
-                </div>
+                                    <form action="/vehicles" method="POST" class="mb-4 ">
+                                        <div class="form-row form-group">
+                                            <label class="col-form-label">Date:</label>
+                                            <div class="col">
+                                                <input type="date" class="form-control" id="date" name="entry_date" value="{{today_date}}">
+                                            </div>
+                                        </div>
         
-
-                <div class="col-md-6">
-                          <h5>Outside Vehicle Time Record:</h5>
+                                        <div class="form-group form-row">
+                                                <label class="col-form-label">In Time:</label>
+                                                <div class="col">
+                                                        <input name="intime" class="form-control" type="time" value="{{today_time}}">
+                                                </div>
+                                            </div>
+                                        
+                                            <div class="form-row form-group">
                                 
-
-
-                                <div class="card table-responsive">
-                                        <h5 class="card-header">Update Outside Vehicles</h5>
-                                        
-                                    <div class="card-body">
-                                        
-                                        <table class="table table-sm">
-                                            <thead>
-                                                <th>Vehicle No</th>
-                                                <th>In Time</th>
-                                                <th>Out Time</th>
-                                                <th>Actions</th>
-                                            </thead>
-                                            <tbody>
-                                                    {% for v in today_vehicles %}
-                                                    <tr>
-                                                        <td><strong>{{v.VeNO}}</strong></td>
-
-                                                        <td>{{v.InTime}}</td>
-                                                        <form action="/vehicles/update"
-                                                            method="POST">
-                    
-                                                            <input type="hidden"
-                                                                value="{{v.VeID}}"
-                                                                name="vid">
-                                                            <td>
-                                                                <input
-                                                                    class="form-control form-control-sm"
-                                                                    type="time"
-                                                                    value="{{v.OutTime}}"
-                                                                    name="outtime">
-                                                            </td>
-                                                            <td><input type="submit"
-                                                                    class="btn btn-sm btn-warning"
-                                                                    value="Update">
-                                                            </td>
-                                                        </form>
-                    
-                                                    </tr>
-                                                    {% endfor %}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                </div>
+                                                    <label class="col-form-label">Vehicle No:</label>
+                                                    <div class="col">
+                                                            <input style="text-transform:uppercase;" placeholder="(XX-99-XX-9999)" type="text" class="form-control"
+                                                            id="name" name="veno" required>
+            
+                                                    </div>
+                                            </div>
         
-</div>
-    
+                                            <div class="form-group form-row">
+                                                    <label class="col-form-label">Vehicle Type</label>
+                                                <div class="col">
+                                                        <select class="form-control" name="vehicletype">
+                                                                {% for type in types %}
+                                                                <option value={{type.id}}>
+                                                                    {{type.typename}}
+                                                                </option>
+                                                                {% endfor %}
+                                                            </select>
+                                                </div>
+                                                    
+                                            </div>
+                                
+                                        <div class="form-group form-row">
+                                            <label class="col-form-label">Vendor Name</label>
+                                            <div class="col">
+                                                    <input style="text-transform:uppercase;" name="vendorname" class="form-control" type="text"
+                                                    placeholder="Vendor Name" required>
+                                            </div>  
+                                        </div>  
+                                        <div class="form-group">
+                                            <label class="sr-only">Submit</label>
+                                            <input class="btn btn-block btn-primary" type="submit">
+                                        </div>
+                                
+                                    </form>
+                                </div>
+                    </div>
 
-<!-- End of Vehicle Form-->
+            </div>
+      
+            <div class="col">
+                <div class="card table-responsive">
+                                    <h5 class="card-header">Update Mill Vehicles</h5>
+                                    <div class="card-body">
+                                            <table class="table table-borderless table-sm table-hover">
+                                                    <thead>
+                                                        <th>Vehicle No</th>
+                                                        <th>Out Time</th>
+                                                        <th>In Time</th>
+                                                        <th>Actions</th>
+                                                    </thead>
+                                                    <tbody>
+                                                            {% for v in comp_vehicles_today %}
+                                                            <tr>
+                                                                
+                                                                <td><strong>{{v.comp_timesheet.comp_vehicle_no}}</strong><span>
+                                                                        ({{v.comp_timesheet.model_name}})</span></td>
+                                                                
+                                                                <td>{{v.OutTime}}</td>
+                                                                <form action="/vehicles/mill/update" method="POST">
+                                                                    <input type="hidden" value="{{v.id}}" name="vid">
+                                                                    <td><input value="{{v.InTime}}" class="form-control col-5" type="time"
+                                                                            name="intime"></td>
+                                                                    <td><input type="submit" class="btn btn-sm  btn-warning" value="UPDATE"
+                                                                            </td> 
+                                                                        </form> 
+                                                                    </tr> 
+                                                                    {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                    </div>
+                    </div>
+                <div class="card table-responsive">
+                                    <h5 class="card-header">Update Outside Vehicles</h5>
+                                    
+                                <div class="card-body">
+                                    <table class="table table-borderless table-sm table-hover">
+                                        <thead>
+                                            <th>Vehicle No</th>
+                                            <th>In Time</th>
+                                            <th>Out Time</th>
+                                            <th>Actions</th>
+                                        </thead>
+                                        <tbody>
+                                                {% for v in today_vehicles %}
+                                                <tr>
+                                                    <td><strong>{{v.VeNO}}</strong></td>
 
+                                                    <td>{{v.InTime}}</td>
+                                                    <form action="/vehicles/update"
+                                                        method="POST">
+                
+                                                        <input type="hidden"
+                                                            value="{{v.VeID}}"
+                                                            name="vid">
+                                                        <td>
+                                                            <input
+                                                                class="form-control form-control-sm"
+                                                                type="time"
+                                                                value="{{v.OutTime}}"
+                                                                name="outtime">
+                                                        </td>
+                                                        <td><input type="submit"
+                                                                class="btn btn-sm btn-warning"
+                                                                value="Update">
+                                                        </td>
+                                                    </form>
+                
+                                                </tr>
+                                                {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                    </div>
+                    
+            </div>
+    </div>
 </div>
+
 
 
 {% endblock %}
