@@ -1,0 +1,153 @@
+{% extends 'test-dashboard.html' %}
+
+{% block pagetitle %}
+    Visitors Report
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/print-format.css')}}">
+{% endblock %}
+
+{% block title %} Reports  {% endblock %}
+
+{% block linktitle %} Visitors {% endblock %}
+
+{% block body %}
+<div class="accordian" id="visitorpanel">
+    <div class=" justify-content-center mt-4 mr-auto ml-auto mb-4 row">
+        <div class="btn-toolbar"  role="toolbar" aria-label="Toolbar with button groups">
+            <div class="btn-group mr-2 btn-group-lg" role="group" aria-label="First group">
+              <button type="button" class="btn btn-warning" data-toggle="collapse" data-target="#daily-visitors-link"> Daily Visitors</button>
+              <button type="button" class="btn btn-warning"  data-toggle="collapse" data-target="#allvisitor">All Visitors</button>
+            </div>
+        </div>
+    </div>
+
+    <!--Daily Visitors-------------------------------------------------------------------------------->
+    <div id="daily-visitors-link" class="collapse" data-parent="#visitorpanel">
+        <div id="daily-visitor-card" class="card">
+            <div class="card-header text-center">
+                <h5 class="text-black">Siddhi Vinayak Knots & Prints Pvt. Ltd.</h5>
+                <p class="text-muted">A-26 To A-32, "Central Park", G.I.D.C Pandesra, SURAT-394221.
+                </p>
+                <h6 class="text-black"> Daily VISITOR SLIP</h6>
+                <form class="form-row" action="{{url_for('report.report_print')}}" method="POST">
+                        <input type="hidden" name="printid" value="1">
+                        <input type="date" class="form-control col-2" name="date">
+                        <input type="submit" class="btn btn-primary ml-3" value="PRINT">
+                    </form>
+            </div>
+           
+            <div class="card-body">
+                <table padding: .25rem;" data-paging="true" id='daily-visitors'
+                    class="table table-bordered table-sm">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Entry date</th>
+                            <th>Visitor Name</th>
+                            <th>Contact Number</th>
+                            <th>Visitor Company</th>
+                            <th>Visiting Person</th>
+                            <th>Visiting Department</th>
+                            <th>Visiting Purpose</th>
+                            <th>In Time</th>
+                            <th>Out Time</th>
+                            <th>Total Duration</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for vi in query_visitors_date %}
+                        <tr>
+                            <td>{{vi.id}}</td>
+                            <td>{{vi.entry_date.strftime('%d-%m-%Y')}}</td>
+                            <td>{{vi.visitor_name}}</td>
+                            <td>{{vi.visitor_contact}}</td>
+                            <td>{{vi.visitor_company}}</td>
+                            <td> {{vi.visited_employee.employee_name}} </td>
+                            <td>{{vi.visited_dept.department_name}}</td>
+                            <td> {{vi.visiting_purpose}}</td>
+                            <td>{{vi.entry_time}}</td>
+                            <td>{{vi.exit_time}}</td>
+                            <td>{{vi.total_duration}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!--All Visitor Report----------------------------------------------------------------------------->
+
+    <div id="allvisitor" style="margin-top: 15px;" class="collapse card" data-parent="#visitorpanel">
+        <div class="card-header text-center">
+            <h5 class="text-black">Siddhi Vinayak Knots & Prints Pvt. Ltd.</h5>
+            <p class="text-muted">A-26 To A-32, "Central Park", G.I.D.C Pandesra, SURAT-394221.
+            </p>
+            <h6 class="text-black">ALL VISITOR SLIP</h6>
+        </div>
+
+        <div class="card-body">
+            <table data-paging="true" id='all-visitoreport' 
+                class="table table-bordered display compact">
+                <thead>
+                    <tr>
+                        
+                        <th>Entry date</th>
+                        <th>Visitor Name</th>
+                        <th>Contact Number</th>
+                        <th>Visitor Company</th>
+                        <th>Visiting Person</th>
+                        <th>Visiting Department</th>
+                        <th>Visiting Purpose</th>
+                        <th>In Time</th>
+                        <th>Out Time</th>
+                        <th>Total Duration</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for vi in visitors %}
+                    <tr>
+                        
+                        <td>{{vi.entry_date.strftime('%d-%m-%Y')}}</td>
+                        <td>{{vi.visitor_name}}</td>
+                        <td>{{vi.visitor_contact}}</td>
+                        <td>{{vi.visitor_company}}</td>
+                        <td> {{vi.visited_employee.employee_name}} </td>
+                        <td>{{vi.visited_dept.department_name}}</td>
+                        <td> {{vi.visiting_purpose}}</td>
+                        <td>{{vi.entry_time}}</td>
+                        <td>{{vi.exit_time}}</td>
+                        <td>{{vi.total_duration}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        
+                        <th>Entry date</th>
+                        <th>Visitor Name</th>
+                        <th>Contact Number</th>
+                        <th>Visitor Company</th>
+                        <th>Visiting Department</th>
+                        <th>Visiting Person</th>
+                        <th>Visiting Purpose</th>
+                        <th>In Time</th>
+                        <th>Out Time</th>
+                        <th>Total Duration</th>
+                    </tr>
+                </tfoot>
+            </table>
+
+        </div>
+    </div>
+
+
+</div>
+</div>
+
+
+{% endblock %}

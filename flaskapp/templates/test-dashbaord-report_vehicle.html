@@ -1,0 +1,324 @@
+{% extends 'test-dashboard.html' %}
+
+{% block pagetitle %}
+    Vehicles Report
+{% endblock %}
+
+{% block title %}Report {% endblock %}
+{% block linktitle %} Vehicles {% endblock %}
+
+
+{% block body %}
+<div class="accordian" id="mainpanel">
+    <div class=" justify-content-center mt-4 mr-auto ml-auto mb-2 row">
+        <div class="btn-toolbar"  role="toolbar" aria-label="Toolbar with button groups">
+            <div class="btn-group mr-2 btn-group-lg" role="group" aria-label="First group">
+              <button type="button" class="btn btn-warning" data-toggle="collapse" data-target="#outsidepanel"> Outside Vehicles </button>
+              <button type="button" class="btn btn-warning"  data-toggle="collapse" data-target="#millpanel">Mill Vehicles </button>
+            </div>
+        </div>
+    </div>
+    <div class="accordian" id="datapanel">
+        <div id="outsidepanel" data-parent="#mainpanel" class="collapse  justify-content-center mt-4 mr-auto ml-auto mb-2 row ">
+            <div  class="btn-toolbar"  role="toolbar" aria-label="Toolbar with button groups">
+                <div class="btn-group mr-2 btn-group-lg" role="group" aria-label="Second group">
+                  <button type="button" class="btn btn-warning" data-toggle="collapse" data-target="#daily-outsidevehiclecard"> Daily </button>
+                  <button type="button" class="btn btn-warning"  data-toggle="collapse" data-target="#all-outsidevehiclecard">All</button>
+                </div>
+            </div>
+        </div>
+        <div id="millpanel" data-parent="#mainpanel" class="collapse justify-content-center mt-4 mr-auto ml-auto mb-2 row">
+            <div class="btn-toolbar"  role="toolbar" aria-label="Toolbar with button groups" >
+                <div class="btn-group mr-2 btn-group-lg" role="group" aria-label="Thrid group">
+                  <button type="button" class="btn btn-warning" data-toggle="collapse" data-target="#daily-millvehiclecard"> Daily </button>
+                  <button type="button" class="btn btn-warning"  data-toggle="collapse" data-target="#all-millvehiclescard">All </button>
+                  <button type="button" class="btn btn-warning"  data-toggle="collapse" data-target="#vehiclewise-millvehiclescard">Vehicle Wise</button>
+                </div>
+            </div>
+        </div>
+<!----------------------------------All Vehicles Report--------------------------------------------------------->
+        <!--Daily Vehicles Report-->
+        <div id="daily-outsidevehiclecard" class="collapse card" data-parent="#datapanel">
+            <div class="card-header text-center">
+                <h5 class="text-black">Siddhi Vinayak Knots & Prints Pvt. Ltd.</h5>
+                <p class="text-muted">A-26 To A-32, "Central Park", G.I.D.C Pandesra, SURAT-394221.
+                </p>
+                <h6 class="text-black">DAILY OUTSIDE VEHICLE REPORT</h6>
+                <form class="form-row" action="{{url_for('report.report_print')}}" method="POST">
+                        <input type="hidden" name="printid" value="2">
+                        <input type="date" class="form-control col-2" name="date">
+                        <input type="submit" class="btn btn-primary ml-3" value="PRINT">
+                    </form>
+            </div>
+            <div class="card-body">
+                <table id='daily-vehicles' class=" table table-bordered table-sm table-striped "
+                    style="width: 100%">
+                    <thead class="">
+                        <tr>
+                            
+                            <th>Entry date</th>
+                            <th>Vehicle NO</th>
+                            <th>Vendor Name</th>
+                            <th>Vehicle Type</th>
+                            <th>In Time</th>
+                            <th>Out Time</th>
+                            <th>Total Duration</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for v in query_vehicles_date %}
+                        <tr>
+                            
+                            <td>{{v.VeEntryDate.strftime('%d-%m-%Y')}}</td>
+                            <td>{{v.VeNO}}</td>
+                            <td>{{v.VendorName}}</td>
+                            <td>{{v.vehicle_type.typename}}</td>
+                            <td> {{v.InTime}} </td>
+                            <td>{{v.OutTime}} </td>
+                            <td> {{v.TotalDuration}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            
+                            <th>Entry date</th>
+                            <th>Vehicle NO</th>
+                            <th>Vendor Name</th>
+                            <th>Vehicle Type</th>
+                            <th>In Time</th>
+                            <th>Out Time</th>
+                            <th>Total Duration</th>
+
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+         <!--All Vehicles Report -->
+        <div id="all-outsidevehiclecard" class=" collapse col" data-parent="#datapanel">
+            <div style="margin-top: 15px;" class="card">
+                    <div class="card-header text-center">
+                        <h5 class="text-black">Siddhi Vinayak Knots & Prints Pvt. Ltd.</h5>
+                        <p class="text-muted">A-26 To A-32, "Central Park", G.I.D.C Pandesra, SURAT-394221.
+                        </p>
+                        <h6 class="text-black">OUTSIDE VEHICLE REPORT</h6>
+                    </div>
+                    <div class="card-body">
+                        <table id='all-vehiclereport'
+                            class=" table table-sm table-bordered table-striped " style="width: 100%">
+                            <thead class="">
+                                <tr>
+                                    
+                                    <th>Entry date</th>
+                                    <th>Vehicle NO</th>
+                                    <th>Vendor Name</th>
+                                    <th>Vehicle Type</th>
+                                    <th>In Time</th>
+                                    <th>Out Time</th>
+                                    <th>Total Duration</th>
+        
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for v in query_vehicles_outside %}
+                                <tr>
+                                    
+                                    <td>{{v.VeEntryDate.strftime('%d-%m-%Y')    }}</td>
+                                    <td>{{v.VeNO}}</td>
+                                    <td>{{v.VendorName}}</td>
+                                    <td>{{v.vehicle_type.typename}}</td>
+                                    <td> {{v.InTime}} </td>
+                                    <td>{{v.OutTime}} </td>
+                                    <td> {{v.TotalDuration}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <th>Entry Date</th>
+                                <th>Vehicle No</th>
+                                <th>Vendor Name</th>
+                                <th>Vehicle Type</th>
+                                <th>In Time</th>
+                                <th>Out Time</th>
+                                <th>Total Duration</th>
+                            </tfoot>
+                        </table>
+        
+                    </div>
+            </div>
+        </div>
+<!----------------------------------Mill Vehicle Reprot--------------------------------------------------------->
+        
+        <div id="daily-millvehiclecard" class="collapse col" data-parent="#datapanel">
+                <div style="margin-top: 15px;" class="card">
+                        <div class="card-header text-center">
+                            <h5 class="text-black">Siddhi Vinayak Knots & Prints Pvt. Ltd.</h5>
+                            <p class="text-muted">A-26 To A-32, "Central Park", G.I.D.C Pandesra, SURAT-394221.
+                            </p>
+                            <h6 class="text-black">DATE-WISE MILL VEHICLE REPORT</h6>
+                            <form class="form-row" action="{{url_for('report.report_print')}}" method="POST">
+                                    <input type="hidden" name="printid" value="3">
+                                    <input type="date" class="form-control col-2" name="date">
+                                    <input type="submit" class="btn btn-primary ml-3" value="PRINT">
+                                </form>
+                        </div>
+
+                        <div class="card-body">
+                            <table data-paging="true" id='all-millvehiclereport'
+                                class=" table table-sm table-bordered table-striped " style="width: 100%">
+                                <thead class="">
+                                    <tr>
+                                        
+                                        <th>Entry date</th>
+                                        <th>Vehicle NO</th>
+                                        <th>Vehicle Type</th>
+                                        <th>Out Time</th>
+                                        <th>In Time</th>
+                                        <th>Total Duration</th>
+    
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for v in query_vehicles_mill %}
+                                    <tr>
+                                        
+                                        <td>{{v.date.strftime('%d-%m-%Y')    }}</td>
+                                        <td>{{v.comp_timesheet.comp_vehicle_no}}</td>
+                                        <td>{{v.comp_timesheet.comp_vehicle_type.typename}}</td>
+                                        <td>{{v.OutTime}} </td>
+                                        <td> {{v.InTime}} </td>
+                                        <td> {{v.duration}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        
+                                        <th>Entry date</th>
+                                        <th>Vehicle NO</th>
+                                        <th>Vehicle Type</th>
+                                        <th>Out Time</th>
+                                        <th>In Time</th> 
+                                        <th>Total Duration</th>
+    
+                                    </tr>
+                                </tfoot>
+                            </table>
+    
+                        </div>
+                </div>
+        </div>
+
+    <div id="all-millvehiclescard" class="collapse col" data-parent="#datapanel">
+                <div style="margin-top: 15px;" class="card">
+                        <div class="card-header text-center">
+                            <h5 class="text-black">Siddhi Vinayak Knots & Prints Pvt. Ltd.</h5>
+                            <p class="text-muted">A-26 To A-32, "Central Park", G.I.D.C Pandesra, SURAT-394221.
+                            </p>
+                            <h6 class="text-black">MILL VEHICLE REPORT</h6>
+                        </div>
+
+                        <div class="card-body">
+                            <table data-paging="true" id='all-millvehiclereport'
+                                class=" table table-sm table-bordered table-striped " style="width: 100%">
+                                <thead class="">
+                                    <tr>
+                                        
+                                        <th>Entry date</th>
+                                        <th>Vehicle NO</th>
+                                        <th>Vehicle Type</th>
+                                        <th>Out Time</th>
+                                        <th>In Time</th>
+                                        <th>Total Duration</th>
+    
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for v in query_vehicles_mill %}
+                                    <tr>
+                                        
+                                        <td>{{v.date.strftime('%d-%m-%Y')    }}</td>
+                                        <td>{{v.comp_timesheet.comp_vehicle_no}}</td>
+                                        <td>{{v.comp_timesheet.comp_vehicle_type.typename}}</td>
+                                        <td>{{v.OutTime}} </td>
+                                        <td> {{v.InTime}} </td>
+                                        <td> {{v.duration}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        
+                                        <th>Entry date</th>
+                                        <th>Vehicle NO</th>
+                                        <th>Vehicle Type</th>
+                                        <th>Out Time</th>
+                                        <th>In Time</th> 
+                                        <th>Total Duration</th>
+    
+                                    </tr>
+                                </tfoot>
+                            </table>
+    
+                        </div>
+                </div>
+        </div>
+<!-----------------------------------Mill Vehicle Wise report--------------------------------------------------------->        
+        <div id="vehiclewise-millvehiclescard" class="collapse col" data-parent="#datapanel">
+            <div class="card">
+                <div class="card-header text-center">
+                        <h5 class="text-black">Siddhi Vinayak Knots & Prints Pvt. Ltd.</h5>
+                        <p class="text-muted">A-26 To A-32, "Central Park", G.I.D.C Pandesra, SURAT-394221.
+                        </p>
+                        <h6 class="text-black"><form action="{{url_for('report.report_vehicles')}}">
+                                <select name="comp_vehicle">
+                                        {% for v in query_comp_vehicles %} 
+                                            <option value="{{v.id}}">{{v.comp_vehicle_no}}, {{v.model_name}}</option>
+                                        {%endfor%}
+                                </select>
+                                <input type="submit">
+                        </form</h6>
+                </div>
+                <div class="card-body">
+                        <table
+                        class=" table table-sm table-bordered table-striped " style="width: 100%; font-size: 1.2rem;">
+                        <thead class="">
+                            <tr>
+                                <th>Entry date</th>
+                                <th>Out Time</th>
+                                <th>In Time</th>
+                                <th>Total Duration</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for v in timesheet %}
+                            <tr>
+                                <td>{{v.date.strftime('%d-%m-%Y') }}</td>
+                                <td>{{v.OutTime}} </td>
+                                <td> {{v.InTime}} </td>
+                                <td> {{v.duration}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Entry date</th>
+                                <th>Out Time</th>
+                                <th>In Time</th> 
+                                <th>Total Duration</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+   
+{% endblock %}
+

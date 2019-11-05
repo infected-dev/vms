@@ -1,0 +1,173 @@
+{% extends 'test-dashboard.html' %}
+
+<!-- CSS Style Block -->
+{%block styles%}
+<style>
+    table tbody {
+        font-size: 1rem;
+    }
+
+    .form-group {
+        margin-right: 5px;
+        box-shadow: brown;
+    }
+
+    #visitorform {
+        margin-left: 5px;
+    }
+</style>
+{%endblock%}
+<!-- End of CSS Block-->
+
+
+<!--Page Title Block-->
+{% block pagetitle %}
+Data Entry
+{% endblock %}
+<!-- End of Page Title BLock-->
+
+
+<!--Title Block-->
+{% block title %}
+Data Entry
+{% endblock %}
+<!--End of Title Block-->
+{% block linktitle %}
+Visitor Data
+{% endblock %}
+
+{% block body %}
+<div id="maincontainer" class="container-fulid">
+
+    <!-- Start of Visitor Data Entry Form-->
+
+    <div class="row">
+
+
+        <div class="col-3">
+            <div class="card">
+                <h4 class="card-header text-center">Data Entry</h4>
+                <div class="card-body p-2" >
+                    <form id="visitorform" action="/test-postformat/visitor" method="POST" class="form ">
+                        <!--Entry Date Input-->
+                        <div class="form-row form-group mb-2 ">
+                                <label class="col-form-label" for="entrydate">Date:</label>
+                                
+                                        <input type="date" class="form-control" id="date" name="entrydate" value="{{today_date}}" autofocus required>
+                                
+                            </div>
+                        
+
+                            <div class="form-group form-row mb-2">
+                                <label class="col-form-label" for="intime">In Time:</label>
+                               
+                                        <input name="intime" class="form-control" type="time" value="{{today_time}}">
+                                
+                            </div>
+                        
+
+
+
+                        <div class="form-row form-group mb-2">
+                            <label class="sr-only" for="name">Visitor Name:</label>
+                                    <input style="text-transform:uppercase;" placeholder="Visitor Name" type="text" class="form-control"
+                                    id="name" name="visitorname" required>
+                        </div>
+
+                        <!-- Visitor Contact Input-->
+                        <div class="form-row form-group mb-2">
+                            <label class="sr-only" for="visitorcontact">Contact No: </label>
+                            <input name="visitorcontact" type="tel" class="form-control"
+                                placeholder="Visitor Contact No.">
+                        </div>
+
+                        <!--Visitor Compnay -->
+                        <div class="form-row form-group mb-2">
+                            <label class="sr-only" for="visitorcompnay">Compnay From: </label>
+                            <input style="text-transform:uppercase;" name="visitorcompany" class="form-control"
+                                type="text" placeholder="Visitor Company" required>
+                        </div>
+
+                        <!--Visiting Employee Input-->
+                        <div class="form-row form-group mb-2">
+                            <label class="sr-only">Visiting Employee</label>
+                            <select class="form-control" name="visiting_employee">
+                                {% for emp in employees %}
+                                <option value={{emp.id}}>{{emp.employee_name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <!--Compnay From Input-->
+                        <div class="form-group mb-2">
+                            <label class="sr-only" for="visitingpurpose">Compnay From: </label>
+                            <input style="text-transform:uppercase;" name="visitingpurpose" class="form-control"
+                                type="text" placeholder="Visiting Purpose">
+                        </div>
+                        <div class="form-group mb-2">
+                            <input type="submit" class="btn btn-primary btn-block">
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col">
+            <div class="card">
+                <h4 class="card-header">Update Visitor Data</h4>
+                <!-- Visitor entry table Comment-->
+            
+                <div class=" table-responsive card-body">
+                    <table id="VisitorPostTable" class="table table-stripped table-sm">
+                        <thead class="thead">
+
+                        </thead>
+
+                        <tbody>
+                            {% for visitor in today_visitors %}
+                            <tr id="datasection{{visitor.id}}">
+                                <td>{{visitor.entry_date.strftime("%d/%m/%Y")}}</td>
+                                <td>{{visitor.visitor_name}}</td>
+                                <td>{{visitor.visitor_contact}}</td>
+                                <td>{{visitor.visitor_company}}</td>
+                                <td>{{visitor.visited_employee.employee_name}}</td>
+                                <td>{{visitor.visiting_purpose}}</td>
+                                <td>{{visitor.entry_time}}</td>
+
+                                <td>
+                                    <input id="vi_id{{visitor.id}}" name="vi_id" type="hidden" value="{{visitor.id}}">
+                                    <input class="form-control form-control-sm" type="time"
+                                        value="{{visitor.exit_time}}" id="exittime{{visitor.id}}" name="exittime">
+                                </td>
+                                <td><button attributes="{{visitor.id}}" type="submit" id="button"
+                                        class="update btn btn-warning btn-sm">Update</button></button></td>
+
+
+
+
+
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+           
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- End of Visitor Form-->
+
+
+
+
+
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}

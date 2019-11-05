@@ -1,0 +1,40 @@
+
+<div class="container">
+        <table data-paging="true" id='daily-visitors'
+        class="table table-bordered display compact">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Visitor Name</th>
+                <th>Contact Number</th>
+                <th>Visitor Company</th>
+                <th>Visiting Person</th>
+                <th>Visiting Department</th>
+                <th>Visiting Purpose</th>
+                <th>In Time</th>
+                <th>Out Time</th>
+                <th>Total Duration</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for vi in query_visitors_date %}
+            <tr>
+                <td>{{vi.id}}</td>
+                <td>{{vi.visitor_name}}</td>
+                <td>{{vi.visitor_contact}}</td>
+                <td>{{vi.visitor_company}}</td>
+                <td> {{vi.visited_employee.employee_name}} </td>
+                <td>{{vi.visited_dept.department_name}}</td>
+                <td> {{vi.visiting_purpose}}</td>
+                <td>{{vi.entry_time}}</td>
+                <td>{{vi.exit_time}}</td>
+                <td>{{vi.total_duration}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        
+        </table>
+</div>
+<script>
+   
+</script>

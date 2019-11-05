@@ -1,0 +1,121 @@
+{% extends 'test-dashboard.html' %}
+
+{% block pagetitle %}
+Summary Dashboard
+{% endblock %}
+
+{% block title %} Summary DashBoard {% endblock %}
+
+{% block body %}
+
+<div class="container-fulid">
+        <div class="accordian" id="adminpanel">
+                <div class=" justify-content-center mt-4 mr-auto ml-auto mb-2 row">
+                        <div class="btn-toolbar"  role="toolbar" aria-label="Toolbar with button groups">
+                            <div class="btn-group mr-2 btn-group-lg" role="group" aria-label="First group">
+                              <button type="button" class="btn btn-warning" data-toggle="collapse" data-target="#visitor_card"> Visitors </button>
+                              <button type="button" class="btn btn-warning"  data-toggle="collapse" data-target="#vehicle_card">Vehicles </button>
+                            </div>
+                        </div>
+                    </div>
+
+    <div id="visitor_card" class="row collapse" data-parent='#adminpanel'>
+        <div class="col">
+            <div class="card">
+                <h5 class="card-header"> Visitors Summary</h5>
+                <div class="card-body">
+                    <div class="card-text">
+                        <h4 class="card-title">Today's Count</h4>
+                        <p class="display-4">{{query_visitors_today}}</p>
+                        <h4 class="card-title"> Total Visitors</h4>
+                        <p class="display-4">{{query_visitors_all}}</p>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class=" mr-4 col">
+            <div class="card">
+                    <h5 class="card-header"> Date Wise Summary </h5>
+                <div class="card-body">
+                    <canvas id="linechartforvisitors" >
+
+                    </canvas>
+                </div>
+            </div>
+        </div> 
+    </div>
+
+    <div id="vehicle_card" class="row collapse mt-2"  data-parent='#adminpanel'>
+            <div class="col">
+                    <div class="card">
+                        <h5 class="card-header"> Vehicles Summary</h5>
+                        <div class="card-body">
+                            <div class="card-text">
+                                <h4 class="card-title">Today's Count</h4>
+                                <p class="display-4">{{query_vehicles_today}}</p>
+                                <h4 class="card-title"> Total Vehicles</h4>
+                                <p class="display-4">{{query_vehicles_all}}</p>
+        
+                            </div>
+        
+                        </div>
+                    </div>
+                </div>
+            <div class="mr-4 col">
+                <div class="card">
+                    <h5 class="card-header">Date Wise Summary</h5>
+                    <div class="card-body">
+
+                    </div>
+                </div>
+                
+            </div>
+    </div>
+    
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script src="{{url_for('static', filename='js/chart.min.js')}}"></script>
+<script type="text/javascript">
+var ctx = document.getElementById('linechartforvisitors').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels:[
+        {% for i in total_count %}
+                "{{i[0]}}",
+        {% endfor %}
+        ], 
+        datasets: [{
+            label: '{{legend}}',
+            data: [
+                {% for i in total_count %}
+                    {{i[1]}},
+                {% endfor %}
+            ],
+            
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+
+</script>
+
+{%  endblock %}

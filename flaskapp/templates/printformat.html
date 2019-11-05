@@ -1,0 +1,77 @@
+<htmL>
+
+<head>
+    <style>
+        body {
+            margin-top: 2%;
+            margin-left: 2%;
+            margin-right: 10%;
+        }
+
+        .main-border {
+            width: 20cm;
+            height: 14cm;
+            border: 2px solid black;
+
+        }
+
+        .position {
+            position: relative;
+            left: 75%;
+            width: 4cm;
+        }
+
+        #company-name {
+            text-align: center;
+        }
+
+        #company-name p {
+            margin-top: 0;
+        }
+
+        #company-name h2 {
+            margin-bottom: 1%;
+        }
+
+        .slip-title {
+            text-align: center;
+            text-decoration: underline;
+        }
+
+        .slip-items {
+            float: left;
+            margin: 1%;
+        }
+
+        #outime-item {
+            margin: 10%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-border">
+        <div id="company-name">
+            <h2>Siddhi Vinayak Knots & Prints Pvt. Ltd</h2>
+            <p>A-26 To A-32, "Central Park", G.I.D.C, Pandesara, Surat-394221</p>
+        </div>
+        <div class="slip-title">
+            <h3>VISITOR'S SLIP</h3>
+        </div>
+        <div class="position">
+            <p>Date:<span>{{}}</span></p>
+        </div>
+        <div class="slip-items">
+            <p class="label-item">Visitor Slip No:<span class="value-item">{{}}</span></p>
+            <p class="label-item">Visitor Name:<span class="value-item">{{}}</span></p>
+            <p class="label-item">Official to Meet:<span>{{}}</span></p>
+            <p class="label-item">Purpose of Visit:<span>{{}}</span></p>
+            <p class="label-item">In Time: <span>{{}}</span> </p>
+            <p class="label-item">Out Time:<span>{{}}</span></p>
+            <hr style="width: 15cm;">
+            <p class="label-item">Authorized Signature:</p>
+        </div>
+    </div>
+</body>
+
+</htmL>

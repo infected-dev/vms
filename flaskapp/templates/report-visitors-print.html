@@ -1,0 +1,76 @@
+<html>
+    <head>
+            <link href="{{url_for('static',filename='css/dashboard.css')}}" rel="stylesheet">
+            <link href="{{url_for('static', filename='css/dataTables.bootstrap.min.css')}}  " rel="stylesheet">
+            <link href="{{url_for('static',filename='css/print.min.css')}}" rel="stylesheet">
+            <link href="{{url_for('static', filename='css/bootstrap.min.css')}}" rel="stylesheet">
+            <link href="{{url_for('static', filename='css/printstyles.css')}}" rel="stylesheet" media="print">
+        <style>
+            body{
+                margin-top: 15px;
+                margin-left: 5px;
+                margin-right: 5px;
+
+            }
+        </style>
+        </style>
+    </head>
+    <body>
+        <div class="container-fulid">   
+                <div class="printclass">
+                        <div class="text-center">
+                            <h5>Siddhi Vinayak Knots and Prints Pvt. Ltd.</h5>
+                            <p class=" mb-0 text-monospace text-muted">A-26 To A-32, "Central Park", G.I.D.C Pandesra, SURAT-394221.
+                                </p>
+                                <h5 class="mb-0 mt-0">{{title}}</h5>
+                        </div>
+                        <p class="  text-left"><strong> Date: {{date.strftime('%d-%m-%Y')}}</strong> <span class=" ml-4 text-left"><strong >Total Count:<span class="ml-2">{{count}}</span></strong></span> </p> 
+                        <div id='tableclass' class="">
+                            <table class="table table-sm table-bordered">
+                                <thead >
+                                    <tr class="text-center">
+                                        <th>#</th>
+                                        <th>Visitor Name</th>
+                                        <th>Contact No</th>
+                                        <th>Compnay/From</th>
+                                        <th>Visiting Employee</th>
+                                        <th>Visiting Department</th>
+                                        <th>Visiting Purpose</th>
+                                        <th>In Time</th>
+                                        <th> Out Time </th>
+                                        <th>Total Duration </th>
+                                    </tr>
+                                </thead>
+                                
+                                <tbody>
+                                    {% for vi in query %}
+                                     <tr>
+                                            <td></td>
+                                            <td>{{vi.visitor_name}}</td>
+                                            <td>{{vi.visitor_contact}}</td>
+                                            <td>{{vi.visitor_company}}</td>
+                                            <td> {{vi.visited_employee.employee_name}} </td>
+                                            <td>{{vi.visited_dept.department_name}}</td>
+                                            <td> {{vi.visiting_purpose}}</td>
+                                            <td>{{vi.entry_time}}</td>
+                                            <td>{{vi.exit_time}}</td>
+                                            <td>{{vi.total_duration}}</td>
+                                    </tr>
+                                    {% endfor %}    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+        </div>
+        <script src="{{url_for('static', filename='js/jquery-3.4.js')}}"></script>
+    </body>
+<script type="text/javascript">
+    var addSerialNumber = function(){
+        $('table tr').each(function(index){
+            $(this).find('td:nth-child(1)').html(index+0);
+        });
+    };
+    
+    addSerialNumber();
+</script>
+</html>

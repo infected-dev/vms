@@ -1,0 +1,147 @@
+<html>
+    <head>
+            <link href="{{url_for('static',filename='css/dashboard.css')}}" rel="stylesheet">
+            <link href="{{url_for('static', filename='css/dataTables.bootstrap.min.css')}}  " rel="stylesheet">
+            <link href="{{url_for('static',filename='css/print.min.css')}}" rel="stylesheet">
+            <link href="{{url_for('static', filename='css/bootstrap.min.css')}}" rel="stylesheet">
+        <style>
+            body{
+                margin-top: 15px;
+                margin-left: 15px;
+                margin-right: 15px;
+
+            }
+        </style>
+        <style type="text/css" media="print">
+            @page 
+                {size: landscape  ;}
+            @media print{
+                table, th, td
+                    {
+                    
+                    border: 1px solid black;
+                    font-size: 12px;
+                   
+                    }
+                  
+                    table {
+                        width: 100%;
+                        clear: both;
+                        border-collapse: collapse;
+                        table-layout: auto;
+                    }
+                    thead, tfoot {
+                                 display: table-row-group;
+                            }
+                              
+                    tr {
+                                page-break-inside: avoid;
+                            }
+                    
+            } 
+                
+
+                .card-header h5{
+                    margin-top: 0;
+                }
+                .card-header h3{
+                    font-size: 16px;
+                }
+                .card-header p {
+                    font-size: 13px;
+                    
+                }
+                .card-body{
+                    margin-top: 0   ;
+                    
+                }
+                .card-header{
+                    margin:0;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container-fulid">
+                <p class="text-left"><strong> Date: {{date.strftime('%d-%m-%Y')}}</strong></p>    
+                <div class="card">
+                        <div class="card-header text-center">
+                            <h3>Siddhi Vinayak Knots and Prints Pvt. Ltd.</h3>
+                            <p class="text-muted">A-26 To A-32, "Central Park", G.I.D.C Pandesra, SURAT-394221.
+                                </p>
+                                <h5 class="text-black">{{title}}</h5>
+                            
+                        </div>
+                        <div class="card-body">
+                           {% if title == 'Outside Vehicle Records' %}
+                            <table class="table table-sm table-bordered">
+                                <thead >
+                                    <tr class="text-center">
+                                        <th>#</th>
+                                        <th>Vehicle No</th>
+                                        <th>Vendor Name</th>
+                                        <th>Vehicle Type</th>
+                                        <th>In Time</th>
+                                        <th>Out Time</th>
+                                        <th>Total Duration </th>
+                                    </tr>
+                                </thead>
+                                
+                                <tbody>
+                                    {% for vi in query %}
+                                     <tr>
+                                            <td></td>
+                                            <td>{{vi.VeNO}}</td>
+                                            <td>{{vi.VendorName}}</td>
+                                            <td>{{vi.vehicle_type.typename}}</td>
+                                            <td>{{vi.InTime}}</td>
+                                            <td>{{vi.OutTime}}</td>
+                                            <td>{{vi.TotalDuration}}</td>
+                                    </tr>
+                                    {% endfor %}    
+                                </tbody>
+                            </table>
+                            {% endif %}
+
+                            {% if title == 'Mill Vehicle Records' %}
+                            <table class="table table-sm table-bordered">
+                                    <thead >
+                                        <tr class="text-center">
+                                            <th>#</th>
+                                            <th>Vehicle No</th>
+                                            <th>Vehicle Type</th>
+                                            <th>Out Time</th>
+                                            <th>In Time</th>
+                                            <th>Total Duration </th>
+                                        </tr>
+                                    </thead>
+                                    
+                                    <tbody>
+                                        {% for vi in query %}
+                                         <tr>
+                                                <td></td>
+                                                <td>{{vi.comp_timesheet.comp_vehicle_no}}</td>
+                                                <td>{{vi.comp_timesheet.comp_vehicle_type.typename}}</td>
+                                                <td>{{vi.OutTime}}</td>
+                                                <td>{{vi.InTime}}</td>
+                                                <td>{{vi.duration}}</td>
+                                        </tr>
+                                        {% endfor %}    
+                                    </tbody>
+                                </table>
+                            {% endif %}
+                        </div>
+                    </div>
+        </div>
+        <script src="{{url_for('static', filename='js/jquery-3.4.js')}}"></script>
+    </body>
+<script type="text/javascript">
+    var addSerialNumber = function(){
+        $('table tr').each(function(index){
+            $(this).find('td:nth-child(1)').html(index+0);
+        });
+    };
+    
+    addSerialNumber();
+</script>
+</html>

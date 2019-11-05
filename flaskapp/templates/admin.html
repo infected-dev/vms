@@ -1,0 +1,320 @@
+{% extends 'test-dashboard.html' %}
+{% block pagetitle %}
+    Admin
+{% endblock %}
+
+
+{%  block title %}
+Manage 
+{% endblock  %}
+
+{% block linktitle %}
+Admin Panel
+{% endblock %}
+
+{% block styles %}
+    <style>
+        btn-custom {
+            margin-top: 10px;
+        }
+      
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="accordian" id="adminpanel">
+        <div class=" justify-content-center mt-4 mr-auto ml-auto mb-2 row">
+                <div class="btn-toolbar"  role="toolbar" aria-label="Toolbar with button groups">
+                    <div class="btn-group mr-2 btn-group-lg" role="group" aria-label="First group">
+                      <button type="button" class="btn btn-warning" data-toggle="collapse" data-target="#usercard"> Users </button>
+                      <button type="button" class="btn btn-warning"  data-toggle="collapse" data-target="#departmentcard">Departments </button>
+                      <button type="button" class="btn btn-warning"  data-toggle="collapse" data-target="#employeecard">Employee</button>
+                      <button type="button" class="btn btn-warning"  data-toggle="collapse" data-target="#companyvehiclecard ">Compnay Vehicles</button>
+                      <button type="button" class="btn btn-warning"  data-toggle="collapse" data-target="#vehicletypecard">Vehicles Types</button>
+                    </div>
+                </div>
+            </div>
+            <div class=" mt-4 container">
+                 
+                    <!-- User Forum-->
+                    <div id="usercard"  class=" collapse col" data-parent="#adminpanel">
+                            <div class="card">
+                                <div class="card-body">
+                                        <form method="POST" action="/admin/post/user">
+                                            <h3>Add New User</h3>
+                                            <label for="employeename">UserName:</label>
+                                            <input type="text" class="form-control" name="username" required>
+                                            <input type="submit" class="btn mt-1 btn-block btn-primary">
+                                           
+                                        </form>
+                                        <table class="table table-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Username</th>
+                                                    <th>Update</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for u in users %}
+                                                <tr>
+                                                    <td>{{u.id}}</td>
+                                                    <td>{{u.username}}</td>
+                                                    <td><form action="" method="POST">
+                                                        <input type="hidden" name="user_id" value="{{u.id}}">
+                                                        <input type="submit" value="Update" class="btn btn-sm btn-warning">
+                                                    </form></td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                </div>
+                            </div>
+                    </div>
+                    
+     
+                    <!--Company Department Forum-->
+                    <div id="departmentcard" class="collapse col" data-parent="#adminpanel">
+                            <div class="card">
+                                <div class="card-body">
+                                        <form method="POST" action="/admin/post">
+                                            <h3>Add Company Departments</h3>
+                                            <label for="deptname">Department Name:</label>
+                                            <input  type="text" class="form-control" name="deptname" style="text-transform:uppercase;" placeholder=" Department Name"required>
+                                            <input type="submit" class="btn mt-1 btn-block btn-primary">
+                                        </form>
+            
+                                        <table id="company-department-table" class="table table-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Department Name</th>
+                                                    <th>Update</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for dept in departments %}
+                                                <tr>
+                                                    <td>{{dept.id}}</td>
+                                                    <td>{{dept.department_name}}</td>
+                                                    <td>
+                                                            <button id="vehicle_types-submit" type="button" value="Actions" class="btn btn-sm btn-warning" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>
+                                                            <div class="dropdown-menu" aria-labelledby="vehicle_types-submit">
+                                                                   <div>
+                                                                        <form action="{{url_for('admin.admin_delete')}}" method="POST">
+                                                                                <input type="hidden" name="dept_id" value="{{dept.id}}">
+                                                                                <input class="dropdown-item" type="submit" value="Delete">
+                                                                                   
+                                                                        </form>
+            
+                                                                   </div>
+                                                                   <div>
+                                                                        <form action="" method="POST">
+                                                                                <input type="hidden" value="{{dept.id}}">
+                                                                                <input class="dropdown-item" type="submit" value="Update">       
+                                                                        </form>
+                                                                   </div>
+                                                            </div>  
+                                                        </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        
+                                        </table>
+                
+                                </div>
+                            </div>
+                    </div>
+            
+                    
+                    <!--Company employee Forum-->
+                    <div id="employeecard" class="collapse col" data-parent="#adminpanel">
+                            <div class="card">
+                                <div class="card-body">
+                                        <form method="POST" action="/admin/post/employee">
+                                            <h3>Add Company Employee Details</h3>
+                                            <div class="row">
+                                                    <div class="col">
+                                                            <label for="employeename">Employee Name:</label>
+                                                            <input style="text-transform:uppercase;" placeholder="Employee Name" type="text" class="form-control" name="employeename" required>
+                                                    </div>
+                    
+                                                    <div class="col">
+                                                            <label for="current_department">Current Department:</label>
+                                                            <select class="form-control" name="current_department" required>
+                                                                    {% for dept in departments %}
+                                                                    <option value={{dept.id}}>{{dept.department_name}}</option>
+                                                                    {% endfor %}
+                                                                </select>
+                                                    </div>
+                                            </div>
+                                            <input type="submit" class="btn btn-block mt-1 btn-primary">
+                                        </form>
+                                        <table id="company-employee-table" class="table table-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Employee  Name</th>
+                                                    <th>Department</th>
+                                                    <th>Update</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for employee in employees %}
+                                                <tr>
+                                                    <td>{{employee.id}}</td>
+                                                    <td>{{employee.employee_name}}</td>
+                                                    <td>{{employee.dept.department_name}}</td>
+                                                    <td>
+                                                            <button id="vehicle_types-submit" type="button" value="Actions" class="btn btn-sm btn-warning" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>
+                                                            <div class="dropdown-menu" aria-labelledby="vehicle_types-submit">
+                                                                   <div>
+                                                                        <form action="{{url_for('admin.admin_delete')}} " method="POST">
+                                                                                <input type="hidden" name="employee_id" value="{{employee.id}}">
+                                                                                <input class="dropdown-item" type="submit" value="Delete">
+                                                                                   
+                                                                        </form>
+            
+                                                                   </div>
+                                                                   <div>
+                                                                        <form action="" method="POST">
+                                                                                <input type="hidden" name="employee_id" value="{{employee.id}}">
+                                                                                <input class="dropdown-item" type="submit" value="Update">       
+                                                                        </form>
+                                                                   </div>
+                                                            </div>
+                                                        </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                </div>
+                            </div>
+                    </div>
+   
+                    
+                     <!--  Vehicle Type Forum -->
+                     <div id="vehicletypecard" class="collapse col" data-parent="#adminpanel">
+                            <div class="card">
+                                <div class="card-body">
+                                        <form method="POST" action="/admin/post/vehicletype">
+                                            <h3>Add Vehicle Types</h3>
+                                            <label for="vehicletype">VehicleType:</label>
+                                            <input style="text-transform:uppercase;" placeholder="Vehicle type" type="text" class="form-control" name="vehicletype" required>
+                                            <input type="submit" class="btn btn-block mt-1 btn-primary">
+                                        </form>
+                                        <table class="table table-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th>Type ID</th>
+                                                    <th> Type Name</th>
+                                                    <th>Update</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for types in vehicle_types %}
+                                                <tr>
+                                                    <td>{{types.id}}</td>
+                                                    <td>{{types.typename}}</td>
+                                                    <td>
+                                                            <button id="vehicle_types-submit" type="button" value="Actions" class="btn btn-sm btn-warning" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>
+                                                            <div class="dropdown-menu" aria-labelledby="vehicle_types-submit">
+                                                                   <div>
+                                                                        <form action="{{url_for('admin.admin_delete')}}" method="POST">
+                                                                                <input type="hidden" name="types_id" value="{{types.id}}">
+                                                                                <input class="dropdown-item" type="submit" value="Delete">
+                                                                                   
+                                                                        </form>
+            
+                                                                   </div>
+                                                                   <div>
+                                                                        <form action="" method="POST">
+                                                                                <input type="hidden" value="{{types.id}}">
+                                                                                <input class="dropdown-item" type="submit" value="Update">       
+                                                                        </form>
+                                                                   </div>
+                                                            </div>
+                                                        </td>
+                                                </tr>
+                                                {% endfor %}    
+                                            </tbody>
+                                        </table>
+                
+                                </div>
+                            </div>
+                        </div>
+                    <!-- Compnay Vehicle Form -->
+                    <div id="companyvehiclecard" class="collapse col" data-parent="#adminpanel">
+                            <div class="card">
+                                    <div class="card-body">
+                                            <form method="POST" action="/admin/post/compnayvehicles">
+                                                <h3>Add Compnay Vehicles </h3>
+                                                <div class="form-row">
+                                                    <div class="col">
+                                                            <label for="vehicleno">Vehicle No:</label>
+                                                            <input autofocus class="form-control" autocapitalize="True" style="text-transform:uppercase;" placeholder="Vehicle type" type="text" class="form-control" name="vehicleno" required>
+                                                    </div>
+                                                    <div class="col">
+                                                        <label>Vehicle Type:</label>
+                                                            <select class="form-control" name="vehicletype">
+                                                                    {% for types in vehicle_types %}
+                                                                    <option value="{{types.id}}">{{types.typename}}</option>
+                                                                    {% endfor %}
+                                                                </select>
+                                                    </div>
+                                                    <div class="col">
+                                                        <label>Model Name:</label>
+                                                            <input class="form-control" type="text" placeholder="Model Name" name="modelname">
+                                                    </div>
+                                                </div>
+                                                <input type="submit" class="btn btn-block mt-1 btn-primary">
+                                            </form>
+                                            <table class="table table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Vehicle ID</th>
+                                                        <th> Vehicle No</th>
+                                                        <th>Vehicle Type</th>
+                                                        <th>Model Name</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for comp_v in company_vehicles %}
+                                                    <tr>
+                                                        <td>{{comp_v.id}}</ td>
+                                                        <td>{{comp_v.comp_vehicle_no}}</td>
+                                                        <td>{{comp_v.comp_vehicle_type.typename}}</td>
+                                                        <td>{{comp_v.model_name}}</td>
+                                                        <td>
+                                                                <button id="vehicle_types-submit" type="button" value="Actions" class="btn btn-sm btn-warning" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>
+                                                                <div class="dropdown-menu" aria-labelledby="vehicle_types-submit">
+                                                                       <div>
+                                                                            <form action="{{url_for('admin.admin_delete')}}" method="POST">
+                                                                                    <input type="hidden" name="comp_v_id" value="{{comp_v.id}}">
+                                                                                    <input class="dropdown-item" type="submit" value="Delete">
+                                                                                       
+                                                                            </form>
+                
+                                                                       </div>
+                                                                       <div>
+                                                                            <form action="" method="POST">
+                                                                                    <input type="hidden" value="{{comp_v.id}}">
+                                                                                    <input class="dropdown-item" type="submit" value="Update">       
+                                                                            </form>
+                                                                       </div>
+                                                                </div>
+                                                            </td>
+                                                    </tr>
+                                                    {% endfor %}    
+                                                </tbody>
+                                            </table>
+                    
+                                    </div>
+                                </div>
+            
+                    </div>
+            
+</div>  
+            </div>
+              
+{% endblock %}

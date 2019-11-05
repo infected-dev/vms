@@ -1,0 +1,131 @@
+{% extends 'test-dashboard.html' %}
+
+{% block title %}Search {% endblock %}
+
+{% block linktitle%} 
+    Results
+{% endblock %}
+
+{% block body %}
+    <div class="container text-center text-monospace">
+        <h5>Search Results For: </h5>
+        <p>{{text_search}}</p>
+        <p>{{date_search}}</p>
+        <p>{{time_search}}</p>
+    </div>
+
+<div class="container">
+    <!--Text Search ----------------------------->
+
+{%if text_search %}
+<div class="container">
+    {%if search_visitor%}
+        <h5>Visitors</h5>
+        <p>{{search_visitor.visitor_name}}, {{search_visitor.visitor_contact}}</p>
+        {%endif%}
+    
+        {%if search_vehicle%}
+        <h5>Outside Vehicles</h5>
+        <p>{{search_vehicle.VeNO}}</p> 
+        {% endif %}
+    
+        {%if search_mill %}
+        <h5>Company vehicle</h5>
+        <p>{{search_mill.comp_vehicle_no}}</p>
+        {% endif %}
+    
+    
+</div>
+{% endif %}
+
+<!--Date Search -------------------------------------->
+{% if date_search %}
+
+    {% if search_visitor %}
+    <h3>Visitors</h3>
+    
+        <table class="table table-sm col-6">
+            <thead>
+                <tr>
+                    <th>Visitor Name</th>
+                    <th>Contact No</th>
+                    <th>In Time</th>
+                    <th>Out Time</th>
+                    <th>Duration</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in search_visitor %}
+                    <tr>
+                        <td>{{i.visitor_name}}</td>
+                        <td>{{i.visitor_contact}}</td>
+                        <td>{{i.entry_time}}</td>
+                        <td>{{i.exit_time}}</td>
+                        <td>{{i.total_duration}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    
+    {%endif%}
+
+
+    {% if search_vehicle %}
+    <h3>Outside Vehicles</h3>
+    
+    <table class="table table-sm col-5">
+        <thead>
+            <tr>
+                <th>Vehicle No</th>
+                <th>In Time</th>
+                <th>Out Time</th>
+                <th>Duration</th>
+            </tr>
+        </thead>
+        <tbody>
+                {% for i in search_vehicle%}
+                <tr>
+                        <td>{{i.VeNO}}</td>
+                        <td>{{i.InTime}}</td>
+                        <td>{{i.OutTime}}</td>
+                        <td>{{i.TotalDuration}}</td>
+                </tr>
+                {% endfor %}
+        </tbody>
+    </table>
+        
+    
+    {%endif%}
+
+
+    {% if search_company %}
+    <h3>Company Vehicle </h3>
+    <table class="table table-sm col-5">
+        <thead>
+            <tr>
+                <th>Vehicle No</th>
+                <th>Out Time</th>
+                <th>In Time</th>
+                <th>Duration</th>
+            </tr>
+        </thead>
+        <tbody>
+                {% for i in search_company %}
+                <tr>
+                    <td>{{i.comp_timesheet.comp_vehicle_no}}</td>
+                    <td>{{i.OutTime}}</td>
+                    <td>{{i.InTime}}</td>
+                    <td>{{i.duration}}</td>
+                </tr>
+                {% endfor %}
+        </tbody>
+    </table>
+    
+    {% endif %}
+
+{% endif %}
+
+</div>
+
+
+{% endblock %}
