@@ -18,14 +18,24 @@ def dashboard():
     query_visitors_all = Visitor.query.count()
     ## Department Count Queries ##
     query_department_all = Department.query.all()
-    query_department_visitor = [(d.department_name, len(d.visitors)) for d in query_department_all]
-    ## Date Wise Count Queries ##
+    query_department_visitor = []
+    for i in query_department_all:
+        if len(i.visitors) > 0:
+            query_department_visitor.append([i.department_name, len(i.visitors)])
+
+    ## Date Wise Count Queries for charts ##
+
     legend = 'Total Visitors by Date'
     dates = [r.entry_date for r in db.session.query(Visitor.entry_date).distinct()]
     total_count = []
     for i in dates: 
         count = Visitor.query.filter_by(entry_date=i).count()
         total_count.append([i.strftime("%d/%m/%Y"), count])
+
+
+    ## departmentwise Count Queries for charts ##
+    
+    
 
     return render_template('test-dashboard-front.html',legend=legend, total_count=total_count, query_department_visitor=query_department_visitor, 
         query_visitors_all=query_visitors_all, query_visitors_today=query_visitors_today)

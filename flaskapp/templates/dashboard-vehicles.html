@@ -17,7 +17,7 @@ DashBoard for
 {% endblock %}
 
 {% block body %}
-<div id="vehicle_card">
+<div class="row" id="vehicle_card">
         <div class="col">
                 <div class="card">
                     <h5 class="card-header"> Vehicles Summary</h5>
@@ -37,10 +37,51 @@ DashBoard for
             <div class="card">
                 <h5 class="card-header">Date Wise Summary</h5>
                 <div class="card-body">
-
+                    <canvas id="outsidevehiclechart">
+                        
+                    </canvas>
                 </div>
             </div>
             
         </div>
 </div>
+<script src="{{url_for('static', filename='js/chart.min.js')}}"></script>
+<script type="text/javascript">
+var ctx = document.getElementById('linechartforvisitors').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels:[
+        {% for i in total_count %}
+                "{{i[0]}}",
+        {% endfor %}
+        ], 
+        datasets: [{
+            label: '{{legend}}',
+            data: [
+                {% for i in total_count %}
+                    {{i[1]}},
+                {% endfor %}
+            ],
+            
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+
+</script>
+
 {%endblock%}

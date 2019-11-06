@@ -36,9 +36,19 @@ Summary Dashboard
             </div>
         </div> 
     </div>
+
     <div class="row">
         <div class="col">
-            
+
+        </div>
+        <div class="col mr-4 mt-1">
+            <div class="card">
+                <h5 class="card-header">Department Wise Summary </h5>
+                <div class="card-body">
+                    <canvas id="barchartfordept">
+
+                    </canvas>               
+            </div>
         </div>
     </div>
 
@@ -47,6 +57,7 @@ Summary Dashboard
 {% endblock %}
 
 {% block script %}
+
 <script src="{{url_for('static', filename='js/chart.min.js')}}"></script>
 <script type="text/javascript">
 var ctx = document.getElementById('linechartforvisitors').getContext('2d');
@@ -86,4 +97,42 @@ var myChart = new Chart(ctx, {
 
 </script>
 
+<script type="text/javascript">
+    
+var deptctx = document.getElementById('barchartfordept').getContext('2d');
+var myChart = new Chart(deptctx, {
+    type: 'bar',
+    data: {
+        labels:[
+        {% for i in query_department_visitor %}
+                "{{i[0]}}",
+        {% endfor %}
+        ], 
+        datasets: [{
+            label: 'Visitors by Departments',
+            data: [
+                {% for i in query_department_visitor %}
+                    {{i[1]}},
+                {% endfor %}
+            ],
+            
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+
+</script>
 {%  endblock %}
