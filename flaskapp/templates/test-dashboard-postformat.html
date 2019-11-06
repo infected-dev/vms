@@ -142,8 +142,14 @@ Visitor Data
                                         value="{{visitor.exit_time}}" id="exittime{{visitor.id}}" name="exittime">
                                 </td>
                                 <td><button attributes="{{visitor.id}}" type="submit" id="button"
-                                        class="update btn btn-warning btn-sm">Update</button></button></td>
-
+                                        class="update btn btn-warning btn-sm">Update</button></td>
+                                <td><form action="{{url_for('report.printslip')}}" method="POST">
+                                        <input id="vi_id{{visitor.id}}" name="vi_id" type="hidden" value="{{visitor.id}}">
+                                        <button attributes="{{visitor.id}}" type="submit" id="button"
+                                        class="btn btn-info btn-sm">Print</button>
+                                </form>
+                                   
+                                        </td>
 
 
 

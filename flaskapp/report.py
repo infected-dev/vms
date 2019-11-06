@@ -104,7 +104,11 @@ def report_print():
             query = CompanyTimesheet.query.filter_by(date=date).all()
             count = len(query)
             return render_template('report-vehicles-print.html', query=query, title=title,count=count, date=date)
-    
-        
 
-        
+
+@report.route('/print-slip', methods=['POST'])
+def printslip():
+    if request.form:
+        get_id = int(request.form.get('vi_id'))
+        visitor = Visitor.query.filter_by(id=get_id).first()
+        return render_template('printformat.html', visitor=visitor)        

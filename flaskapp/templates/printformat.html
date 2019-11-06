@@ -2,76 +2,117 @@
 
 <head>
     <style>
-        body {
-            margin-top: 2%;
-            margin-left: 2%;
-            margin-right: 10%;
+        @media print{
+            body {
+                margin: 0 auto;
+            }
         }
+        
+        
 
-        .main-border {
-            width: 20cm;
-            height: 14cm;
-            border: 2px solid black;
 
-        }
-
-        .position {
-            position: relative;
-            left: 75%;
-            width: 4cm;
-        }
-
-        #company-name {
-            text-align: center;
-        }
-
-        #company-name p {
-            margin-top: 0;
-        }
-
-        #company-name h2 {
-            margin-bottom: 1%;
-        }
-
-        .slip-title {
-            text-align: center;
-            text-decoration: underline;
-        }
-
-        .slip-items {
-            float: left;
-            margin: 1%;
-        }
-
-        #outime-item {
-            margin: 10%;
-        }
     </style>
+     <link href="{{url_for('static', filename='css/bootstrap.min.css')}}" rel="stylesheet">
 </head>
 
-<body>
-    <div class="main-border">
-        <div id="company-name">
-            <h2>Siddhi Vinayak Knots & Prints Pvt. Ltd</h2>
-            <p>A-26 To A-32, "Central Park", G.I.D.C, Pandesara, Surat-394221</p>
-        </div>
-        <div class="slip-title">
-            <h3>VISITOR'S SLIP</h3>
-        </div>
-        <div class="position">
-            <p>Date:<span>{{}}</span></p>
-        </div>
-        <div class="slip-items">
-            <p class="label-item">Visitor Slip No:<span class="value-item">{{}}</span></p>
-            <p class="label-item">Visitor Name:<span class="value-item">{{}}</span></p>
-            <p class="label-item">Official to Meet:<span>{{}}</span></p>
-            <p class="label-item">Purpose of Visit:<span>{{}}</span></p>
-            <p class="label-item">In Time: <span>{{}}</span> </p>
-            <p class="label-item">Out Time:<span>{{}}</span></p>
-            <hr style="width: 15cm;">
-            <p class="label-item">Authorized Signature:</p>
-        </div>
+<body class="container">
+    <div class="m-4 p-2 border border-dark">
+            <div class="main-border w-auto">
+                    <div class="mt-3" id="company-name">
+                        <h2 style="font-family: Arial, Helvetica, sans-serif;" class=" text-center font-weight-bold mt-1">Siddhi Vinayak Knots & Prints Pvt. Ltd</h4>
+                        <p  class="text-center text-secondary">A-26 To A-32, "Central Park", G.I.D.C, Pandesara, Surat-394221</p>
+                    </div>
+                    <div class="slip-title">
+                        <h5 class="mt-0 text-center"><span class="border-bottom border-dark">VISITOR'S SLIP</span></h5>
+                    </div>
+                    
+
+                    <div style="font-size: 1.2em;" class="slip ml-n3 mr-5">
+
+
+                        <div class="row p-1 m-1 mb-3">
+                                    <div class="col-3 mr-n5">
+                                            <p class="mb-0"> Visitor Slip No: </p>
+                                    </div>
+                                    <div class="col border-bottom ">
+            
+                                    </div>
+                                    <div class="col-3 mr-n3 text-right">
+                                            <p class="mb-0 "> Date: </p>
+                                    </div>
+                                           
+                                    <div class="col-3 border-bottom  text-right">
+                                            <span class=" font-weight-bold">{{visitor.entry_date.strftime('%d/%m/%Y')}}</span>
+                                    </div>
+                                    
+                                </div>
+                        <div class="row p-1 m-1">
+                            <div class="col-3 mr-n5 ">
+                                    <p class="">Visitor's Name:</p>
+                            </div>
+                            <div class="col p-0 mb-3  border-bottom">
+                                    <span class=" font-weight-normal">{{visitor.visitor_name.title()}} - {{visitor.visitor_contact}}</span>
+                            </div>
+                        </div>
+
+                        
+                        <div class="row p-1 m-1">
+                                <div class="col-3 mr-n5 ">
+                                        <p class="">Meeting with:</p>
+                                </div>
+                                <div class="col mb-3 p-0 text-left   border-bottom">
+                                        <span class=" font-weight-normal">{{visitor.visited_employee.employee_name.title()}}</span>
+                                </div>
+                            </div>
+                        
+
+                        <div class="row p-1 m-1">
+                                    <div class="col-3 mr-n5 ">
+                                            <p class="">Department:</p>
+                                    </div>
+                                    <div class="col mb-3 p-0 text-left   border-bottom">
+                                            <span class=" font-weight-normal">{{visitor.visited_dept.department_name.title()}}</span>
+                                    </div>
+                                </div>
+                
+
+                        <div class="row p-1 m-1">
+                                        <div class="col-3 mr-n5 ">
+                                                <p class="">Purpose of Visit:</p>
+                                        </div>
+                                        <div class="col mb-3 p-0 text-left   border-bottom">
+                                                <span class=" ml-2  font-weight-normal">{{visitor.visiting_purpose.title()}}</span>
+                                        </div>
+                                    </div>        
+                        
+
+                        <div class="row p-1 m-1">
+                                            <div class=" mr-n5 col-2 ">
+                                                    <p class="">In Time :  </p>
+                                            </div>
+                                            <div class="col mb-3 p-0 text-center  border-bottom ">
+                                                    <span class=" ml-2  font-weight-normal">{{visitor.entry_time}}</span>
+                                            </div>
+                                            <div class="col-2 mr-n5 text-left">
+                                                    <p class="">Out Time :</p>
+                                            </div>
+                                            <div class="col mb-3 p-0 text-center  border-bottom">
+                                                    <span class=" ml-2  font-weight-normal"></span>
+                                            </div>
+                                        </div>  
+
+                        <div class="row p-1 m-1 mt-3">
+                            <div class="col-4 mr-n5 text-left">
+                                    <p style="margin-top: px;" class="">Authorized Signature:</p>
+                            </div>
+                            <div  class=" col  border-bottom mb-3">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
     </div>
+    
 </body>
 
 </htmL>
