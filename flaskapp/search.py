@@ -25,8 +25,14 @@ def search_main():
             else:
                 search_visitor = Visitor.query.filter((Visitor.visitor_name == text_search) | (Visitor.visitor_contact == text_search)).all()
                 search_vehicle = Vehicle.query.filter_by(VeNO=text_search).first()
-                search_mill = CompanyVehicle.query.filter_by(comp_vehicle_no=text_search.upper()).first()
-                count = len(search_visitor)
+                search_mill = CompanyVehicle.query.filter_by(comp_vehicle_no=text_search.upper()).all()
+                count = 0
+                if search_visitor:
+                    count = len(search_visitor)
+                elif search_vehicle:
+                    count = len(search_vehicle)
+                elif search_mill:
+                    count = len(search_mill)
                 
                 return render_template('search-results.html', count=count,text_search=text_search, search_visitor=search_visitor, search_vehicle=search_vehicle, search_mill=search_mill)  
     return render_template('search-results.html', text_search=text_search)

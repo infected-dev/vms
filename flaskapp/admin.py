@@ -8,7 +8,6 @@ admin = Blueprint('admin', __name__)
 
 
 @admin.route('/admin')
-
 def admin_main():
     vehicle_types = VehicleTypes.query.all()
     departments = Department.query.all()
@@ -67,6 +66,7 @@ def admin_delete():
         flash('Company vehicle Deleted ')
         return redirect(url_for('admin.admin_main'))
 
+
 @admin.route('/admin/post/employee', methods=['POST'])
 def admin_employee():
     if request.form:
@@ -99,7 +99,8 @@ def admin_vehicletype():
         else:
             flash('VehicleType already Exists')
         return redirect(url_for('admin.admin_main'))
-    
+
+
 @admin.route('/admin/post/compnayvehicles', methods=['POST'])
 def admin_company_vehicles():
     if request.form:
@@ -108,6 +109,7 @@ def admin_company_vehicles():
         db.session.commit()
         flash('Company Vehicle Added')
         return redirect(url_for('admin.admin_main'))
+
 
 @admin.route('/admin/post/user', methods=['POST'])
 def admin_user():

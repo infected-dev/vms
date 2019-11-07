@@ -1,10 +1,12 @@
+from datetime import datetime
 from flask import Blueprint, render_template, redirect, url_for, request, flash, jsonify
 from .cust_functions import convert, minutes, timeobj
-from datetime import datetime
 from .models import Vehicle, Visitor, Employee, VehicleTypes, CompanyVehicle, CompanyTimesheet
 from . import db
 
+
 dataentry = Blueprint('dataentry', __name__)
+
 
 @dataentry.route('/vehicles/mill', methods=['POST'])
 def mill_vehicles():
@@ -20,7 +22,8 @@ def mill_vehicles():
         db.session.commit()
         flash('Compnay Vehicle Time Noted')
         return redirect(url_for('dataentry.post_vehicles'))
-    
+
+
 @dataentry.route('/vehicles/mill/update', methods=['POST'])
 def mill_vehicles_update():
     if request.form:
@@ -38,6 +41,7 @@ def mill_vehicles_update():
                 compnay_vehicle.duration = diff
                 db.session.commit()
         return redirect(url_for('dataentry.post_vehicles'))
+
 
 @dataentry.route('/vehicles', methods=['POST'])
 def vehicles_post():
@@ -106,10 +110,6 @@ def delete_vehicles():
     return redirect(url_for('dataentry.vehicles'))
 
 
-
-
-
-
 @dataentry.route('/test-database-postformat')
 def post_format():
     today_date = datetime.now().date()
@@ -161,7 +161,6 @@ def visitors_update():
             request.form['exittime'], '%H:%M').time()
         visitor.exit_time = exittime
         db.session.commit()
-        
         if (duration == None or 'none'):
             intime = visitor.entry_time
             outtime = visitor.exit_time

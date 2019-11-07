@@ -35,8 +35,20 @@
         {% endif %}
     
         {%if search_mill %}
-        <h5>Company vehicle</h5>
-        <p>{{search_mill.comp_vehicle_no}}</p>
+        <div class="card">
+            <h4 class="card-header">Company Vehicles</h4>
+        <div class="card-body">
+
+        
+        {% for mill in search_mill%}
+          <a  class="card-title lead font-weight-normal" href="/test-dashboard-report/vehicles/?comp_vehicle={{mill.id}}">{{mill.comp_vehicle_no}}</a>
+          <div class="">
+              <p class="mb-0"> Model Name : {{mill.model_name}}</p>
+              <p> Vehicle Type : {{mill.comp_vehicle_type.typename}}</p>
+          </div> 
+        {% endfor %}
+    </div>    
+    </div>
         {% endif %}
     
     
