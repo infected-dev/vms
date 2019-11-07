@@ -1,0 +1,148 @@
+{% extends 'test-dashboard.html' %}
+
+<!-- CSS Style Block -->
+{%block styles%}
+<style>
+    table tbody {
+        font-size: 1rem;
+    }
+
+    .form-group{
+        margin-right: 5px;
+        box-shadow: brown;
+        
+    }
+    #visitorform {
+        margin-left: 5px;
+    }
+    label{
+        font-weight: 500;
+    }
+
+    .table td.fit, 
+    .table th.fit {
+    white-space: nowrap;
+    width: 1%;
+}
+</style>
+{%endblock%}
+<!-- End of CSS Block-->
+
+
+<!--Page Title Block-->
+{% block pagetitle %}
+Mill Vehicle Data Entry
+{% endblock %}
+<!-- End of Page Title BLock-->
+
+
+<!--Title Block-->
+{% block title %}
+Mill Vehicle Data Entry
+{% endblock %}
+<!--End of Title Block-->
+
+{% block linktitle %}
+
+{% endblock %}
+
+{% block body %}
+<div  class="container-fulid">
+<!-- Start of Vehicle Data Entry Form   -->
+
+  <div class="row">
+        
+                <div class="col-4">  
+                    <div class="card">
+                        <!--Company Vehicle Form-->
+                        <h5 class="card-header">
+                            Company Vehicle Data Entry
+                        </h5>
+                        <div class="card-body">
+                                <form action="/vehicles/mill" method="POST" class="mb-2">
+                                
+                                    <!--Company Vehicle Entry Date Input :-->
+                                        <div class="form-group form-row">
+                                            <label class="col-form-label" for="date">Date:</label>
+                                            <div class="col-9">
+                                                    <input type="date" class="form-control" id="date" name="entry_date"
+                                                    value="{{today_date}}">
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="form-group form-row mt-n2">
+                                                <label class="col-form-label">Out Time:</label>
+                                                <div class="col-5">
+                                                        <input name="outime" class="form-control" type="time"
+                                                        value="{{today_time}}">
+                                                </div>
+                                                
+                                        </div>
+                                    <div class="form-row form-group">
+                                            
+                                                <!-- Company Vehicle Select Input-->
+                                                    <label class="col-form-label" for="name">Company Vehicles:</label>
+                                                    <div class="col">
+                                                            <select class="form-control" name="comp_id">
+                                                                    {% for v in comp_vehicles %}
+                                                                    
+                                                                    <option class="form-control" value="{{v.id}}">
+                                                                        {{v.comp_vehicle_no}} </option>
+                                                                    {% endfor %}
+                                                            </select>
+                                                    </div>                                                
+                                            </div>
+                                        <!-- Company vehicle Out Time Input-->
+                                        
+                                    <div class="form-group">
+                                            <input class="btn btn-block btn-primary" type="submit">
+                                    </div>
+                                </form>
+                        </div>
+                    </div>
+            </div>
+            <div class="col">
+                <div class="card table-responsive">
+                                    <h5 class="card-header">Update Mill Vehicles</h5>
+                                    <div class="card-body">
+                                            <table class="mb-0   table table-borderless table-sm table-hover">
+                                                    <thead>
+                                                        <th>Vehicle No</th>
+                                                        <th>Out Time</th>
+                                                        <th>In Time</th>
+                                                        <th>Actions</th>
+                                                    </thead>
+                                                    <tbody>
+                                                            {% for v in comp_vehicles_today %}
+                                                            <tr>
+                                                                
+                                                                <td><strong>{{v.comp_timesheet.comp_vehicle_no}}</strong><span>
+                                                                        ({{v.comp_timesheet.model_name}})</span></td>
+                                                                
+                                                                <td>{{v.OutTime}}</td>
+                                                                <form action="/vehicles/mill/update" method="POST">
+                                                                    <input type="hidden" value="{{v.id}}" name="vid">
+                                                                    <td><input value="{{v.InTime}}" class="form-control col-7 form-control-sm" type="time"
+                                                                            name="intime"></td>
+                                                                    <td><input type="submit" class="btn btn-sm  btn-warning" value="UPDATE"
+                                                                            </td> 
+                                                                        </form> 
+                                                                    </tr> 
+                                                                    {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                    </div>
+                    </div>            
+            </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+
+</script>
+{% endblock %}

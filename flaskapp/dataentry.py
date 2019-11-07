@@ -21,7 +21,7 @@ def mill_vehicles():
         db.session.add(comp_vehicle_time)
         db.session.commit()
         flash('Compnay Vehicle Time Noted')
-        return redirect(url_for('dataentry.post_vehicles'))
+        return redirect(url_for('dataentry.post_mill'))
 
 
 @dataentry.route('/vehicles/mill/update', methods=['POST'])
@@ -40,7 +40,7 @@ def mill_vehicles_update():
                 diff = timeobj(outtime, intime)
                 compnay_vehicle.duration = diff
                 db.session.commit()
-        return redirect(url_for('dataentry.post_vehicles'))
+        return redirect(url_for('dataentry.post_mill '))
 
 
 @dataentry.route('/vehicles', methods=['POST'])
@@ -69,34 +69,19 @@ def update_vehicle():
     if request.form:
         vid = request.form.get('vid')
         vehicle = Vehicle.query.filter_by(VeID=vid).first()
-        vendor = vehicle.VendorName
         duration = vehicle.TotalDuration
-        if (vendor != 'MILL'):
-            outtime = datetime.strptime(
+        outtime = datetime.strptime(
                 request.form.get('outtime'), '%H:%M').time()
-            vehicle.OutTime = outtime
-            db.session.commit()
-            if duration == None or 'none':
+        vehicle.OutTime = outtime
+        db.session.commit()
+        if duration == None or 'none':
                 intime = vehicle.InTime
                 outtime = vehicle.OutTime
                 diff = timeobj(intime, outtime)
                 vehicle.TotalDuration = diff
                 db.session.commit()
                 flash('Out Time Updated')
-            return redirect(url_for('dataentry.post_vehicles'))
-        else:
-            intime = datetime.strptime(
-                request.form.get('intime'), '%H:%M').time()
-            vehicle.InTime = intime
-            flash('In Time Updated')
-            db.session.commit()
-            if duration == None or 'none':
-                intime = vehicle.InTime
-                outtime = vehicle.OutTime
-                diff = timeobj(outtime, intime)
-                vehicle.TotalDuration = diff
-                db.session.commit()
-
+        return redirect(url_for('dataentry.post_vehicles'))
     return redirect(url_for('dataentry.post_format'))
 
 
@@ -129,9 +114,15 @@ def post_vehicles():
     today_time = (datetime.now().time()).strftime("%H:%M")
     today_vehicles = Vehicle.query.filter_by(VeEntryDate=today_date).all()
     types = VehicleTypes.query.all()
+    return render_template('test-dashboard-vehicles.html',today_vehicles=today_vehicles,today_date=today_date,today_time=today_time, types=types)
+
+@dataentry.route('/test-dashboard-vehicles/mill')
+def post_mill():
+    today_date = datetime.now().date()
+    today_time = (datetime.now().time()).strftime("%H:%M")
     comp_vehicles = CompanyVehicle.query.all()
     comp_vehicles_today = CompanyTimesheet.query.filter_by(date=today_date).all()
-    return render_template('test-dashboard-vehicles.html',today_vehicles=today_vehicles,today_date=today_date,today_time=today_time, types=types, comp_vehicles=comp_vehicles, comp_vehicles_today=comp_vehicles_today)
+    return render_template('test-dashboard-mill.html', today_date=today_date, today_time=today_time, comp_vehicles=comp_vehicles, comp_vehicles_today=comp_vehicles_today)
 
 
 @dataentry.route('/test-postformat/visitor', methods=['POST'])
