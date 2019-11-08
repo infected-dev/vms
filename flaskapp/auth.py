@@ -13,11 +13,11 @@ def login_main():
     user = User.query.filter_by(id=user_get).first()
 
     if user.password == user_pwd_get:
-        login_user(user)
+        login_user(user, remember=True)
         flash('Successfully logged in')
         return redirect(url_for('dataentry.post_format'))
-    else:
-        flash('wrong password')
+    else: 
+        flash('wrong password or Username')
         return redirect(url_for('base.index'))
 
 

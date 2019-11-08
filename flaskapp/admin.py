@@ -8,6 +8,7 @@ admin = Blueprint('admin', __name__)
 
 
 @admin.route('/admin')
+@login_required
 def admin_main():
     vehicle_types = VehicleTypes.query.all()
     departments = Department.query.all()
@@ -30,7 +31,7 @@ def admin_dept():
             db.session.commit()
             flash('Department Added')
             return redirect(url_for('admin.admin_main'))
-        else:
+        else:   
             flash('Department Already Exists')
             return redirect(url_for('admin.admin_main'))
 

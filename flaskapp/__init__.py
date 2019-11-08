@@ -22,6 +22,7 @@ db.init_app(app)
 
 login_manager.init_app(app)
 login_manager.login_view = 'auth.login_main'
+login_manager.login_message = "Please Sign in Before Accessing this page"
 
 
 from .models import User
