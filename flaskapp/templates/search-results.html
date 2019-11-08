@@ -41,7 +41,7 @@
 
         
         {% for mill in search_mill%}
-          <a  class="card-title lead font-weight-normal" href="/test-dashboard-report/vehicles/?comp_vehicle={{mill.id}}">{{mill.comp_vehicle_no}}</a>
+          <a  class="card-title lead font-weight-normal" href="/test-dashboard-report/mill/?comp_vehicle={{mill.id}}">{{mill.comp_vehicle_no}}</a>
           <div class="">
               <p class="mb-0"> Model Name : {{mill.model_name}}</p>
               <p> Vehicle Type : {{mill.comp_vehicle_type.typename}}</p>
