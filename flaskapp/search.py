@@ -7,7 +7,6 @@ search = Blueprint('search', __name__)
 
 @search.route('/search')
 def search_main():
-
     if request.args:
        text_search = request.args['text-search'].upper()
        
@@ -36,6 +35,7 @@ def search_main():
                 
                 return render_template('search-results.html', count=count,text_search=text_search, search_visitor=search_visitor, search_vehicle=search_vehicle, search_mill=search_mill)  
     return render_template('search-results.html', text_search=text_search)
+
 
 @search.route('/clear')
 def search_clear():

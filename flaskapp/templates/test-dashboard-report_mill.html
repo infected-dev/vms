@@ -1,0 +1,174 @@
+{% extends 'test-dashboard.html' %}
+
+{% block pagetitle %}
+    Vehicles Report
+{% endblock %}
+
+{% block title %}Report {% endblock %}
+{% block linktitle %} Vehicles {% endblock %}
+
+
+{% block body %}
+
+<div class="row">
+        <div class="col-2">
+                <div class="card">
+                    <h5 class="card-header text-center">Print</h5>
+                        <div class="btn-group-vertical p-2">
+                            <button type="button" data-toggle="modal" data-target="#datewisemodal"  class="btn btn-secondary mb-2"> Date Wise Report</button>
+                            <button href="#" class="btn btn-secondary "> Department Wise Report</button>
+                        </div>
+                    </div>
+        </div>
+    
+        <div class="modal fade" id="datewisemodal" tabindex="-1" role="dialog" aria-labelledby="datewisemodallabel" aria-hidden="true">
+            <div class="modal-dialog" role="form">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"> Date Wise Report </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                            <form class="form-row" action="{{url_for('report.report_print')}}" method="POST">
+                            <input type="hidden" name="printid" value="3">
+                            <label class=" mb-2 h6 col-form-label" for="#date">Select Date : </label>
+                            <input id="date" type="date" class="form-control" name="date" autofocus>
+                            <input type="submit"  class="mt-2 btn btn-primary btn-block btn-sm" value="Print">
+                              
+                        </form>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="all-millvehiclescard" class="col">
+                    <div  class="card">
+                            <div class="card-header text-center">
+                                <h5 class="text-black">Siddhi Vinayak Knots & Prints Pvt. Ltd.</h5>
+                                <p class="text-muted">A-26 To A-32, "Central Park", G.I.D.C Pandesra, SURAT-394221.
+                                </p>
+                                <h6 class="text-black">MILL VEHICLE REPORT</h6>
+                            </div>
+    
+                            <div class="card-body">
+                                <table data-paging="true" id='all-millvehiclereport'
+                                    class=" table table-sm table-bordered table-striped " style="width: 100%">
+                                    <thead class="">
+                                        <tr>
+                                            
+                                            <th>Entry date</th>
+                                            <th>Vehicle NO</th>
+                                            <th>Vehicle Type</th>
+                                            <th>Out Time</th>
+                                            <th>In Time</th>
+                                            <th>Total Duration</th>
+        
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for v in query_vehicles_mill %}
+                                        <tr>
+                                            
+                                            <td>{{v.date.strftime('%d-%m-%Y')    }}</td>
+                                            <td>{{v.comp_timesheet.comp_vehicle_no}}</td>
+                                            <td>{{v.comp_timesheet.comp_vehicle_type.typename}}</td>
+                                            <td>{{v.OutTime}} </td>
+                                            <td> {{v.InTime}} </td>
+                                            <td> {{v.duration}}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            
+                                            <th>Entry date</th>
+                                            <th>Vehicle NO</th>
+                                            <th>Vehicle Type</th>
+                                            <th>Out Time</th>
+                                            <th>In Time</th> 
+                                            <th>Total Duration</th>
+        
+                                        </tr>
+                                    </tfoot>
+                                </table>
+        
+                            </div>
+                    </div>
+            </div>
+    </div>
+      
+    <div class="row">
+        <div class="col-2">
+
+        </div>
+
+        <div id="vehiclewise-millvehiclescard" class="col">
+                    <div class="card">
+                        <div class="card-header text-center">
+                                <h5 class="text-black">Siddhi Vinayak Knots & Prints Pvt. Ltd.</h5>
+                                <p class="text-muted">A-26 To A-32, "Central Park", G.I.D.C Pandesra, SURAT-394221.
+                                </p>
+                                <h6 class="text-black"><form action="{{url_for('report.mill_report')}}">
+                                        <select name="comp_vehicle">
+                                                {% for v in query_comp_vehicles %} 
+                                                    <option value="{{v.id}}">{{v.comp_vehicle_no}}, {{v.model_name}}</option>
+                                                {%endfor%}
+                                        </select>
+                                        <input type="submit">
+                                </form</h6>
+                        </div>
+                        <div class="card-body">
+                                <table
+                                class=" table table-sm table-bordered table-striped " style="width: 100%; font-size: 1.2rem;">
+                                <thead class="">
+                                    <tr>
+                                        <th>Entry date</th>
+                                        <th>Out Time</th>
+                                        <th>In Time</th>
+                                        <th>Total Duration</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for v in timesheet %}
+                                    <tr>
+                                        <td>{{v.date.strftime('%d-%m-%Y') }}</td>
+                                        <td>{{v.OutTime}} </td>
+                                        <td> {{v.InTime}} </td>
+                                        <td> {{v.duration}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Entry date</th>
+                                        <th>Out Time</th>
+                                        <th>In Time</th> 
+                                        <th>Total Duration</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+    </div>
+       
+
+
+    
+<!-----------------------------------Mill Vehicle Wise report--------------------------------------------------------->        
+       
+    
+
+
+   
+{% endblock %}
+
+
+{% block script %}
+<script>
+    $('.modal').on('shown.bs.modal', function() {
+  $(this).find('[autofocus]').focus();
+});
+</script>
+{% endblock %}

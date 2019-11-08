@@ -167,7 +167,10 @@
                                 <span style="font-size: 1rem;" data-feather="file-text">Vehicles</span>
                                 
                             </a>
-    
+                            <ul>
+                                <li class="nav-item"><a class="nav-link" href="{{url_for('report.report_vehicles')}}">Outside Vehicles</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{url_for('report.mill_report')}}">Mill Vehicles</a></li>
+                            </ul>
                         </li>
                     </ul>
                     <h3 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
@@ -194,7 +197,7 @@
             </nav>
             <!-- End OF Side Bar-->
             <!-- Start of Main -->
-    <main style="margin-top: 59px;" role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <main style="margin-top: 59px;" role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
                     {% with messages = get_flashed_messages() %}
                     {% if messages %}
                         {% for message in messages %}  
@@ -219,7 +222,7 @@
                 {% block body %} 
                 
                 {% endblock %}
-    </main>
+            </main>
             <!-- End of Main -->
         </div>
     </div>
@@ -330,6 +333,7 @@
 {% block script  %}
 
 {% endblock %}
+
 </body>
 
 </html>

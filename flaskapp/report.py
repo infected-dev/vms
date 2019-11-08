@@ -70,27 +70,24 @@ def report_main():
 
 @report.route('/test-dashboard-report/vehicles/')
 def report_vehicles():
+    query_vehicles_outside = Vehicle.query.all()
+    return render_template('test-dashbaord-report_vehicle.html',query_vehicles_outside=query_vehicles_outside 
+       )
 
+@report.route('/test-dashboard-report/mill/')
+def mill_report():
     if request.args:
-        query_vehicles_mill = CompanyTimesheet.query.all()
-        query_vehicles_outside = Vehicle.query.all()
+        query_vehicles_mill = CompanyTimesheet.query.all()  
         query_comp_vehicles = CompanyVehicle.query.all()    
         comp_veh_id = request.args['comp_vehicle']
         comp_vehicle = CompanyVehicle.query.get(comp_veh_id)
-        timesheet= comp_vehicle.timesheet
-        return render_template('test-dashbaord-report_vehicle.html',timesheet=timesheet,query_comp_vehicles=query_comp_vehicles,
+        timesheet= comp_vehicle.timesheet   
+        return render_template('test-dashboard-report_mill.html',timesheet=timesheet,query_comp_vehicles=query_comp_vehicles,
         query_vehicles_mill=query_vehicles_mill,
-        query_vehicles_outside=query_vehicles_outside 
        )
-       
     query_vehicles_mill = CompanyTimesheet.query.all()
-    query_vehicles_outside = Vehicle.query.all()
     query_comp_vehicles = CompanyVehicle.query.all()
-
-    return render_template('test-dashbaord-report_vehicle.html',query_comp_vehicles=query_comp_vehicles,
-        query_vehicles_mill=query_vehicles_mill,
-        query_vehicles_outside=query_vehicles_outside 
-       )
+    return render_template('test-dashboard-report_mill.html', query_comp_vehicles=query_comp_vehicles, query_vehicles_mill=query_vehicles_mill)
 
 @report.route('/print-report', methods=['POST'])
 def report_print():
