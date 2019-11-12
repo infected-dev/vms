@@ -17,7 +17,13 @@ Admin Panel
         btn-custom {
             margin-top: 10px;
         }
-      
+      label{
+          font-size: medium;
+          font-weight: 500;
+      }
+      h3{
+          font-style: italic;
+      }
     </style>
 {% endblock %}
 
@@ -29,7 +35,7 @@ Admin Panel
                       <button type="button" class="btn btn-warning" data-toggle="collapse" data-target="#usercard"> Users </button>
                       <button type="button" class="btn btn-warning"  data-toggle="collapse" data-target="#departmentcard">Departments </button>
                       <button type="button" class="btn btn-warning"  data-toggle="collapse" data-target="#employeecard">Employee</button>
-                      <button type="button" class="btn btn-warning"  data-toggle="collapse" data-target="#companyvehiclecard ">Compnay Vehicles</button>
+                      <button type="button" class="btn btn-warning"  data-toggle="collapse" data-target="#companyvehiclecard ">Company Vehicles</button>
                       <button type="button" class="btn btn-warning"  data-toggle="collapse" data-target="#vehicletypecard">Vehicles Types</button>
                     </div>
                 </div>
@@ -40,9 +46,9 @@ Admin Panel
                     <div id="usercard"  class=" collapse col" data-parent="#adminpanel">
                             <div class="card">
                                 <div class="card-body">
-                                        <form method="POST" action="/admin/post/user">
+                                        <form class="mb-1" method="POST" action="/admin/post/user">
                                             <h3>Add New User</h3>
-                                            <label for="employeename">UserName:</label>
+                                            <label for="employeename">User Name:</label>
                                             <input type="text" class="form-control" name="username" required>
                                             <input type="submit" class="btn mt-1 btn-block btn-primary">
                                            
@@ -77,7 +83,7 @@ Admin Panel
                     <div id="departmentcard" class="collapse col" data-parent="#adminpanel">
                             <div class="card">
                                 <div class="card-body">
-                                        <form method="POST" action="/admin/post">
+                                        <form class="mb-2" method="POST" action="/admin/post">
                                             <h3>Add Company Departments</h3>
                                             <label for="deptname">Department Name:</label>
                                             <input  type="text" class="form-control" name="deptname" style="text-transform:uppercase;" placeholder=" Department Name"required>
@@ -131,7 +137,7 @@ Admin Panel
                     <div id="employeecard" class="collapse col" data-parent="#adminpanel">
                             <div class="card">
                                 <div class="card-body">
-                                        <form method="POST" action="/admin/post/employee">
+                                        <form class="mb-2" method="POST" action="/admin/post/employee">
                                             <h3>Add Company Employee Details</h3>
                                             <div class="row">
                                                     <div class="col">
@@ -197,7 +203,7 @@ Admin Panel
                      <div id="vehicletypecard" class="collapse col" data-parent="#adminpanel">
                             <div class="card">
                                 <div class="card-body">
-                                        <form method="POST" action="/admin/post/vehicletype">
+                                        <form class="mb-2" method="POST" action="/admin/post/vehicletype">
                                             <h3>Add Vehicle Types</h3>
                                             <label for="vehicletype">VehicleType:</label>
                                             <input style="text-transform:uppercase;" placeholder="Vehicle type" type="text" class="form-control" name="vehicletype" required>
@@ -248,7 +254,7 @@ Admin Panel
                             <div class="card">
                                     <div class="card-body">
                                             <form method="POST" action="/admin/post/compnayvehicles">
-                                                <h3>Add Compnay Vehicles </h3>
+                                                <h3>Add Company Vehicles </h3>
                                                 <div class="form-row">
                                                     <div class="col">
                                                             <label for="vehicleno">Vehicle No:</label>

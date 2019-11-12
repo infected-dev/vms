@@ -24,7 +24,9 @@
     <link rel="stylesheet" media="print" href="{{url_for('static', filename='css/print-format.css')}}">
     
    
-   {% block stylesheets %} {% endblock %} 
+   {% block stylesheets %} 
+   
+   {% endblock %} 
 
 
     <style>
@@ -68,7 +70,18 @@
         #navbarSearchForm {
             width: 70vw;
         }
+        #sidenav-styles{
+            background-color:#1b1b19 ;
+            
+        }
+        #sidenav-styles ul >li>a>span {
+            color: wheat;
+        }
         
+       .sidebar-heading span  {
+            color: whitesmoke;
+        }
+
     </style>
 
 
@@ -80,7 +93,7 @@
 <body>
 
     <nav style="height: 60px;" class="fixed-top text-dark navbar navbar-dark bg-light flex-md-nowrap border-bottom ">
-        <p style="font-weight: 400;" class=" lead h5">Visitor Management System</p>
+        <p  style="font-weight: 400;" class="p-3 lead h5">Visitor Management System</p>
         <form id="navbarSearchForm" class="navbar-form form-row  justify-content-center" role="search" action="{{url_for('search.search_main')}}">
             <div class="col-md-5 col-sm-4">
                 <div class="shadow input-group">
@@ -90,7 +103,7 @@
                 </div>
                     
             </div>
-            <div class="col-md-2 col-sm-1">
+            <div class=" shadow">
                     <input type="submit" class="btn btn-warning " value="Search">
             </div> 
         </form>
@@ -105,99 +118,97 @@
         </ul>
     </nav>
     
-
-    <div class="container-fulid">
-        <div class="row">
-            <!-- Side Bar Starting -->
-            <nav style="margin-top: 59px;" id="sidenav-main" class="collapse col-md-2 d-none d-md-block bg-light sidebar border-top ">
-                <div style="background-color: #f5f7fa" class="sidebar-sticky">
-                        <h3 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-1 mb-1 text-muted">
-                                <span style="font-size: 1.25rem;"> Manage</span>
-                                <a class="d-flex align-items-center text-muted" href    ="#">
-                            
-                                </a>
-                            </h3>
-                            <ul id="mainsidebar-report" class="nav flex-column mb-2 border-bottom">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{url_for('admin.admin_main')}}">
-                                        <span style="font-size: 1rem;" data-feather="file-text">Admin </span>
-        
-                                    </a>
-                                </li>
-                            </ul>
-
-                        <h3 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                                <span style="font-size: 1.25rem;"> Data Entry</span>
-                                <a class="d-flex align-items-center text-muted" href="#">
-                            
-                                </a>
-                            </h3>
-                            <ul id="mainsidebar-report" class="nav flex-column mb-2 border-bottom">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{url_for('dataentry.post_format')}}">
-                                        <span style="font-size: 1rem;" data-feather="file-text">Visitors</span>
-        
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{url_for('dataentry.post_vehicles')}}">
-                                        <span style="font-size: 1rem;" data-feather="file-text">Vehicles</span>
-                                        
-                                    </a>
-                                    <ul><li class="nav-item"><a class="nav-link" href="{{url_for('dataentry.post_vehicles')}}">Outside Vehicles</a> </li>
-                                        <li class="nav-item"><a class="nav-link" href="{{url_for('dataentry.post_mill')}}">Mill Vehicles </a> </li></ul>
-                                </li>
-                            </ul>
-
-                    <h3 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                        <span style="font-size: 1.25rem;"> Reports</span>
-                        <a class="d-flex align-items-center text-muted" href="#">
+    <nav style="margin-top: 59px; " id="sidenav-main" class="collapse d-none d-md-block bg-light sidebar border-top">
+        <div id="sidenav-styles" class="sidebar-sticky rounded-top">
+                <h3 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-1 mb-1 text-muted">
+                        <span style="font-size: 1.25rem;"> Manage</span>
+                        <a class="d-flex align-items-center text-muted" href    ="#">
                     
                         </a>
                     </h3>
-                    <ul id="mainsidebar-report" class="nav flex-column mb-2 border-bottom">
+                    <ul id="mainsidebar-report" class="nav flex-column mb-2">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{url_for('report.report_main')}}">
+                            <a class="nav-link" href="{{url_for('admin.admin_main')}}">
+                                <span style="font-size: 1rem;" data-feather="file-text">Admin </span>
+
+                            </a>
+                        </li>
+                    </ul>
+
+                <h3 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span style="font-size: 1.25rem;"> Data Entry</span>
+                        <a class="d-flex align-items-center text-muted" href="#">
+                        </a>
+                    </h3>
+                    <ul id="mainsidebar-report" class="nav flex-column mb-2">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{url_for('dataentry.post_format')}}">
                                 <span style="font-size: 1rem;" data-feather="file-text">Visitors</span>
 
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{url_for('report.report_vehicles')}}">
+                            <a class="nav-link" href="{{url_for('dataentry.post_vehicles')}}">
                                 <span style="font-size: 1rem;" data-feather="file-text">Vehicles</span>
                                 
                             </a>
-                            <ul>
-                                <li class="nav-item"><a class="nav-link" href="{{url_for('report.report_vehicles')}}">Outside Vehicles</a></li>
-                                <li class="nav-item"><a class="nav-link" href="{{url_for('report.mill_report')}}">Mill Vehicles</a></li>
-                            </ul>
+                            <ul><li class="nav-item"><a class="nav-link" href="{{url_for('dataentry.post_vehicles')}}" style="color: white;">Outside Vehicles</a> </li>
+                                <li class="nav-item"><a class="nav-link" href="{{url_for('dataentry.post_mill')}}" style="color: white;">Mill Vehicles </a> </li></ul>
                         </li>
                     </ul>
-                    <h3 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                            <span style="font-size: 1.25rem;"> DashBoard </span>
-                            <a class="d-flex align-items-center text-muted" href="#">
+
+            <h3 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                <span style="font-size: 1.25rem;"> Reports</span>
+                <a class="d-flex align-items-center text-muted" href="#">
+            
+                </a>
+            </h3>
+            <ul id="mainsidebar-report" class="nav flex-column mb-2" >
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('report.report_main')}}">
+                        <span style="font-size: 1rem;" data-feather="file-text">Visitors</span>
+
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('report.report_vehicles')}}">
+                        <span style="font-size: 1rem;" data-feather="file-text">Vehicles</span>
                         
-                            </a>
-                        </h3>
-                        <ul id="mainsidebar-report" class="nav flex-column mb-2 border-bottom">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{url_for('report.dashboard')}}">
-                                    <span style="font-size: 1rem;" data-feather="file-text">Visitors</span>
-    
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{url_for('report.dashboard_vehicle')}}">
-                                    <span style="font-size: 1rem;" data-feather="file-text">Vehicles</span>
-                                    
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-            </nav>
-            <!-- End OF Side Bar-->
+                    </a>
+                    <ul>
+                        <li class="nav-item"><a class="nav-link" href="{{url_for('report.report_vehicles')}}" style="color: white;">Outside Vehicles</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{url_for('report.mill_report')}}" style="color: white;">Mill Vehicles</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <h3 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                    <span style="font-size: 1.25rem;"> DashBoard </span>
+                    <a class="d-flex align-items-center text-muted" href="#">
+                
+                    </a>
+                </h3>
+                <ul id="mainsidebar-report" class="nav flex-column mb-2 ">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('report.dashboard')}}">
+                            <span style="font-size: 1rem;" data-feather="file-text">Visitors</span>
+
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('report.dashboard_vehicle')}}">
+                            <span style="font-size: 1rem;" data-feather="file-text">Vehicles</span>
+                            
+                        </a>
+                    </li>
+                </ul>
+            </div>
+    </nav>
+
+    <div class="container-fulid">
+        <div class="row">
+         
             <!-- Start of Main -->
-            <main style="margin-top: 59px;" role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <main style="margin-top: 59px; margin-left: 190px;" role="main" class="col  col-lg-10 pt-3 px-4">
                     {% with messages = get_flashed_messages() %}
                     {% if messages %}
                         {% for message in messages %}  
@@ -219,9 +230,13 @@
                 {% endwith %}
                 <div style="margin: 2px; border-bottom: black;" class="">
                     <h1  class="h2 mb-4 text-center">{% block title %}Main Page{% endblock %}{% block linktitle%} {% endblock %}</h1>
+                </div>
+               
                 {% block body %} 
                 
                 {% endblock %}
+                
+                
             </main>
             <!-- End of Main -->
         </div>

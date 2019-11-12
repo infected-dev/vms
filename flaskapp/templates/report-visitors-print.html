@@ -50,7 +50,11 @@
                                             <td>{{vi.visitor_contact}}</td>
                                             <td>{{vi.visitor_company.title()}}</td>
                                             <td> {{vi.visited_employee.employee_name.title()}} </td>
+                                            {% if vi.visiting_department == None   %}
+                                            <td>None</td>
+                                            {% else %}
                                             <td>{{vi.visited_dept.department_name.title()}}</td>
+                                            {% endif %}
                                             <td> {{vi.visiting_purpose.title()}}</td>
                                             <td>{{vi.entry_time}}</td>
                                             <td>{{vi.exit_time}}</td>
