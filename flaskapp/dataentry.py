@@ -27,20 +27,19 @@ def mill_vehicles():
 @dataentry.route('/vehicles/mill/update', methods=['POST'])
 def mill_vehicles_update():
     if request.form:
-        comp_id = int(request.form.get('vid'))
+        comp_id = int(request.form['vid'])
         compnay_vehicle = CompanyTimesheet.query.filter_by(id=comp_id).first()
         duration = compnay_vehicle.duration
-        InTime = datetime.strptime(request.form.get('intime'), '%H:%M').time() 
+        InTime = datetime.strptime(request.form['intime'], '%H:%M').time() 
         compnay_vehicle.InTime = InTime
         db.session.commit()
-        flash('InTime Updated!')
         if duration == None or 'none':
                 intime = compnay_vehicle.InTime
                 outtime = compnay_vehicle.OutTime
                 diff = timeobj(outtime, intime)
                 compnay_vehicle.duration = diff
                 db.session.commit()
-        return redirect(url_for('dataentry.post_mill '))
+        return jsonify({'status':'OK'})
 
 
 @dataentry.route('/vehicles', methods=['POST'])
@@ -67,11 +66,11 @@ def vehicles_post():
 @dataentry.route('/vehicles/update', methods=['POST'])
 def update_vehicle():
     if request.form:
-        vid = request.form.get('vid')
+        vid = request.form['VeID']
         vehicle = Vehicle.query.filter_by(VeID=vid).first()
         duration = vehicle.TotalDuration
         outtime = datetime.strptime(
-                request.form.get('outtime'), '%H:%M').time()
+                request.form['outtime'], '%H:%M').time()
         vehicle.OutTime = outtime
         db.session.commit()
         if duration == None or 'none':
@@ -79,10 +78,8 @@ def update_vehicle():
                 outtime = vehicle.OutTime
                 diff = timeobj(intime, outtime)
                 vehicle.TotalDuration = diff
-                db.session.commit()
-                flash('Out Time Updated')
-        return redirect(url_for('dataentry.post_vehicles'))
-    return redirect(url_for('dataentry.post_format'))
+                db.session.commit()             
+        return jsonify({'status': 'OK'})
 
 
 @dataentry.route('/vehicles/delete', methods=['POST'])

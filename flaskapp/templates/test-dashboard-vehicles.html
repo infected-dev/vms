@@ -123,28 +123,28 @@ Outside Vehicle Data Entry
                                         </thead>
                                         <tbody>
                                                 {% for v in today_vehicles %}
-                                                <tr>
+                                                <tr id="datasectionveh{{v.VeID}}">
                                                     <td><strong>{{v.VeNO}}</strong></td>
 
                                                     <td>{{v.InTime}}</td>
-                                                    <form action="/vehicles/update"
-                                                        method="POST">
+                                                    
                 
                                                         <input type="hidden"
                                                             value="{{v.VeID}}"
-                                                            name="vid">
+                                                            name="vid"
+                                                            id="vid{{v.VeID}}">
                                                         <td>
-                                                            <input
+                                                            <input id="outtime{{v.VeID}}"
                                                                 class="form-control form-control-sm"
                                                                 type="time"
                                                                 value="{{v.OutTime}}"
                                                                 name="outtime">
                                                         </td>
-                                                        <td><input type="submit"
-                                                                class="btn btn-sm btn-warning"
-                                                                value="Update">
+                                                        <td><button  attributes="{{v.VeID}}" type="submit"
+                                                                class="updatevehicles btn btn-sm btn-warning"
+                                                                value="Update">Update</button>
                                                         </td>
-                                                    </form>
+                                                   
                 
                                                 </tr>
                                                 {% endfor %}
@@ -164,5 +164,7 @@ Outside Vehicle Data Entry
 {% block scripts %}
 <script>
 
+
 </script>
 {% endblock %}
+

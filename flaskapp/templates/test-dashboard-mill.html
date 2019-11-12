@@ -20,7 +20,7 @@
     }
 
     
-}
+
 </style>
 {%endblock%}
 <!-- End of CSS Block-->
@@ -111,19 +111,19 @@ Mill Vehicle Data Entry
                                                     </thead>
                                                     <tbody>
                                                             {% for v in comp_vehicles_today %}
-                                                            <tr>
+                                                            <tr id="datasectionmill{{v.id}}">
                                                                 
                                                                 <td><strong>{{v.comp_timesheet.comp_vehicle_no}}</strong><span>
                                                                         ({{v.comp_timesheet.model_name}})</span></td>
                                                                 
                                                                 <td>{{v.OutTime}}</td>
-                                                                <form action="/vehicles/mill/update" method="POST">
+                                                                
                                                                     <input type="hidden" value="{{v.id}}" name="vid">
                                                                     <td><input value="{{v.InTime}}" class="form-control col-7 form-control-sm" type="time"
-                                                                            name="intime"></td>
-                                                                    <td><input type="submit" class="btn btn-sm  btn-warning" value="UPDATE"
-                                                                            </td> 
-                                                                        </form> 
+                                                                            name="intime" id="intime{{v.id}}"></td>
+                                                                    <td><button attributes="{{v.id}}" type="submit" class="updatemill btn btn-sm  btn-warning" value="UPDATE">Update</button>
+                                                                    </button></td> 
+                                                                       
                                                                     </tr> 
                                                                     {% endfor %}
                                                     </tbody>
