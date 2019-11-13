@@ -18,7 +18,6 @@ class Vehicle(db.Model):
     OutTime = db.Column(db.Time)
     TotalDuration = db.Column(db.String(25))
 
-
 class VehicleTypes(db.Model):
     __tablename__ = "vehicletypes"
     id = db.Column(db.Integer, primary_key=True)
@@ -53,29 +52,43 @@ class CompanyTimesheet(db.Model):
     duration = db.Column(db.String(25)) 
 
 class Visitor(db.Model):
-    __tablename__ = "visitor"
-
-    
+    __tablename__ = 'visitor'
 
     id = db.Column(db.Integer, primary_key=True)
-    visitor_name = db.Column(db.String(80), nullable=False)
-    visitor_contact = db.Column(db.Integer, nullable=False)
-    visitor_company = db.Column(db.String(80), nullable=False)
-    visiting_department = db.Column(db.Integer, db.ForeignKey('department.id'))
-    visiting_person = db.Column(db.Integer, db.ForeignKey('employee.id'))
-    visiting_purpose = db.Column(db.String(100), nullable=False)
-    entry_date = db.Column(db.Date)
-    entry_time = db.Column(db.Time)
-    exit_time = db.Column(db.Time)
-    total_duration = db.Column(db.String(25))
+    name = db.Column(db.String(25))
+    contact = db.Column(db.String(11))
+    place_from = db.Column(db.String(20))
+    activities = db.relationship('Activity', backref='activity')
+    a_timesheet = db.relationship('Timesheet_Visitor', backref="a_timelog")
+    
+class Activity(db.Model):
+    __tablename__ = "activity"
 
+    id = db.Column(db.Integer, primary_key=True)
+    visitor_id = db.Column(db.Integer, db.ForeignKey('visitor.id'))
+    visiting_purpose = db.Column(db.String(50))
+    visiting_employee = db.Column(db.Integer, db.ForeignKey('employee.id'))
+    visiting_department = db.Column(db.Integer, db.ForeignKey('department.id'))
+    timelog = db.relationship('Timesheet_Visitor', backref='active')
+   
+
+class Timesheet_Visitor(db.Model):
+    __tablename__ = 'timesheet_visitor'
+
+    id = db.Column(db.Integer, primary_key=True)
+    visitor_id = db.Column(db.Integer, db.ForeignKey('visitor.id'))
+    activity_id = db.Column(db.Integer, db.ForeignKey('activity.id'))
+    date = db.Column(db.Date)
+    in_time = db.Column(db.Time)
+    out_time = db.Column(db.Time)
+    duration = db.Column(db.String(20))
 
 class Department(db.Model):
     __tablename__ = "department"
     id = db.Column(db.Integer, primary_key=True)
     department_name = db.Column(db.String(80), nullable=False)
     employees = db.relationship('Employee', backref='dept')
-    visitors = db.relationship('Visitor',  backref='visited_dept')
+    activity_dept = db.relationship('Activity',  backref='visited_dept')
 
 class Employee(db.Model):
     __tablename__ = "employee"
@@ -83,7 +96,7 @@ class Employee(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     employee_name = db.Column(db.String(80), nullable=False)
     department_id = db.Column(db.Integer, db.ForeignKey('department.id'))
-    visitors = db.relationship('Visitor' , backref='visited_employee')
+    activity_emp = db.relationship('Activity' , backref='visited_employee')
 
 class User(UserMixin ,db.Model):
     __tablename__ = "users"

@@ -130,18 +130,18 @@ Visitor Data Entry
                         <tbody>
                             {% for visitor in today_visitors %}
                             <tr id="datasection{{visitor.id}}">
-                                <td>{{visitor.entry_date.strftime("%d/%m/%Y")}}</td>
-                                <td>{{visitor.visitor_name}}</td>
-                                <td>{{visitor.visitor_contact}}</td>
-                                <td>{{visitor.visitor_company}}</td>
-                                <td>{{visitor.visited_employee.employee_name}}</td>
-                                <td>{{visitor.visiting_purpose}}</td>
-                                <td>{{visitor.entry_time}}</td>
+                                <td>{{visitor.date.strftime("%d/%m/%Y")}}</td>
+                                <td>{{visitor.a_timelog.name}}</td>
+                                <td>{{visitor.a_timelog.contact}}</td>
+                                <td>{{visitor.a_timelog.place_from}}</td>
+                                <td>{{visitor.active.visited_employee.employee_name}}</td>
+                                <td>{{visitor.active.visited_dept.department_name}}</td>
+                                <td>{{visitor.in_time}}</td>
 
                                 <td>
                                     <input id="vi_id{{visitor.id}}" name="vi_id" type="hidden" value="{{visitor.id}}">
                                     <input class="form-control form-control-sm" type="time"
-                                        value="{{visitor.exit_time}}" id="exittime{{visitor.id}}" name="exittime">
+                                        value="{{visitor.out_time}}" id="exittime{{visitor.id}}" name="exittime">
                                 </td>
                                 
                                 <td><button attributes="{{visitor.id}}" type="submit" id="button"

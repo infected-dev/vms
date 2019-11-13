@@ -1,7 +1,7 @@
 from datetime import datetime
 from flask import Blueprint, render_template, redirect, url_for, request, flash, jsonify
 from .cust_functions import convert, minutes, timeobj
-from .models import Vehicle, Visitor, Employee, VehicleTypes, CompanyVehicle, CompanyTimesheet
+from .models import Vehicle, Visitor,Activity,Timesheet_Visitor, Employee, VehicleTypes, CompanyVehicle, CompanyTimesheet
 from . import db
 
 
@@ -96,13 +96,13 @@ def delete_vehicles():
 def post_format():
     today_date = datetime.now().date()
     today_time = (datetime.now().time()).strftime("%H:%M")
-    today_visitors = Visitor.query.all()
+    today_visitors = Timesheet_Visitor.query.filter_by(date=today_date).all()
    
     employees = Employee.query.all()
     types = VehicleTypes.query.all()
-    
+    visitors = Visitor.query.all()
     return render_template('test-dashboard-postformat.html', today_time=today_time, today_date=today_date, types=types, employees=employees,
-                           today_visitors=today_visitors)
+                           today_visitors=today_visitors, visitors=visitors)
 
 
 @dataentry.route('/test-dashboard-vehicles')
@@ -111,7 +111,8 @@ def post_vehicles():
     today_time = (datetime.now().time()).strftime("%H:%M")
     today_vehicles = Vehicle.query.filter_by(VeEntryDate=today_date).all()
     types = VehicleTypes.query.all()
-    return render_template('test-dashboard-vehicles.html',today_vehicles=today_vehicles,today_date=today_date,today_time=today_time, types=types)
+    
+    return render_template('test-dashboard-vehicles.html', today_vehicles=today_vehicles,today_date=today_date,today_time=today_time, types=types)
 
 @dataentry.route('/test-dashboard-vehicles/mill')
 def post_mill():
@@ -124,19 +125,39 @@ def post_mill():
 
 @dataentry.route('/test-postformat/visitor', methods=['POST'])
 def visitors_post():
-    if request.form:
-        employee_id = int(request.form.get('visiting_employee'))
-        employee = Employee.query.filter_by(id=employee_id).first()
-        employee_dept = int(employee.department_id)
-        entry_date = datetime.strptime(
-            request.form.get('entrydate'), '%Y-%m-%d').date()
-        intime = datetime.strptime(request.form.get('intime'), '%H:%M').time()
-        visitor = Visitor(visitor_name=request.form.get('visitorname').upper(), visitor_contact=request.form.get('visitorcontact'), visitor_company=request.form.get(
-            'visitorcompany').upper(), visiting_department=employee_dept, visiting_person=employee_id, visiting_purpose=request.form.get('visitingpurpose'), entry_date=entry_date, entry_time=intime)
-        db.session.add(visitor)
-        db.session.commit()
-        flash('Visitor Added')
-    return redirect(url_for('dataentry.post_format'))
+   if request.form:
+       name = request.form.get('visitorname')
+       contact = request.form.get('visitorcontact')
+       place_from = request.form.get('visitorcompany')
+
+       if Visitor.query.filter_by(contact=contact).first():
+           visitor = Visitor.query.filter_by(contact=contact).first()
+       else:
+            visitor = Visitor(name=name, contact=contact, place_from=place_from)
+            db.session.add(visitor)
+            db.session.commit()
+        
+       employee_id = Employee.query.get(int(request.form.get('visiting_employee')))
+       emp_id = employee_id.id
+       department_id = employee_id.department_id
+       visiting_purpose = request.form.get('visitingpurpose')
+       activity = Activity(visitor_id=visitor.id, visiting_purpose=visiting_purpose,
+            visiting_employee=emp_id, visiting_department=department_id)
+       db.session.add(activity)
+       db.session.commit()
+
+       date = datetime.strptime(request.form.get('entrydate'), '%Y-%m-%d').date()
+       time = datetime.strptime(request.form.get('intime'), '%H:%M').time()
+
+       timelog = Timesheet_Visitor(visitor_id=visitor.id, activity_id=activity.id, date=date, in_time=time)
+       db.session.add(timelog)
+       db.session.commit()
+       return redirect(url_for('dataentry.post_format'))    
+
+
+        
+
+
 
 
 @dataentry.route('/visitors/update', methods=['POST'])
@@ -156,6 +177,7 @@ def visitors_update():
             visitor.total_duration = diff
             db.session.commit()
     return jsonify({'status':'ok'})
+
 
 
 @dataentry.route('/visitors/delete', methods=['POST'])
