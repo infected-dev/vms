@@ -57,7 +57,7 @@ Outside Vehicles Report
                                 <th>Entry date</th>
                                 <th>Vehicle NO</th>
                                 <th>Vendor Name</th>
-                                <th>Vehicle Type</th>
+                                <th>Department</th>
                                 <th>In Time</th>
                                 <th>Out Time</th>
                                 <th>Total Duration</th>
@@ -71,7 +71,7 @@ Outside Vehicles Report
                                 <td>{{v.VeEntryDate.strftime('%d-%m-%Y')    }}</td>
                                 <td>{{v.VeNO}}</td>
                                 <td>{{v.VendorName}}</td>
-                                <td>{{v.vehicle_type.typename}}</td>
+                                <td>{{v.outside_dept.dept_name}}</td>
                                 <td> {{v.InTime}} </td>
                                 <td>{{v.OutTime}} </td>
                                 <td> {{v.TotalDuration}}</td>

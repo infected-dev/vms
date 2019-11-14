@@ -65,7 +65,7 @@ Outside Vehicle Data Entry
                                                 <div class="col">
                                                         <input name="intime" class="form-control" type="time" value="{{today_time}}">
                                                 </div>
-                                            </div>
+                                        </div>
                                         
                                             <div class="form-row form-group">
                                 
@@ -78,26 +78,27 @@ Outside Vehicle Data Entry
                                             </div>
         
                                             <div class="form-group form-row">
-                                                    <label class="col-form-label">Vehicle Type</label>
+                                                    <label class="col-form-label">Vendor Name</label>
+                                                    <div class="col">
+                                                            <input style="text-transform:uppercase;" name="vendorname" class="form-control" type="text"
+                                                            placeholder="Vendor Name" required>
+                                                    </div>  
+                                            </div>  
+
+                                            <div class="form-group form-row">
+                                                    <label class="col-form-label">Department to:</label>
                                                 <div class="col">
                                                         <select class="form-control" name="vehicletype">
-                                                                {% for type in types %}
+                                                                {% for d in departments %}
                                                                 <option value={{type.id}}>
-                                                                    {{type.typename}}
+                                                                    {{d.department_name}}
                                                                 </option>
                                                                 {% endfor %}
                                                             </select>
-                                                </div>
-                                                    
+                                                </div>      
                                             </div>
                                 
-                                        <div class="form-group form-row">
-                                            <label class="col-form-label">Vendor Name</label>
-                                            <div class="col">
-                                                    <input style="text-transform:uppercase;" name="vendorname" class="form-control" type="text"
-                                                    placeholder="Vendor Name" required>
-                                            </div>  
-                                        </div>  
+                                        
                                         <div class="form-group">
                                             <label class="sr-only">Submit</label>
                                             <input class="btn btn-block btn-primary" type="submit">
@@ -117,6 +118,7 @@ Outside Vehicle Data Entry
                                     <table class="table table-borderless table-sm table-hover">
                                         <thead>
                                             <th>Vehicle No</th>
+                                            <th>Department</th>
                                             <th>In Time</th>
                                             <th>Out Time</th>
                                             <th>Actions</th>
@@ -125,7 +127,7 @@ Outside Vehicle Data Entry
                                                 {% for v in today_vehicles %}
                                                 <tr id="datasectionveh{{v.VeID}}">
                                                     <td><strong>{{v.VeNO}}</strong></td>
-
+                                                    <td>{{v.outside_dept.department_name}}</td>
                                                     <td>{{v.InTime}}</td>
                                                     
                 

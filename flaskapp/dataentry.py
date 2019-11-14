@@ -1,7 +1,7 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from flask import Blueprint, render_template, redirect, url_for, request, flash, jsonify
 from .cust_functions import convert, minutes, timeobj
-from .models import Vehicle, Visitor,Activity,Timesheet_Visitor, Employee, VehicleTypes, CompanyVehicle, CompanyTimesheet
+from .models import Department, Vehicle, Visitor,Activity,Timesheet_Visitor, Employee, VehicleTypes, CompanyVehicle, CompanyTimesheet
 from . import db
 
 
@@ -108,19 +108,22 @@ def post_format():
 @dataentry.route('/test-dashboard-vehicles')
 def post_vehicles():
     today_date = datetime.now().date()
+    yesterday = today_date - timedelta(days=1)
     today_time = (datetime.now().time()).strftime("%H:%M")
-    today_vehicles = Vehicle.query.filter_by(VeEntryDate=today_date).all()
+    today_vehicles = Vehicle.query.filter_by(VeEntryDate=yesterday).all()
     types = VehicleTypes.query.all()
-    
-    return render_template('test-dashboard-vehicles.html', today_vehicles=today_vehicles,today_date=today_date,today_time=today_time, types=types)
+    departments = Department.query.all()
+    return render_template('test-dashboard-vehicles.html',departments=departments, today_vehicles=today_vehicles,today_date=yesterday,today_time=today_time, types=types)
 
 @dataentry.route('/test-dashboard-vehicles/mill')
 def post_mill():
     today_date = datetime.now().date()
+    yesterday = today_date - timedelta(days=1)
     today_time = (datetime.now().time()).strftime("%H:%M")
-    comp_vehicles = CompanyVehicle.query.all()
-    comp_vehicles_today = CompanyTimesheet.query.filter_by(date=today_date).all()
-    return render_template('test-dashboard-mill.html', today_date=today_date, today_time=today_time, comp_vehicles=comp_vehicles, comp_vehicles_today=comp_vehicles_today)
+    comp_vehicles = CompanyVehicle.query.all()  
+    comp_vehicles_today = CompanyTimesheet.query.filter_by(date=yesterday).all()
+    departments = Department.query.all()
+    return render_template('test-dashboard-mill.html',departments=departments, today_date=yesterday, today_time=today_time, comp_vehicles=comp_vehicles, comp_vehicles_today=comp_vehicles_today)
 
 
 @dataentry.route('/test-postformat/visitor', methods=['POST'])

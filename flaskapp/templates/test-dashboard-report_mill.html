@@ -59,20 +59,20 @@
                                             
                                             <th>Entry date</th>
                                             <th>Vehicle NO</th>
-                                            <th>Vehicle Type</th>
+                                            <th>Department</th>
                                             <th>Out Time</th>
                                             <th>In Time</th>
                                             <th>Total Duration</th>
         
                                         </tr>
-                                    </thead>
+                                    </thead>    
                                     <tbody>
                                         {% for v in query_vehicles_mill %}
                                         <tr>
                                             
                                             <td>{{v.date.strftime('%d-%m-%Y')    }}</td>
                                             <td>{{v.comp_timesheet.comp_vehicle_no}}</td>
-                                            <td>{{v.comp_timesheet.comp_vehicle_type.typename}}</td>
+                                            <td>{{v.mill_dept.department_name}}</td>
                                             <td>{{v.OutTime}} </td>
                                             <td> {{v.InTime}} </td>
                                             <td> {{v.duration}}</td>

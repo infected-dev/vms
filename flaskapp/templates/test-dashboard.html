@@ -127,6 +127,7 @@
     
     <nav style="margin-top: 59px; " id="sidenav-main" class="collapse d-none d-md-block bg-light sidebar border-top">
         <div id="sidenav-styles" class="sidebar-sticky rounded-top accordion">
+            {% if current_user.user_role == 2 %}
                 <h3 class="hvr-sweep-to-bottom hvr-icon-hang sidebar-heading d-flex justify-content-between align-items-center px-3 mt-1 mb-1 text-muted">
                         
                         <a data-target="#manage-links" data-toggle="collapse" class="mt-4 d-flex align-items-center text-muted p-1" href    ="#">
@@ -142,7 +143,9 @@
                             </a>
                         </li>
                     </ul>
+            {% endif %}
 
+            {% if current_user.user_role == 1 or current_user.user_role == 2 or current_user.user_role == 3 %}
                 <h3 class="hvr-sweep-to-bottom sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                         
                         <a data-toggle="collapse" data-target="#dataentry-links"  class="d-flex align-items-center text-muted mt-2 p-1" href="#">
@@ -166,7 +169,9 @@
                                 <li class="nav-item"><a class="nav-link" href="{{url_for('dataentry.post_mill')}}" style="color: white;">Mill Vehicles </a> </li></ul>
                         </li>
                     </ul>
-
+            {% endif %}
+            
+            {% if current_user.user_role == 3 or current_user.user_role == 2 %}
             <h3 class="hvr-sweep-to-bottom sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                 
                 <a data-toggle="collapse" data-target="#report-links" class="d-flex align-items-center text-muted mt-2 p-1" href="#">
@@ -213,6 +218,7 @@
                         </a>
                     </li>
                 </ul>
+                {% endif %}
             </div>
     </nav>
 

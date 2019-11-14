@@ -12,6 +12,7 @@ class Vehicle(db.Model):
     VeID = db.Column(db.Integer, unique=True, nullable=False, primary_key=True)
     VeNO = db.Column(db.String(25), nullable=False)
     VendorName = db.Column(db.String(80))
+    visited_department = db.Column(db.Integer, db.ForeignKey('department.id'))
     VehicleTypeName_id = db.Column(
         db.Integer, db.ForeignKey('vehicletypes.id'))
     InTime = db.Column(db.Time)
@@ -46,6 +47,7 @@ class CompanyTimesheet(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     comp_vehicle_id = db.Column(db.Integer, db.ForeignKey('companyvehicles.id'))
+    visited_department = db.Column(db.Integer, db.ForeignKey('department.id'))
     date = db.Column(db.Date)
     InTime = db.Column(db.Time)
     OutTime = db.Column(db.Time)
@@ -89,12 +91,14 @@ class Department(db.Model):
     department_name = db.Column(db.String(80), nullable=False)
     employees = db.relationship('Employee', backref='dept')
     activity_dept = db.relationship('Activity',  backref='visited_dept')
+    outside_vehicles = db.relationship('Vehicle', backref='outside_dept')
+    mill_vehicles = db.relationship('CompanyTimesheet', backref='mill_dept')
 
 class Employee(db.Model):
     __tablename__ = "employee"
     
     id = db.Column(db.Integer, primary_key=True)
-    employee_name = db.Column(db.String(80), nullable=False)
+    employee_name =  db.Column(db.String(80), nullable=False)
     department_id = db.Column(db.Integer, db.ForeignKey('department.id'))
     activity_emp = db.relationship('Activity' , backref='visited_employee')
 
@@ -105,6 +109,10 @@ class User(UserMixin ,db.Model):
     username = db.Column(db.String(10), unique=True)
     password = db.Column(db.String(13))
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
+
+    @property
+    def user_role(self):
+        return self.role_id
 
 class Role(db.Model):
     __tablename__ = 'roles'
