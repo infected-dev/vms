@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, url_for, redirect, flash
-from .models import Vehicle, Visitor, Department, CompanyTimesheet, CompanyVehicle
+from .models import Vehicle, Visitor, Department, CompanyTimesheet, CompanyVehicle, Timesheet_Visitor
 from datetime import datetime, timedelta
 from flaskapp import db
 
@@ -54,19 +54,16 @@ def report_main():
     error = None
     today = datetime.now().date()
     yesterday = today - timedelta(days=1)
-    query_visitors_date = Visitor.query.filter_by(entry_date=yesterday).all()
+    
     date = yesterday
     
-    if request.args:
-        date = request.args['date']
-        date = datetime.strptime(date, '%Y-%m-%d').date()
-        query_visitors_date = Visitor.query.filter_by(entry_date = date).all()
+    
         
 
-    visitors = Visitor.query.all()
+    visitors = Timesheet_Visitor.query.all()
     vehicles = Vehicle.query.all()
     return render_template('test-dashbaord-report_visitor.html', date=date.strftime('%d-%b-%Y')
-    , visitors=visitors, vehicles=vehicles, error=error, query_visitors_date=query_visitors_date)
+    , visitors=visitors, vehicles=vehicles, error=error)
 
 @report.route('/test-dashboard-report/vehicles/')
 def report_vehicles():
@@ -98,7 +95,7 @@ def report_print():
                 request.form.get('date'), '%Y-%m-%d').date()
         if print_id == '1':
             title = 'Visitor Records'
-            query = Visitor.query.filter_by(entry_date=date).all()
+            query = Timesheet_Visitor.query.filter_by(date=date).all()
             count = len(query)
             return render_template('report-visitors-print.html',count=count, query=query, date=date, title=title)
         elif print_id == '2':
@@ -117,5 +114,5 @@ def report_print():
 def printslip():
     if request.form:
         get_id = int(request.form.get('vi_id'))
-        visitor = Visitor.query.filter_by(id=get_id).first()
+        visitor = Timesheet_Visitor.query.filter_by(id=get_id).first()
         return render_template('printformat.html', visitor=visitor)        

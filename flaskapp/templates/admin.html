@@ -37,6 +37,7 @@ Admin Panel
                       <button type="button" class="btn btn-warning"  data-toggle="collapse" data-target="#employeecard">Employee</button>
                       <button type="button" class="btn btn-warning"  data-toggle="collapse" data-target="#companyvehiclecard ">Company Vehicles</button>
                       <button type="button" class="btn btn-warning"  data-toggle="collapse" data-target="#vehicletypecard">Vehicles Types</button>
+                      <button type="button" class="btn btn-warning"  data-toggle="collapse" data-target="#visitorcard">Visitors</button>
                     </div>
                 </div>
             </div>
@@ -318,6 +319,33 @@ Admin Panel
                                     </div>
                                 </div>
             
+                    </div>
+
+                    <div id="visitorcard" data-parent="#adminpanel" class="collapse col">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3>Visitor Master</h3>
+                                <table class="table table-sm">
+                                    <thead>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Contact Number</th>
+                                        <th>Place From</th>
+                                    </thead>
+                                    <tbody>
+                                        {% for v in visitors %}
+                                        <tr>
+                                            <td>{{v.id}}</td>
+                                            <td>{{v.name}}</td>
+                                            <td>{{v.contact}}</td>
+                                            <td>{{v.place_from}}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
                     </div>
             
 </div>  

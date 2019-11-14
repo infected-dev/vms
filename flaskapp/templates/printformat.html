@@ -32,17 +32,17 @@
 
                         <div class="row p-1 m-1 mb-3">
                                     <div class="col-3 mr-n5">
-                                            <p class="mb-0"> Visitor Slip No: </p>
+                                            <p class="mb-0"> Visitor Slip No:  </p>
                                     </div>
                                     <div class="col border-bottom ">
-            
+                                                {{visitor.id}}
                                     </div>
                                     <div class="col-3 mr-n3 text-right">
                                             <p class="mb-0 "> Date: </p>
                                     </div>
                                            
                                     <div class="col-3 border-bottom  text-right">
-                                            <span class=" font-weight-bold">{{visitor.entry_date.strftime('%d/%m/%Y')}}</span>
+                                            <span class=" font-weight-bold">{{visitor.date.strftime('%d/%m/%Y')}}</span>
                                     </div>
                                     
                                 </div>
@@ -51,7 +51,7 @@
                                     <p class="">Visitor's Name:</p>
                             </div>
                             <div class="col p-0 mb-3  border-bottom">
-                                    <span class=" font-weight-normal">{{visitor.visitor_name.title()}} - {{visitor.visitor_contact}}</span>
+                                    <span class=" font-weight-normal">{{visitor.a_timelog.name.title()}} - {{visitor.a_timelog.contact}}</span>
                             </div>
                         </div>
 
@@ -61,7 +61,7 @@
                                         <p class="">Meeting with:</p>
                                 </div>
                                 <div class="col mb-3 p-0 text-left   border-bottom">
-                                        <span class=" font-weight-normal">{{visitor.visited_employee.employee_name.title()}}</span>
+                                        <span class=" font-weight-normal">{{visitor.active.visited_employee.employee_name.title()}}</span>
                                 </div>
                             </div>
                         
@@ -71,7 +71,7 @@
                                             <p class="">Department:</p>
                                     </div>
                                     <div class="col mb-3 p-0 text-left   border-bottom">
-                                            <span class=" font-weight-normal">{{visitor.visited_dept.department_name.title()}}</span>
+                                                <span class=" font-weight-normal">{{visitor.active.visited_dept.department_name.title()}}</span>
                                     </div>
                                 </div>
                 
@@ -81,7 +81,7 @@
                                                 <p class="">Purpose of Visit:</p>
                                         </div>
                                         <div class="col mb-3 p-0 text-left   border-bottom">
-                                                <span class=" ml-2  font-weight-normal">{{visitor.visiting_purpose.title()}}</span>
+                                                <span class=" ml-2  font-weight-normal">{{visitor.active.visiting_purpose.title()}}</span>
                                         </div>
                                     </div>        
                         
@@ -91,7 +91,7 @@
                                                     <p class="">In Time :  </p>
                                             </div>
                                             <div class="col mb-3 p-0 text-center  border-bottom ">
-                                                    <span class=" ml-2  font-weight-normal">{{visitor.entry_time}}</span>
+                                                    <span class=" ml-2  font-weight-normal">{{visitor.in_time}}</span>
                                             </div>
                                             <div class="col-2 mr-n5 text-left">
                                                     <p class="">Out Time :</p>

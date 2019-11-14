@@ -155,26 +155,21 @@ def visitors_post():
        return redirect(url_for('dataentry.post_format'))    
 
 
-        
-
-
-
-
 @dataentry.route('/visitors/update', methods=['POST'])
 def visitors_update():
     if request.form:
         vid = request.form['vi_id']
-        visitor = Visitor.query.filter_by(id=vid).first()
-        duration = visitor.total_duration
+        visitor = Timesheet_Visitor.query.filter_by(id=vid).first()
+        duration = visitor.duration
         exittime = datetime.strptime(
             request.form['exittime'], '%H:%M').time()
-        visitor.exit_time = exittime
+        visitor.out_time = exittime
         db.session.commit()
         if (duration == None or 'none'):
-            intime = visitor.entry_time
-            outtime = visitor.exit_time
+            intime = visitor.in_time
+            outtime = visitor.out_time
             diff = timeobj(intime, outtime)
-            visitor.total_duration = diff
+            visitor.duration = diff
             db.session.commit()
     return jsonify({'status':'ok'})
 

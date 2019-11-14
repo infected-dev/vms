@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, url_for, redirect, flash, session
-from .models import Department, Employee, Vehicle, VehicleTypes, User, CompanyVehicle
+from .models import Visitor, Department, Employee, Vehicle, VehicleTypes, User, CompanyVehicle
 from flask_login import login_required
 from . import db
 
@@ -15,7 +15,8 @@ def admin_main():
     employees = Employee.query.all()
     users = User.query.all()
     company_vehicles = CompanyVehicle.query.all()
-    return render_template('admin.html',company_vehicles=company_vehicles, vehicle_types=vehicle_types, departments=departments, employees=employees, users=users)
+    visitors = Visitor.query.all()
+    return render_template('admin.html',visitors=visitors,company_vehicles=company_vehicles, vehicle_types=vehicle_types, departments=departments, employees=employees, users=users)
 
 
 @admin.route('/admin/post', methods=['POST'])

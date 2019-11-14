@@ -75,16 +75,25 @@
                                 {% for vi in visitors %}
                                 <tr>
                                     
-                                    <td>{{vi.entry_date.strftime('%d-%m-%Y')}}</td>
-                                    <td>{{vi.visitor_name}}</td>
-                                    <td>{{vi.visitor_contact}}</td>
-                                    <td>{{vi.visitor_company}}</td>
-                                    <td> {{vi.visited_employee.employee_name}} </td>
-                                    <td>{{vi.visited_dept.department_name}}</td>
-                                    <td> {{vi.visiting_purpose}}</td>
-                                    <td>{{vi.entry_time}}</td>
-                                    <td>{{vi.exit_time}}</td>
-                                    <td>{{vi.total_duration}}</td>
+                                    <td>{{vi.date.strftime('%d-%m-%Y')}}</td>
+                                    <td>{{vi.a_timelog.name}}</td>
+                                    <td>{{vi.a_timelog.contact}}</td>
+                                    <td>{{vi.a_timelog.place_from}}</td>
+                                    {% if vi.active.visited_dept.department_name == None %}
+                                    <td>None</td>
+                                    {% else %}
+                                    <td>{{vi.active.visited_employee.employee_name}} </td>
+                                    {% endif %}
+
+                                    {% if vi.active.visited_dept.department_name == None %}
+                                    <td>None</td>
+                                    {% else %}
+                                    <td>{{vi.active.visited_dept.department_name}}</td>
+                                    {% endif %}
+                                    <td>{{vi.active.visiting_purpose}}</td>
+                                    <td>{{vi.in_time}}</td>
+                                    <td>{{vi.out_time}}</td>
+                                    <td>{{vi.duration}}</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>

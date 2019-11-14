@@ -46,19 +46,27 @@
                                     {% for vi in query %}
                                      <tr>
                                             <td></td>
-                                            <td>{{vi.visitor_name.title()}}</td>
-                                            <td>{{vi.visitor_contact}}</td>
-                                            <td>{{vi.visitor_company.title()}}</td>
-                                            <td> {{vi.visited_employee.employee_name.title()}} </td>
-                                            {% if vi.visiting_department == None   %}
+                                            <td>{{vi.a_timelog.name.title()}}</td>
+                                            <td>{{vi.a_timelog.contact}}</td>
+                                            <td>{{vi.a_timelog.place_from.title()}}</td>
+                                            {% if vi.active.visited_employee     == None %}
                                             <td>None</td>
                                             {% else %}
-                                            <td>{{vi.visited_dept.department_name.title()}}</td>
+                                            <td> {{vi.active.visited_employee.employee_name.title()}} </td>
                                             {% endif %}
-                                            <td> {{vi.visiting_purpose.title()}}</td>
-                                            <td>{{vi.entry_time}}</td>
-                                            <td>{{vi.exit_time}}</td>
-                                            <td>{{vi.total_duration}}</td>
+
+
+                                            {% if vi.a_timelog.visiting_department == None   %}
+                                            <td>None</td>
+                                            {% else %}
+                                            <td>{{vi.active.visited_dept.department_name.title()}}</td>
+                                            {% endif %}
+
+
+                                            <td> {{vi.active.visiting_purpose.title()}}</td>
+                                            <td>{{vi.in_time}}</td>
+                                            <td>{{vi.out_time}}</td>
+                                            <td>{{vi.duration}}</td>
                                     </tr>
                                     {% endfor %}    
                                 </tbody>
