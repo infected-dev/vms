@@ -38,9 +38,7 @@ Visitor Dashboard
     </div>
 
     <div class="row">
-        <div class="col">
-            
-        </div>
+        
         <div class="col mr-4 mt-1">
             <div class="card">
                 <h5 class="card-header">Department Wise Summary </h5>
@@ -104,14 +102,14 @@ var myChart = new Chart(deptctx, {
     type: 'bar',
     data: {
         labels:[
-        {% for i in query_department_visitor %}
+        {% for i in dept_count %}
                 "{{i[0]}}",
         {% endfor %}
         ], 
         datasets: [{
             label: 'Visitors by Departments',
             data: [
-                {% for i in query_department_visitor %}
+                {% for i in dept_count %}
                     {{i[1]}},
                 {% endfor %}
             ],

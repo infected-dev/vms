@@ -88,9 +88,9 @@ Outside Vehicle Data Entry
                                             <div class="form-group form-row">
                                                     <label class="col-form-label">Department to:</label>
                                                 <div class="col">
-                                                        <select class="form-control" name="vehicletype">
+                                                        <select class="form-control" name="dept">
                                                                 {% for d in departments %}
-                                                                <option value={{type.id}}>
+                                                                <option value={{d.id}}>
                                                                     {{d.department_name}}
                                                                 </option>
                                                                 {% endfor %}

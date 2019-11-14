@@ -15,9 +15,9 @@ def mill_vehicles():
                         request.form.get('entry_date'), '%Y-%m-%d').date()
         OutTime = datetime.strptime(
                         request.form.get('outime'), '%H:%M').time()
-
+        department_id = int(request.form.get('dept'))
         comp_vehicle_time = CompanyTimesheet(
-                        comp_vehicle_id=int(request.form.get('comp_id')), date=entrydate, OutTime=OutTime)
+                        comp_vehicle_id=int(request.form.get('comp_id')),visited_department=department_id, date=entrydate, OutTime=OutTime)
         db.session.add(comp_vehicle_time)
         db.session.commit()
         flash('Compnay Vehicle Time Noted')
@@ -50,13 +50,14 @@ def vehicles_post():
             VeNO = request.form.get('veno')
             VeNO = VeNO.upper()
             comp_vehs = CompanyVehicle.query.all()
+            department_id = int(request.form.get('dept'))
             comp_vehs_list = [c.comp_vehicle_no for c in comp_vehs]
             if VeNO[-6:] in comp_vehs_list:
                 flash('Add Vehicle in Company Timesheet')
                 return redirect(url_for('dataentry.post_vehicles'))
             else:
                 vehicle = Vehicle(VeEntryDate=entrydate, VeNO=VeNO, VehicleTypeName_id=request.form.get(
-                    'vehicletype'), VendorName=request.form.get('vendorname').upper(), InTime=InTime, TotalDuration='none')
+                    'vehicletype'), VendorName=request.form.get('vendorname').upper(),visited_department=department_id, InTime=InTime, TotalDuration='none')
                 db.session.add(vehicle)
                 db.session.commit()
                 flash('New Vehicle Added')

@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, url_for, redirect, flash
-from .models import Vehicle, Visitor, Department, CompanyTimesheet, CompanyVehicle, Timesheet_Visitor
+from .models import Vehicle, Visitor, Department, CompanyTimesheet, CompanyVehicle, Timesheet_Visitor, Activity
 from datetime import datetime, timedelta
 from flaskapp import db
 
@@ -11,25 +11,26 @@ def dashboard():
     today = datetime.now().date()
     ## Daily Vehicles and Visitors Count ##
     
-    query_visitors_today = Visitor.query.filter_by(entry_date=today).count()
+    query_visitors_today = Timesheet_Visitor.query.filter_by(date=today).count()
     
     ## All Vheicles and Visitor Count ##
-    
-    query_visitors_all = Visitor.query.count()
+    activitiy = Activity.query.all()
+    query_visitors_all = Timesheet_Visitor.query.count()
+
     ## Department Count Queries ##
-    query_department_all = Department.query.all()
-    query_department_visitor = []
-    for i in query_department_all:
-        if len(i.visitors) > 0:
-            query_department_visitor.append([i.department_name, len(i.visitors)])
+    departments = { d.id : d.department_name for d in Department.query.all() } 
+    dept_count = []
+    for i in departments:
+        count = Activity.query.filter_by(visiting_department=i).count()
+        dept_count.append([departments[i], count])
 
     ## Date Wise Count Queries for charts ##
 
     legend = 'Total Visitors by Date'
-    dates = [r.entry_date for r in db.session.query(Visitor.entry_date).distinct()]
+    dates = [r.date for r in db.session.query(Timesheet_Visitor.date).distinct()]
     total_count = []
     for i in dates: 
-        count = Visitor.query.filter_by(entry_date=i).count()
+        count = Timesheet_Visitor.query.filter_by(date=i).count()
         total_count.append([i.strftime("%d/%m/%Y"), count])
 
 
@@ -37,8 +38,8 @@ def dashboard():
     
     
 
-    return render_template('test-dashboard-front.html',legend=legend, total_count=total_count, query_department_visitor=query_department_visitor, 
-        query_visitors_all=query_visitors_all, query_visitors_today=query_visitors_today)
+    return render_template('test-dashboard-front.html',legend=legend, total_count=total_count, 
+        query_visitors_all=query_visitors_all, query_visitors_today=query_visitors_today, dept_count=dept_count)
 
 @report.route('/dashbaord/vehicles')
 def dashboard_vehicle():
