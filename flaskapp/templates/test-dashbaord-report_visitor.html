@@ -19,7 +19,7 @@
                     <h5 class="card-header text-center">Print</h5>
                         <div class="btn-group-vertical p-2">
                             <button type="button" data-toggle="modal" data-target="#datewisemodal"  class="btn btn-secondary mb-2"> Date Wise Report</button>
-                            <button href="#" class="btn btn-secondary "> Department Wise Report</button>
+                            <button data-toggle="modal" data-target="#departmentwisemodal" class="btn btn-secondary "> Department Wise Report</button>
                         </div>
                     </div>
     </div>
@@ -35,6 +35,34 @@
                             <input type="hidden" name="printid" value="1">
                             <label class=" mb-2 h6 col-form-label" for="#date">Select Date : </label>
                             <input id="date" type="date" class="form-control" name="date" autofocus>
+                            
+                            <input type="submit"  class="mt-2 btn btn-primary btn-block btn-sm" value="Print">
+                              
+                        </form>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="departmentwisemodal" tabindex="-1" role="dialog" aria-labelledby="departmentwise" aria-hidden="true">
+            <div class="modal-dialog" role="form">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"> Date Wise Report </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                            <form class="form-row" action="{{url_for('report.report_print')}}" method="POST">
+                            <input type="hidden" name="printid" value="9">
+                            <label class=" mb-2 h6 col-form-label" for="#date">Select Date : </label>
+                            <input id="date" type="date" class="form-control" name="date" autofocus>
+                            <label class="mb-2 h6 col-form-label" for="#department">Select Department</label>
+                            <select class="form-control" name="department">
+                                {% for d in departments %}
+                                <option value="{{d.id}}">{{d.department_name}}</option>
+                                {% endfor %}
+                            </select>
                             <input type="submit"  class="mt-2 btn btn-primary btn-block btn-sm" value="Print">
                               
                         </form>

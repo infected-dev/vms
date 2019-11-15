@@ -55,7 +55,7 @@ def report_main():
     error = None
     today = datetime.now().date()
     yesterday = today - timedelta(days=1)
-    
+    departments = Department.query.all()
     date = yesterday
     
     
@@ -63,7 +63,7 @@ def report_main():
 
     visitors = Timesheet_Visitor.query.all()
     vehicles = Vehicle.query.all()
-    return render_template('test-dashbaord-report_visitor.html', date=date.strftime('%d-%b-%Y')
+    return render_template('test-dashbaord-report_visitor.html',departments=departments, date=date.strftime('%d-%b-%Y')
     , visitors=visitors, vehicles=vehicles, error=error)
 
 @report.route('/test-dashboard-report/vehicles/')
@@ -109,6 +109,18 @@ def report_print():
             query = CompanyTimesheet.query.filter_by(date=date).all()
             count = len(query)
             return render_template('report-vehicles-print.html', query=query, title=title,count=count, date=date)
+        elif print_id == '9': 
+            department_id = int(request.form.get('department'))
+            department = Department.query.get(department_id)
+            query = Timesheet_Visitor.query.filter_by(date=date).all()
+            filtered_list = []
+            for i in query:
+                if i.active.visiting_department == department_id:
+                    filtered_list.append(i)
+            title = 'Visitors Records by Department'
+            count = len(filtered_list)
+           
+            return render_template('report-visitors-print.html',department=department, title=title, count=count, filtered_list=filtered_list, date=date)
 
 
 @report.route('/print-slip', methods=['POST'])

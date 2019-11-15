@@ -6,27 +6,43 @@
             <link href="{{url_for('static', filename='css/bootstrap.min.css')}}" rel="stylesheet">
             <link href="{{url_for('static', filename='css/printstyles.css')}}" rel="stylesheet" media="print">
         <style>
+           
             body{
                 margin-top: 15px;
                 margin-left: 5px;
                 margin-right: 5px;
 
             }
+            thead {display: table-header-group;}
+            tfoot {display: table-header-group;}
+
+           
+            
+           
         </style>
         </style>
     </head>
     <body>
-        <div class="container-fulid border border-dark p-1">   
+        <div class="container-fulid P-1">   
                 <div class="printclass">
-                        <div class="text-center">
+                        <div id="header" class="text-center">
                             <h5 class="mb-0">Siddhi Vinayak Knots and Prints Pvt. Ltd.</h5>
                             <p class=" mb-0 text-monospace text-muted">A-26 To A-32, "Central Park", G.I.D.C Pandesra, SURAT-394221.
                                 </p>
                                 <h5 class="mb-0 mt-2">{{title}}</h5>
                         </div>
-                        <p class="mr-2 text-right"><strong> Date: {{date.strftime('%d/%m/%Y')}}</strong> <span class=" ml-4 text-left"><strong >Total Count:<span class="ml-2">{{count}}</span></strong></span> </p> 
-                        <div id='tableclass' class="">
-                            <table class="table table-sm table-bordered">
+                        {% if title == 'Visitor Records' %}
+                        <div class="mr-2 mb-2 row">
+                             <div class="text-right ml-4">
+                                    <strong> Date: {{date.strftime('%d/%m/%Y')}}</strong>
+                            </div>
+                            <div class="col text-right">
+                                   <strong >Total Count:<span class="ml-2">{{count}}
+                                    </strong>
+                            </div>
+                        </div>
+                        <div id='tableclass' class="m">
+                            <table class="mb-4 table table-sm table-bordered">
                                 <thead >
                                     <tr class="text-center">
                                         <th>#</th>
@@ -72,6 +88,63 @@
                                 </tbody>
                             </table>
                         </div>
+                        {% endif %}
+
+            {% if title == 'Visitors Records by Department' %}
+                        <div class="mr-2 row mb-3 border-bottom ml-2">
+                            <div class=" col">
+                                    <strong>Department: {{department.department_name}} </strong> 
+                            </div>
+                            <div class="col-2 text-right mr-n5">
+                                    <strong> Date: {{date.strftime('%d/%m/%Y')}}</strong>
+                            </div>
+                            <div class="col-2 text-right">
+                                   <strong >Total Count:<span class="ml-2">{{count}}
+                                    </strong>
+                            </div>
+                             
+                            
+                            
+                    </div> 
+                        <div id='tableclass' class="">
+                            <table class="table table-sm table-bordered">
+                                <thead >
+                                    <tr class="text-center">
+                                        <th>#</th>
+                                        <th>Visitor Name</th>
+                                        <th>Contact No</th>
+                                        <th>Compnay/From</th>
+                                        <th>Visiting Employee</th>
+                                        <th>Visiting Purpose</th>
+                                        <th>In Time</th>
+                                        <th> Out Time </th>
+                                        <th>Total Duration </th>
+                                    </tr>
+                                </thead>
+                                
+                                <tbody>
+                                    {% for vi in filtered_list %}
+                                     <tr>
+                                            <td></td>
+                                            <td>{{vi.a_timelog.name.title()}}</td>
+                                            <td>{{vi.a_timelog.contact}}</td>
+                                            <td>{{vi.a_timelog.place_from.title()}}</td>
+                                            {% if vi.active.visited_employee     == None %}
+                                            <td>None</td>
+                                            {% else %}
+                                            <td> {{vi.active.visited_employee.employee_name.title()}} </td>
+                                            {% endif %}
+
+                                            <td> {{vi.active.visiting_purpose.title()}}</td>
+                                            <td>{{vi.in_time}}</td>
+                                            <td>{{vi.out_time}}</td>
+                                            <td>{{vi.duration}}</td>
+                                    </tr>
+                                    {% endfor %}    
+                                </tbody>
+                            </table>
+                        </div>
+                        {% endif %}
                     </div>
         </div>
         <script src="{{url_for('static', filename='js/jquery-3.4.js')}}"></script>

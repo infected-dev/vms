@@ -11,7 +11,7 @@ admin = Blueprint('admin', __name__)
 @login_required
 def admin_main():
     vehicle_types = VehicleTypes.query.all()
-    departments = Department.query.all()
+    departments = Department.query.all()    
     employees = Employee.query.all()
     users = User.query.all()
     company_vehicles = CompanyVehicle.query.all()
@@ -23,7 +23,7 @@ def admin_main():
 def admin_dept():
     if request.form:
 
-        name = request.form.get('deptname')
+        name = request.form.get('deptname').upper()
         dept = Department.query.filter_by(department_name=name).first()
 
         if dept is None:
