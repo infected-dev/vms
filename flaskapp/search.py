@@ -20,7 +20,9 @@ def search_main():
                 search_visitor = Visitor.query.filter((Visitor.visitor_name == text_search) | (Visitor.visitor_contact == text_search)).all()
                 search_vehicle = Vehicle.query.filter_by(VeNO=text_search).first()
                 search_mill = CompanyVehicle.query.filter_by(comp_vehicle_no=text_search.upper()).first()
-                return render_template('search-results.html',text_search=text_search, search_visitor=search_visitor, search_vehicle=search_vehicle, search_mill=search_mill)
+                return render_template('search-results.html',text_search=text_search, 
+                    search_visitor=search_visitor, search_vehicle=search_vehicle, 
+                    search_mill=search_mill)
             else:
                 search_visitor = Visitor.query.filter((Visitor.visitor_name == text_search) | (Visitor.visitor_contact == text_search)).all()
                 search_vehicle = Vehicle.query.filter_by(VeNO=text_search).first()
@@ -33,7 +35,9 @@ def search_main():
                 elif search_mill:
                     count = len(search_mill)
                 
-                return render_template('search-results.html', count=count,text_search=text_search, search_visitor=search_visitor, search_vehicle=search_vehicle, search_mill=search_mill)  
+                return render_template('search-results.html', count=count,text_search=text_search, 
+                    search_visitor=search_visitor, search_vehicle=search_vehicle, 
+                    search_mill=search_mill)  
     return render_template('search-results.html', text_search=text_search)
 
 

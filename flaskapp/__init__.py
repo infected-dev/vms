@@ -33,20 +33,20 @@ def load_user(User_id):
      return User.query.get(int(User_id))
 
 
-from .admin import admin as admin_blueprint
-app.register_blueprint(admin_blueprint)
-
-
-from .search import search as search_blueprint
-app.register_blueprint(search_blueprint)
+from .base import base as base_blueprint
+app.register_blueprint(base_blueprint)
 
 
 from .auth import auth as auth_blueprint
 app.register_blueprint(auth_blueprint)
 
 
-from .base import base as base_blueprint
-app.register_blueprint(base_blueprint)
+from .admin import admin as admin_blueprint
+app.register_blueprint(admin_blueprint)
+
+
+from .search import search as search_blueprint
+app.register_blueprint(search_blueprint)
 
 
 from .dataentry import dataentry as dataentry_blueprint

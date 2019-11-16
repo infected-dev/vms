@@ -7,6 +7,7 @@ from . import db
 admin = Blueprint('admin', __name__)
 
 
+#Main Page Render Function
 @admin.route('/admin')
 @login_required
 def admin_main():
@@ -16,9 +17,12 @@ def admin_main():
     users = User.query.all()
     company_vehicles = CompanyVehicle.query.all()
     visitors = Visitor.query.all()
-    return render_template('admin.html',visitors=visitors,company_vehicles=company_vehicles, vehicle_types=vehicle_types, departments=departments, employees=employees, users=users)
+    return render_template('admin.html',visitors=visitors,
+        company_vehicles=company_vehicles, vehicle_types=vehicle_types, 
+        departments=departments, employees=employees, users=users)
 
 
+#Add new Departments
 @admin.route('/admin/post', methods=['POST'])
 def admin_dept():
     if request.form:
@@ -37,6 +41,7 @@ def admin_dept():
             return redirect(url_for('admin.admin_main'))
 
 
+#Delete Functions for Most of Admin Masters (Departments, Employees, Vehicles, Users)
 @admin.route('/admin/delete', methods=['POST'])
 def admin_delete():
     dept_id = request.form.get('dept_id')
@@ -69,6 +74,7 @@ def admin_delete():
         return redirect(url_for('admin.admin_main'))
 
 
+#Add new Employee to a Particular Department
 @admin.route('/admin/post/employee', methods=['POST'])
 def admin_employee():
     if request.form:
@@ -85,8 +91,9 @@ def admin_employee():
         else:
             flash('Employee Already Exists')
             return redirect(url_for('admin.admin_main'))
-            
 
+     
+#Add new Vehicle Type
 @admin.route('/admin/post/vehicletype', methods=['POST'])
 def admin_vehicletype():
     if request.form:
@@ -103,16 +110,20 @@ def admin_vehicletype():
         return redirect(url_for('admin.admin_main'))
 
 
+#Add new Company Vehicle 
 @admin.route('/admin/post/compnayvehicles', methods=['POST'])
 def admin_company_vehicles():
     if request.form:
-        vehicle = CompanyVehicle(comp_vehicle_no=request.form.get('vehicleno').upper(), vehicle_type=int(request.form.get('vehicletype')), model_name=request.form.get('modelname'))
+        vehicle = CompanyVehicle(comp_vehicle_no=request.form.get('vehicleno').upper(), 
+            vehicle_type=int(request.form.get('vehicletype')),
+            model_name=request.form.get('modelname'))
         db.session.add(vehicle)
         db.session.commit()
         flash('Company Vehicle Added')
         return redirect(url_for('admin.admin_main'))
 
 
+#Add new User
 @admin.route('/admin/post/user', methods=['POST'])
 def admin_user():
     if request.form:

@@ -38,7 +38,7 @@ def dashboard():
     
     
 
-    return render_template('test-dashboard-front.html',legend=legend, total_count=total_count, 
+    return render_template('dashboard-visitors.html',legend=legend, total_count=total_count, 
         query_visitors_all=query_visitors_all, query_visitors_today=query_visitors_today, dept_count=dept_count)
 
 @report.route('/dashbaord/vehicles')
@@ -47,32 +47,29 @@ def dashboard_vehicle():
     ## Daily Vehicles and Visitors Count ##
     query_vehicles_today = Vehicle.query.filter_by(VeEntryDate=today).count()
     query_vehicles_all = Vehicle.query.count()
-    return render_template('dashboard-vehicles.html', query_vehicles_all=query_vehicles_all, query_vehicles_today=query_vehicles_today)
+    return render_template('dashboard-vehicles.html', query_vehicles_all=query_vehicles_all, 
+        query_vehicles_today=query_vehicles_today)
 
 
-@report.route('/test-dashboard-report/')
+@report.route('/report/visitors')
 def report_main():
     error = None
     today = datetime.now().date()
     yesterday = today - timedelta(days=1)
     departments = Department.query.all()
     date = yesterday
-    
-    
-        
-
     visitors = Timesheet_Visitor.query.all()
     vehicles = Vehicle.query.all()
-    return render_template('test-dashbaord-report_visitor.html',departments=departments, date=date.strftime('%d-%b-%Y')
+    return render_template('report-visitors.html',departments=departments, date=date.strftime('%d-%b-%Y')
     , visitors=visitors, vehicles=vehicles, error=error)
 
-@report.route('/test-dashboard-report/vehicles/')
+@report.route('/report/vehicles')
 def report_vehicles():
     query_vehicles_outside = Vehicle.query.all()
-    return render_template('test-dashbaord-report_vehicle.html',query_vehicles_outside=query_vehicles_outside 
+    return render_template('report-vehicles.html',query_vehicles_outside=query_vehicles_outside 
        )
 
-@report.route('/test-dashboard-report/mill/')
+@report.route('/report/vehicles/mill/')
 def mill_report():
     if request.args:
         query_vehicles_mill = CompanyTimesheet.query.all()  
@@ -80,12 +77,13 @@ def mill_report():
         comp_veh_id = request.args['comp_vehicle']
         comp_vehicle = CompanyVehicle.query.get(comp_veh_id)
         timesheet= comp_vehicle.timesheet   
-        return render_template('test-dashboard-report_mill.html',timesheet=timesheet,query_comp_vehicles=query_comp_vehicles,
+        return render_template('report-mill.html',timesheet=timesheet,query_comp_vehicles=query_comp_vehicles,
         query_vehicles_mill=query_vehicles_mill,
        )
     query_vehicles_mill = CompanyTimesheet.query.all()
     query_comp_vehicles = CompanyVehicle.query.all()
-    return render_template('test-dashboard-report_mill.html', query_comp_vehicles=query_comp_vehicles, query_vehicles_mill=query_vehicles_mill)
+    return render_template('report-mill.html', query_comp_vehicles=query_comp_vehicles, 
+        query_vehicles_mill=query_vehicles_mill)
 
 @report.route('/print-report', methods=['POST'])
 def report_print():
@@ -120,7 +118,8 @@ def report_print():
             title = 'Visitors Records by Department'
             count = len(filtered_list)
            
-            return render_template('report-visitors-print.html',department=department, title=title, count=count, filtered_list=filtered_list, date=date)
+            return render_template('report-visitors-print.html',department=department, title=title, count=count, 
+                filtered_list=filtered_list, date=date)
 
 
 @report.route('/print-slip', methods=['POST'])
@@ -128,4 +127,4 @@ def printslip():
     if request.form:
         get_id = int(request.form.get('vi_id'))
         visitor = Timesheet_Visitor.query.filter_by(id=get_id).first()
-        return render_template('printformat.html', visitor=visitor)        
+        return render_template('print-visitor-slip.html', visitor=visitor)        

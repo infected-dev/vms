@@ -1,12 +1,10 @@
 from . import db
 from flask_login import UserMixin
-
 from flaskapp import app
+
 
 class Vehicle(db.Model):
     __tablename__ = "vehicles"
-
-    
 
     VeEntryDate = db.Column(db.Date)
     VeID = db.Column(db.Integer, unique=True, nullable=False, primary_key=True)
@@ -19,8 +17,10 @@ class Vehicle(db.Model):
     OutTime = db.Column(db.Time)
     TotalDuration = db.Column(db.String(25))
 
+
 class VehicleTypes(db.Model):
     __tablename__ = "vehicletypes"
+
     id = db.Column(db.Integer, primary_key=True)
     typename = db.Column(db.String(10))
     vehicles = db.relationship('Vehicle', backref='vehicle_type')
@@ -28,11 +28,7 @@ class VehicleTypes(db.Model):
 
 
 class CompanyVehicle(db.Model):
-    
-
     __tablename__ = "companyvehicles"
-
-    
 
     id = db.Column(db.Integer, primary_key=True)
     comp_vehicle_no = db.Column(db.String(20), unique=True)
@@ -40,10 +36,9 @@ class CompanyVehicle(db.Model):
     model_name = db.Column(db.String(20))
     timesheet = db.relationship('CompanyTimesheet', backref='comp_timesheet')
 
+
 class CompanyTimesheet(db.Model):
     __tablename__ = 'companyvehiclestime'
-
-    
 
     id = db.Column(db.Integer, primary_key=True)
     comp_vehicle_id = db.Column(db.Integer, db.ForeignKey('companyvehicles.id'))
@@ -52,6 +47,7 @@ class CompanyTimesheet(db.Model):
     InTime = db.Column(db.Time)
     OutTime = db.Column(db.Time)
     duration = db.Column(db.String(25)) 
+
 
 class Visitor(db.Model):
     __tablename__ = 'visitor'
@@ -62,7 +58,8 @@ class Visitor(db.Model):
     place_from = db.Column(db.String(20))
     activities = db.relationship('Activity', backref='activity')
     a_timesheet = db.relationship('Timesheet_Visitor', backref="a_timelog")
-    
+
+   
 class Activity(db.Model):
     __tablename__ = "activity"
 
@@ -85,6 +82,7 @@ class Timesheet_Visitor(db.Model):
     out_time = db.Column(db.Time)
     duration = db.Column(db.String(20))
 
+
 class Department(db.Model):
     __tablename__ = "department"
     id = db.Column(db.Integer, primary_key=True)
@@ -94,6 +92,7 @@ class Department(db.Model):
     outside_vehicles = db.relationship('Vehicle', backref='outside_dept')
     mill_vehicles = db.relationship('CompanyTimesheet', backref='mill_dept')
 
+
 class Employee(db.Model):
     __tablename__ = "employee"
     
@@ -101,6 +100,7 @@ class Employee(db.Model):
     employee_name =  db.Column(db.String(80), nullable=False)
     department_id = db.Column(db.Integer, db.ForeignKey('department.id'))
     activity_emp = db.relationship('Activity' , backref='visited_employee')
+
 
 class User(UserMixin ,db.Model):
     __tablename__ = "users"
@@ -113,6 +113,7 @@ class User(UserMixin ,db.Model):
     @property
     def user_role(self):
         return self.role_id
+
 
 class Role(db.Model):
     __tablename__ = 'roles'

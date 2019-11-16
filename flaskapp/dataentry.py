@@ -8,6 +8,7 @@ from . import db
 dataentry = Blueprint('dataentry', __name__)
 
 
+#New Mill Vehicle Time Record Function
 @dataentry.route('/vehicles/mill', methods=['POST'])
 def mill_vehicles():
     if request.form:
@@ -24,6 +25,7 @@ def mill_vehicles():
         return redirect(url_for('dataentry.post_mill'))
 
 
+#Update Existsing Mill Vehicle Time Record InTime
 @dataentry.route('/vehicles/mill/update', methods=['POST'])
 def mill_vehicles_update():
     if request.form:
@@ -42,6 +44,7 @@ def mill_vehicles_update():
         return jsonify({'status':'OK'})
 
 
+#New Outside Vehicle Time Record Function
 @dataentry.route('/vehicles', methods=['POST'])
 def vehicles_post():
             entrydate = datetime.strptime(
@@ -57,13 +60,15 @@ def vehicles_post():
                 return redirect(url_for('dataentry.post_vehicles'))
             else:
                 vehicle = Vehicle(VeEntryDate=entrydate, VeNO=VeNO, VehicleTypeName_id=request.form.get(
-                    'vehicletype'), VendorName=request.form.get('vendorname').upper(),visited_department=department_id, InTime=InTime, TotalDuration='none')
+                    'vehicletype'), VendorName=request.form.get('vendorname').upper(),
+                    visited_department=department_id, InTime=InTime, TotalDuration='none')
                 db.session.add(vehicle)
                 db.session.commit()
                 flash('New Vehicle Added')
             return redirect(url_for('dataentry.post_vehicles'))
 
 
+#Update Exisiting Outside Vehicle Time Record InTime
 @dataentry.route('/vehicles/update', methods=['POST'])
 def update_vehicle():
     if request.form:
@@ -83,6 +88,7 @@ def update_vehicle():
         return jsonify({'status': 'OK'})
 
 
+#Delete Exsisiting Outside Vehicle Record
 @dataentry.route('/vehicles/delete', methods=['POST'])
 def delete_vehicles():
     vid = request.form.get('vid')
@@ -93,7 +99,8 @@ def delete_vehicles():
     return redirect(url_for('dataentry.vehicles'))
 
 
-@dataentry.route('/test-database-postformat')
+#Main Page Render Function for Visitor Data Entry
+@dataentry.route('/DataentryVisitor')
 def post_format():
     today_date = datetime.now().date()
     today_time = (datetime.now().time()).strftime("%H:%M")
@@ -102,11 +109,13 @@ def post_format():
     employees = Employee.query.all()
     types = VehicleTypes.query.all()
     visitors = Visitor.query.all()
-    return render_template('test-dashboard-postformat.html', today_time=today_time, today_date=today_date, types=types, employees=employees,
-                           today_visitors=today_visitors, visitors=visitors)
+    return render_template('dataentry-visitors.html', today_time=today_time, 
+        today_date=today_date, types=types, employees=employees, 
+        today_visitors=today_visitors, visitors=visitors)
 
 
-@dataentry.route('/test-dashboard-vehicles')
+#Main Page Render Function for Outside Vehicle DataEntry
+@dataentry.route('/DataentryVehicle')
 def post_vehicles():
     today_date = datetime.now().date()
     yesterday = today_date - timedelta(days=1)
@@ -114,9 +123,11 @@ def post_vehicles():
     today_vehicles = Vehicle.query.filter_by(VeEntryDate=yesterday).all()
     types = VehicleTypes.query.all()
     departments = Department.query.all()
-    return render_template('test-dashboard-vehicles.html',departments=departments, today_vehicles=today_vehicles,today_date=yesterday,today_time=today_time, types=types)
+    return render_template('dataentry-vehicle.html',departments=departments, today_vehicles=today_vehicles,today_date=yesterday,today_time=today_time, types=types)
 
-@dataentry.route('/test-dashboard-vehicles/mill')
+
+#Main Page Render Function for Mill Vehicle DataEntry
+@dataentry.route('/DataentryVehicle/mill')
 def post_mill():
     today_date = datetime.now().date()
     yesterday = today_date - timedelta(days=1)
@@ -124,19 +135,21 @@ def post_mill():
     comp_vehicles = CompanyVehicle.query.all()  
     comp_vehicles_today = CompanyTimesheet.query.filter_by(date=yesterday).all()
     departments = Department.query.all()
-    return render_template('test-dashboard-mill.html',departments=departments, today_date=yesterday, today_time=today_time, comp_vehicles=comp_vehicles, comp_vehicles_today=comp_vehicles_today)
+    return render_template('dataentry-mill.html',departments=departments, today_date=yesterday, today_time=today_time, comp_vehicles=comp_vehicles, comp_vehicles_today=comp_vehicles_today)
 
 
+#New Visitor DataEntry Function
 @dataentry.route('/test-postformat/visitor', methods=['POST'])
 def visitors_post():
    if request.form:
        name = request.form.get('visitorname')
        contact = request.form.get('visitorcontact')
        place_from = request.form.get('visitorcompany')
-
+       #Checks if the Visitor Already existis in the master, if it does only the id is taken over
        if Visitor.query.filter_by(contact=contact).first():
            visitor = Visitor.query.filter_by(contact=contact).first()
        else:
+           #Adds new Visitor if it doesnt exist
             visitor = Visitor(name=name, contact=contact, place_from=place_from)
             db.session.add(visitor)
             db.session.commit()
@@ -158,7 +171,7 @@ def visitors_post():
        db.session.commit()
        return redirect(url_for('dataentry.post_format'))    
 
-
+#Update Exsisting Visitor Record OutTime
 @dataentry.route('/visitors/update', methods=['POST'])
 def visitors_update():
     if request.form:
@@ -178,7 +191,7 @@ def visitors_update():
     return jsonify({'status':'ok'})
 
 
-
+#Delete Exsisting Visitor Record
 @dataentry.route('/visitors/delete', methods=['POST'])
 def visitors_delete():
     vid = request.form.get('vi_id')
