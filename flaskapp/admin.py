@@ -97,7 +97,7 @@ def admin_employee():
 @admin.route('/admin/post/vehicletype', methods=['POST'])
 def admin_vehicletype():
     if request.form:
-        type_name = request.form.get('vehicletype')
+        type_name = request.form.get('vehicletype').upper()
         check_type = VehicleTypes.query.filter_by(typename=type_name).first()
         if check_type is None:
             types = VehicleTypes(typename=type_name)
@@ -116,7 +116,7 @@ def admin_company_vehicles():
     if request.form:
         vehicle = CompanyVehicle(comp_vehicle_no=request.form.get('vehicleno').upper(), 
             vehicle_type=int(request.form.get('vehicletype')),
-            model_name=request.form.get('modelname'))
+            model_name=request.form.get('modelname').upper())
         db.session.add(vehicle)
         db.session.commit()
         flash('Company Vehicle Added')

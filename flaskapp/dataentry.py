@@ -142,7 +142,7 @@ def post_mill():
 @dataentry.route('/test-postformat/visitor', methods=['POST'])
 def visitors_post():
    if request.form:
-       name = request.form.get('visitorname')
+       name = request.form.get('visitorname').upper()
        contact = request.form.get('visitorcontact')
        place_from = request.form.get('visitorcompany')
        #Checks if the Visitor Already existis in the master, if it does only the id is taken over
