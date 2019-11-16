@@ -1,6 +1,7 @@
 ﻿<!doctype html>
 <html lang="en">
 
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -10,8 +11,6 @@
     <link rel="icon" href="{{url_for('static', filename='images/lax.ico')}}">
 
     <title>{% block pagetitle %} Data Entry And Reporting Application {% endblock %}</title>
-
-
 
     <!-- Bootstrap core CSS -->
     <link href="{{url_for('static', filename='css/bootstrap.min.css')}}" rel="stylesheet">
@@ -96,9 +95,10 @@
 </head>
 
 <body>
-
+<!-- Main Top Nav Bar -->
     <nav style="height: 60px;" class="fixed-top text-dark navbar navbar-dark bg-light flex-md-nowrap border-bottom ">
-             <p  style="font-weight: 400;" class="p-3 lead h5"><img class="mr-3" src="{{url_for('static', filename='images/favicon.png')}}" />Visitor Management System</p>
+             <p  style="font-weight: 400;" class="p-3 lead h5">
+                <img class="mr-3" src="{{url_for('static', filename='images/favicon.png')}}" />Visitor Management System</p>
        <!--  <form id="navbarSearchForm" class="navbar-form form-row  justify-content-center" role="search" action="{{url_for('search.search_main')}}">
             <div class="col-md-5 col-sm-4">
                 <div class="shadow input-group">
@@ -123,7 +123,7 @@
             </li>
         </ul>
     </nav>
-    
+<!-- Main Side NavBar -->
     <nav style="margin-top: 59px; " id="sidenav-main" class="collapse d-none d-md-block bg-light sidebar border-top">
         <div id="sidenav-styles" class="sidebar-sticky rounded-top accordion">
             {% if current_user.user_role == 2 %}
