@@ -87,16 +87,46 @@ def update_vehicle():
                 db.session.commit()             
         return jsonify({'status': 'OK'})
 
+@dataentry.route('/vehicles/update/dept', methods=['POST'])
+def update_vehicle_dept():
+    if request.form:
+            id = request.form.get('oid')
+            dept = int(request.form.get('dept'))
+            vehicle = Vehicle.query.get(id)
+            vehicle.visited_department = dept
+            db.session.commit()
+            return jsonify({'status':'ok'})
+
+@dataentry.route('/vehicles/mill/update/dept', methods=['POST'])
+def update_mill_dept():
+    if request.form:
+            id = request.form.get('oid')
+            
+            dept = int(request.form.get('dept'))
+           
+            timelog = CompanyTimesheet.query.get(id)
+            timelog.visited_department = dept
+            db.session.commit()
+            return jsonify({'status':'ok'})
 
 #Delete Exsisiting Outside Vehicle Record
 @dataentry.route('/vehicles/delete', methods=['POST'])
 def delete_vehicles():
-    vid = request.form.get('vid')
+    vid = int(request.form.get('vid'))
     vehicle = Vehicle.query.filter_by(VeID=vid).first()
     db.session.delete(vehicle)
     db.session.commit()
-    flash('Vehicle Deleted')
-    return redirect(url_for('dataentry.vehicles'))
+    flash('Outside Vehicle Record Deleted')
+    return redirect(url_for('dataentry.post_vehicles'))
+
+@dataentry.route('/vehicles/mill/delete', methods=['POST'])
+def delete_mill():
+    vid = int(request.form.get('vid'))
+    vehicle = CompanyTimesheet.query.filter_by(id=vid).first()
+    db.session.delete(vehicle)
+    db.session.commit()
+    flash('Mill Vehicle Record Deleted')
+    return redirect(url_for('dataentry.post_mill'))
 
 
 #Main Page Render Function for Visitor Data Entry
@@ -194,8 +224,13 @@ def visitors_update():
 #Delete Exsisting Visitor Record
 @dataentry.route('/visitors/delete', methods=['POST'])
 def visitors_delete():
-    vid = request.form.get('vi_id')
-    visitor = Visitor.query.filter_by(id=vid).first()
+    
+    vid = int(request.form.get('vi_id'))
+    page = request.form.get('page')
+    visitor = Timesheet_Visitor.query.get(vid)
     db.session.delete(visitor)
     db.session.commit()
-    return redirect(url_for('dataentry.post_format'))
+    if page == 'dataentry':
+        return redirect(url_for('dataentry.post_format'))
+    else:
+        return redirect(url_for('report.report_main'))

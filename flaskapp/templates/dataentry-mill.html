@@ -136,7 +136,12 @@ Mill Vehicle Data Entry
                                                                             name="intime" id="intime{{v.id}}"></td>
                                                                     <td><button attributes="{{v.id}}" type="submit" class="updatemill btn btn-sm  btn-warning" value="UPDATE">Update</button>
                                                                     </button></td> 
-                                                                       
+                                                                    <td>
+                                                                        <form action="{{url_for('dataentry.delete_mill')}}" method="POST">
+                                                                            <input type="hidden" value="{{v.id}}" name="vid">
+                                                                            <input class="btn btn-sm btn-danger" type="submit" value="Delete">
+                                                                        </form>
+                                                                    </td> 
                                                                     </tr> 
                                                                     {% endfor %}
                                                     </tbody>

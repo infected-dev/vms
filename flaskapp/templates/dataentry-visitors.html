@@ -99,8 +99,8 @@ Visitor Data Entry
 
                         <!--Compnay From Input-->
                         <div class="form-group mb-2">
-                            <label class="sr-only" for="visitingpurpose">Company From: </label>
-                            <input style="text-transform:uppercase;" name="visitingpurpose" class="form-control"
+                            <label class="sr-only" for="visitingpurpose">Visiting Purpose: </label>
+                            <input required style="text-transform:uppercase;" name="visitingpurpose" class="form-control"
                                 type="text" placeholder="Visiting Purpose">
                         </div>
                         <div class="form-group form-row mb-2">
@@ -152,6 +152,12 @@ Visitor Data Entry
                                 <td><button class="btn btn-primary btn-sm">Edit</button></td>
                                 {% endif %}
 
+                                <td><form action="{{url_for('dataentry.visitors_delete')}}" method="POST">
+                                    <input type="hidden" name="vi_id" value="{{visitor.id}}">
+                                    <input type="hidden" name="page" value="dataentry">
+                                    <input value="Delete" class="btn btn-danger btn-sm" type="submit">
+                                </form></td>
+
                                 <td><form action="{{url_for('report.printslip')}}" method="POST">
                                         <input id="vi_id{{visitor.id}}" name="vi_id" type="hidden" value="{{visitor.id}}">
                                         <button attributes="{{visitor.id}}" type="submit" id="button"
@@ -159,7 +165,7 @@ Visitor Data Entry
 
                                 </form>
                                    
-                                        </td>
+                                </td>
 
 
 

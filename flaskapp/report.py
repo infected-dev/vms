@@ -65,9 +65,10 @@ def report_main():
 
 @report.route('/report/vehicles')
 def report_vehicles():
+    depts = Department.query.all()
     query_vehicles_outside = Vehicle.query.all()
-    return render_template('report-vehicles.html',query_vehicles_outside=query_vehicles_outside 
-       )
+    return render_template('report-vehicles.html',query_vehicles_outside=query_vehicles_outside, 
+       depts=depts)
 
 @report.route('/report/vehicles/mill/')
 def mill_report():
@@ -80,9 +81,10 @@ def mill_report():
         return render_template('report-mill.html',timesheet=timesheet,query_comp_vehicles=query_comp_vehicles,
         query_vehicles_mill=query_vehicles_mill,
        )
+    depts = Department.query.all()
     query_vehicles_mill = CompanyTimesheet.query.all()
     query_comp_vehicles = CompanyVehicle.query.all()
-    return render_template('report-mill.html', query_comp_vehicles=query_comp_vehicles, 
+    return render_template('report-mill.html',depts=depts, query_comp_vehicles=query_comp_vehicles, 
         query_vehicles_mill=query_vehicles_mill)
 
 @report.route('/print-report', methods=['POST'])
@@ -107,6 +109,10 @@ def report_print():
             query = CompanyTimesheet.query.filter_by(date=date).all()
             count = len(query)
             return render_template('report-vehicles-print.html', query=query, title=title,count=count, date=date)
+        elif print_id == '8':
+            title = 'Visitor Records Sorted by Employee Visited'
+            query = Timesheet_Visitor.query.filter_by(date=date).all()
+            return render_template('report-visitors-print.html',count=count, query=query, date=date, title=title)
         elif print_id == '9': 
             department_id = int(request.form.get('department'))
             department = Department.query.get(department_id)
