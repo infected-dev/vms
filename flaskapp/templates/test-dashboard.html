@@ -332,7 +332,7 @@
         <!--DataTable for all mill vehicles report-->
         <script type="text/javascript">
             $(document).ready(function () {
-                $('#all-millvehiclereport').DataTable({
+                $('#all-millvehiclereport,#all-vehiclereport').DataTable({
                     dom: 'Bfrtip',
                     buttons: [
                         'print'
@@ -371,7 +371,7 @@
                         buttons: [
                             "print"
                         ],
-                        "pagingType": "simple",
+                        
                         "info": false,
                         "filter": false, // "simple" option for 'Previous' and 'Next' buttons only
                     });
@@ -389,8 +389,8 @@
         </script>
         
         <script>
-                var my_options = $("select option");
-                var selected = $("select").val();
+                var my_options = $("#emp option");
+                var selected = $("#emp").val();
         
                 my_options.sort(function(a,b) {
                 if (a.text > b.text) return 1;
@@ -398,8 +398,8 @@
                 return 0
         })
         
-            $("select").empty().append( my_options );
-            $("select").val(selected);
+            $("#emp").empty().append( my_options );
+            $("#emp").val(selected);
         
                
             </script>

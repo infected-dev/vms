@@ -50,7 +50,7 @@ Outside Vehicles Report
                 </div>
                 <div class="card-body">
                     <table id='all-vehiclereport'
-                        class=" table table-sm table-bordered table-striped " style="width: 100%">
+                        class=" table  table-sm table-bordered table-striped " style="width: 100%">
                         <thead class="">
                             <tr>
                                 
@@ -61,7 +61,7 @@ Outside Vehicles Report
                                 <th>In Time</th>
                                 <th>Out Time</th>
                                 <th>Total Duration</th>
-    
+                                <Th>Actions</Th>
                             </tr>
                         </thead>
                         <tbody>
@@ -71,21 +71,52 @@ Outside Vehicles Report
                                 <td>{{v.VeEntryDate.strftime('%d-%m-%Y')    }}</td>
                                 <td>{{v.VeNO}}</td>
                                 <td>{{v.VendorName}}</td>
-                                <td>{{v.outside_dept.dept_name}}</td>
+
+                                <td>{{v.outside_dept.department_name}}</td>
+
                                 <td> {{v.InTime}} </td>
                                 <td>{{v.OutTime}} </td>
                                 <td> {{v.TotalDuration}}</td>
+                                <td>
+                                    <button data-id="{{v.VeID}}" type="button" data-toggle="modal" data-target="#updatemodal">Update</button>         
+                                </td>
                             </tr>
                             {% endfor %}
+                            <div class="modal fade" id="updatemodal" tabindex="-1" role="dialog" aria-labelledby="updatemodal" aria-hidden="true">
+                                    <div class="modal-dialog" role="form">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Update Entry</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                    <form id="deptform" class="form-row" action="{{url_for('dataentry.update_vehicle_dept')}}" method="POST"></form>
+                                                        <input type="hidden" value="2" name="table">
+                                                        <input type="hidden"  id="oid" name="oid">
+                                                    <label class=" mb-2 h6 col-form-label" for="#dept">Select Department : </label>
+                                                    <select id="dept"  class="form-control" name="dept" autofocus>
+                                                        {% for d in depts %}
+                                                        <option  value="{{d.id}}">{{d.department_name}}</option>
+                                                        {% endfor %}
+                                                        </select>
+                                                    <input id="updatedeptbtn" type="submit"  class="mt-2 btn btn-primary btn-block btn-sm" value="Update">
+                                                    
+                                                </form>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                         </tbody>
                         <tfoot>
                             <th>Entry Date</th>
                             <th>Vehicle No</th>
                             <th>Vendor Name</th>
-                            <th>Vehicle Type</th>
+                            <th>Department</th>
                             <th>In Time</th>
                             <th>Out Time</th>
                             <th>Total Duration</th>
+                            <th>Actions</th>
                         </tfoot>
                     </table>
     
@@ -105,6 +136,33 @@ Outside Vehicles Report
 {% endblock %}
 
 {% block script %}
+<script>
+    $('#updatemodal').on('show.bs.modal', function(e){
+        var id = $(e.relatedTarget).data('id');
+        $('#oid').val(id);
+        var dept = $('#dept').val();
+    });
+
+    $('#updatedeptbtn').on('click', function(){
+       
+        var id = $('#oid').val();
+        var dept_id = $('#dept').val();
+
+        req = $.ajax({
+            url : '/vehicles/update/dept',
+            type : 'POST',
+            data : {oid : id, dept : dept_id}
+        });
+        
+    });
+
+    $('#updatedeptbtn').click(function(){
+        $('#updatemodal').modal('hide');
+        location.reload();
+    });
+
+</script>
+
 <script>
     $('.modal').on('shown.bs.modal', function() {
   $(this).find('[autofocus]').focus();

@@ -63,6 +63,7 @@
                                             <th>Out Time</th>
                                             <th>In Time</th>
                                             <th>Total Duration</th>
+                                            <th>Action</th>
         
                                         </tr>
                                     </thead>    
@@ -76,6 +77,7 @@
                                             <td>{{v.OutTime}} </td>
                                             <td> {{v.InTime}} </td>
                                             <td> {{v.duration}}</td>
+                                            <td><button data-id="{{v.id}}" data-toggle="modal" data-target="#millupdatemodal" class="btn btn-sm btn-warning">Update</button></td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>
@@ -88,6 +90,7 @@
                                             <th>Out Time</th>
                                             <th>In Time</th> 
                                             <th>Total Duration</th>
+                                            <th>Action</th>
         
                                         </tr>
                                     </tfoot>
@@ -96,6 +99,31 @@
                             </div>
                     </div>
             </div>
+            <div class="modal fade" id="millupdatemodal" tabindex="-1" role="dialog" aria-labelledby="millupdatemodal" aria-hidden="true">
+                    <div class="modal-dialog" role="form">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Update Entry</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            </div>
+                            <div class="modal-body">
+                                    <form id="deptform" class="form-row" action="{{url_for('dataentry.update_vehicle_dept')}}" method="POST"></form>
+                                        
+                                        <input type="hidden"  id="millid" name="id">
+                                    <label class=" mb-2 h6 col-form-label" for="#dept">Select Department : </label>
+                                    <select id="dept"  class="form-control" name="dept" autofocus>
+                                        {% for d in depts %}
+                                        <option  value="{{d.id}}">{{d.department_name}}</option>
+                                        {% endfor %}
+                                        </select>
+                                    <input id="millupdatedeptbtn" type="submit"  class="mt-2 btn btn-primary btn-block btn-sm" value="Update">
+                                    
+                                </form>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
     </div>
       
     <div class="row">
@@ -166,6 +194,34 @@
 
 
 {% block script %}
+<script>
+    $('#millupdatemodal').on('show.bs.modal', function(e){
+        var id = $(e.relatedTarget).data('id');
+        $('#millid').val(id);
+        var dept = $('#dept').val();
+    });
+
+    $('#millupdatedeptbtn').on('click', function(){
+       
+        var id = $('#millid').val();
+        console.log(id)
+        var dept_id = $('#dept').val();
+        console.log(dept_id)
+        var table_id = 1;
+        
+        req = $.ajax({
+            url : '/vehicles/mill/update/dept',
+            type : 'POST',
+            data : {table:table_id , oid : id, dept : dept_id}
+        });
+        
+    });
+
+    $('#millupdatedeptbtn').click(function(){
+        $('#updatemodal').modal('hide');
+        location.reload();
+    });
+</script>
 <script>
     $('.modal').on('shown.bs.modal', function() {
   $(this).find('[autofocus]').focus();

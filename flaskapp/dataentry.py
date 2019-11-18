@@ -87,6 +87,27 @@ def update_vehicle():
                 db.session.commit()             
         return jsonify({'status': 'OK'})
 
+@dataentry.route('/vehicles/update/dept', methods=['POST'])
+def update_vehicle_dept():
+    if request.form:
+            id = request.form.get('oid')
+            dept = int(request.form.get('dept'))
+            vehicle = Vehicle.query.get(id)
+            vehicle.visited_department = dept
+            db.session.commit()
+            return jsonify({'status':'ok'})
+
+@dataentry.route('/vehicles/mill/update/dept', methods=['POST'])
+def update_mill_dept():
+    if request.form:
+            id = request.form.get('oid')
+            
+            dept = int(request.form.get('dept'))
+           
+            timelog = CompanyTimesheet.query.get(id)
+            timelog.visited_department = dept
+            db.session.commit()
+            return jsonify({'status':'ok'})
 
 #Delete Exsisiting Outside Vehicle Record
 @dataentry.route('/vehicles/delete', methods=['POST'])
@@ -194,8 +215,13 @@ def visitors_update():
 #Delete Exsisting Visitor Record
 @dataentry.route('/visitors/delete', methods=['POST'])
 def visitors_delete():
-    vid = request.form.get('vi_id')
-    visitor = Visitor.query.filter_by(id=vid).first()
+    
+    vid = int(request.form.get('vi_id'))
+    page = request.form.get('page')
+    visitor = Timesheet_Visitor.query.get(vid)
     db.session.delete(visitor)
     db.session.commit()
-    return redirect(url_for('dataentry.post_format'))
+    if page == 'dataentry':
+        return redirect(url_for('dataentry.post_format'))
+    else:
+        return redirect(url_for('report.report_main'))

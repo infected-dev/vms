@@ -145,6 +145,65 @@
                             </table>
                         </div>
                         {% endif %}
+
+                        {% if title == 'Visitor Records Sorted by Employee Visited' %}
+                        <div class="mr-2 mb-2 row">
+                             <div class="text-right ml-4">
+                                    <strong> Date: {{date.strftime('%d/%m/%Y')}}</strong>
+                            </div>
+                            <div class="col text-right">
+                                   <strong >Total Count:<span class="ml-2">{{count}}
+                                    </strong>
+                            </div>
+                        </div>
+                        <div id='tableclass' class="m">
+                            <table class="mb-4 table table-sm table-bordered">
+                                <thead >
+                                    <tr class="text-center">
+                                        <th>#</th>
+                                        <th>Visitor Name</th>
+                                        <th>Contact No</th>
+                                        <th>Compnay/From</th>
+                                        <th>Visiting Employee</th>
+                                        <th>Visiting Department</th>
+                                        <th>Visiting Purpose</th>
+                                        <th>In Time</th>
+                                        <th> Out Time </th>
+                                        <th>Total Duration </th>
+                                    </tr>
+                                </thead>
+                                
+                                <tbody>
+                                    {% for vi in query | sort(attribute='active.visited_employee.employee_name') %}
+                                     <tr>
+                                            <td></td>
+                                            <td>{{vi.a_timelog.name.title()}}</td>
+                                            <td>{{vi.a_timelog.contact}}</td>
+                                            <td>{{vi.a_timelog.place_from.title()}}</td>
+                                            {% if vi.active.visited_employee     == None %}
+                                            <td>None</td>
+                                            {% else %}
+                                            <td> {{vi.active.visited_employee.employee_name.title()}} </td>
+                                            {% endif %}
+
+
+                                            {% if vi.a_timelog.visiting_department == None   %}
+                                            <td>None</td>
+                                            {% else %}
+                                            <td>{{vi.active.visited_dept.department_name.title()}}</td>
+                                            {% endif %}
+
+
+                                            <td> {{vi.active.visiting_purpose.title()}}</td>
+                                            <td>{{vi.in_time}}</td>
+                                            <td>{{vi.out_time}}</td>
+                                            <td>{{vi.duration}}</td>
+                                    </tr>
+                                    {% endfor %}    
+                                </tbody>
+                            </table>
+                        </div>
+                        {% endif %}
                     </div>
         </div>
         <script src="{{url_for('static', filename='js/jquery-3.4.js')}}"></script>
