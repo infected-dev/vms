@@ -112,12 +112,21 @@ def update_mill_dept():
 #Delete Exsisiting Outside Vehicle Record
 @dataentry.route('/vehicles/delete', methods=['POST'])
 def delete_vehicles():
-    vid = request.form.get('vid')
+    vid = int(request.form.get('vid'))
     vehicle = Vehicle.query.filter_by(VeID=vid).first()
     db.session.delete(vehicle)
     db.session.commit()
-    flash('Vehicle Deleted')
-    return redirect(url_for('dataentry.vehicles'))
+    flash('Outside Vehicle Record Deleted')
+    return redirect(url_for('dataentry.post_vehicles'))
+
+@dataentry.route('/vehicles/mill/delete', methods=['POST'])
+def delete_mill():
+    vid = int(request.form.get('vid'))
+    vehicle = CompanyTimesheet.query.filter_by(id=vid).first()
+    db.session.delete(vehicle)
+    db.session.commit()
+    flash('Mill Vehicle Record Deleted')
+    return redirect(url_for('dataentry.post_mill'))
 
 
 #Main Page Render Function for Visitor Data Entry

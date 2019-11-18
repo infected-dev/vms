@@ -146,6 +146,13 @@ Outside Vehicle Data Entry
                                                                 class="updatevehicles btn btn-sm btn-warning"
                                                                 value="Update">Update</button>
                                                         </td>
+                                                        <td><form action="{{url_for('dataentry.delete_vehicles')}}" method="POST">
+                                                            <input type="hidden" value="{{v.VeID}}" name="vid">
+                                                                <input type="submit"
+                                                                class="btn btn-sm btn-danger"
+                                                                value="Delete">
+                                                        </form></td>
+                                                        
                                                    
                 
                                                 </tr>
