@@ -148,6 +148,9 @@ Visitor Data Entry
                                 
                                 <td><button attributes="{{visitor.id}}" type="submit" id="button"
                                         class="update btn btn-warning btn-sm">Update</button></td>
+                                {% if current_user.user_role == 2 %}
+                                <td><button class="btn btn-primary btn-sm">Edit</button></td>
+                                {% endif %}
 
                                 <td><form action="{{url_for('report.printslip')}}" method="POST">
                                         <input id="vi_id{{visitor.id}}" name="vi_id" type="hidden" value="{{visitor.id}}">
