@@ -102,7 +102,7 @@
         <nav style="height: 60px;" class="fixed-top text-dark navbar navbar-dark bg-light flex-md-nowrap border-bottom ">
             <p style="font-weight: 400;" class="p-3 lead h5">
                 <img class="mr-3" src="{{url_for('static', filename='images/favicon.png')}}" />Visitor Management System</p>
-            <!--  <form id="navbarSearchForm" class="navbar-form form-row  justify-content-center" role="search" action="{{url_for('search.search_main')}}">
+              <form id="navbarSearchForm" class="navbar-form form-row  justify-content-center" role="search" action="{{url_for('search.search_main')}}">
                 <div class="col-md-5 col-sm-4">
                     <div class="shadow input-group">
                         <div class="input-group-prepend"> 
@@ -115,7 +115,7 @@
                         <input type="submit" class="btn btn-warning " value="Search">
                 </div> 
             </form>
-        -->
+        
 
 
             <ul class="navbar-nav">
@@ -132,12 +132,12 @@
             <div id="sidenav-styles" class="sidebar-sticky rounded-top accordion">
                 {% if current_user.user_role == 2 %}
                 <h3
-                    class="hvr-sweep-to-bottom hvr-icon-hang sidebar-heading d-flex justify-content-between align-items-center px-3 mt-1 mb-1 text-muted">
+                    class="hvr-sweep-to-bottom  sidebar-heading d-flex justify-content-between align-items-center px-3 mt-1 mb-1 text-muted">
 
                     <a data-target="#manage-links" data-toggle="collapse"
-                        class="mt-4 d-flex align-items-center text-muted p-1" href="#">
+                        class="mt-4 d-flex align-items-center text-muted p-1 text-decoration-none" href="#">
                         <span style="font-size: 1.25rem;"> Manage</span>
-                        <i style="color:wheat;" class=" ml-3 fas fa-angle-down fa-2x hvr-icon"></i>
+                        <i style="color:wheat;" class=" ml-3 fas fa-angle-down fa-2x "></i>
                     </a>
                 </h3>
                 <ul id="manage-links" class="nav flex-column mb-2 collapse" data-parent="#sidenav-styles">
@@ -155,7 +155,7 @@
                     class="hvr-sweep-to-bottom sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
 
                     <a data-toggle="collapse" data-target="#dataentry-links"
-                        class="d-flex align-items-center text-muted mt-2 p-1" href="#">
+                        class="d-flex align-items-center text-muted mt-2 p-1 text-decoration-none" href="#">
                         <span style="font-size: 1.25rem;"> Data Entry</span>
                         <i style="color:wheat;" class=" ml-3 fas fa-angle-down fa-2x"></i>
                     </a>
@@ -168,7 +168,7 @@
                         </a>
                     </li>
                     <li class="  nav-item">
-                        <a class="nav-link" href="{{url_for('dataentry.post_vehicles')}}">
+                        <a class=" nav-link" href="{{url_for('dataentry.post_vehicles')}}">
                             <span style="font-size: 1rem;" data-feather="file-text">Vehicles</span>
 
                         </a>
@@ -187,7 +187,7 @@
                     class="hvr-sweep-to-bottom sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
 
                     <a data-toggle="collapse" data-target="#report-links"
-                        class="d-flex align-items-center text-muted mt-2 p-1" href="#">
+                        class="d-flex align-items-center text-muted mt-2 p-1 text-decoration-none" href="#">
                         <span style="font-size: 1.25rem;"> Reports</span>
                         <i style="color:wheat;" class=" ml-3 fas fa-angle-down fa-2x"></i>
                     </a>
@@ -216,7 +216,7 @@
                     class="hvr-sweep-to-bottom sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
 
                     <a data-target="#dashboard-links" data-toggle="collapse"
-                        class="d-flex align-items-center text-muted mt-2 p-1" href="#">
+                        class="d-flex align-items-center text-muted mt-2 p-1 text-decoration-none" href="#">
                         <span style="font-size: 1.25rem;"> DashBoard </span>
                         <i style="color:wheat;" class=" ml-3 fas fa-angle-down fa-2x"></i>
                     </a>

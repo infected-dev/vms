@@ -99,9 +99,10 @@ Outside Vehicles Report
                                                         <option  value="{{d.id}}">{{d.department_name}}</option>
                                                         {% endfor %}
                                                         </select>
+                                                    <label class="col-form-label" for="#outtime">Out Time:</label>
+                                                    <input class="form-control" id="outtime" type="time">
                                                     <input id="updatedeptbtn" type="submit"  class="mt-2 btn btn-primary btn-block btn-sm" value="Update">
                                                     
-                                                </form>
                                                 
                                             </div>
                                         </div>
@@ -147,11 +148,13 @@ Outside Vehicles Report
        
         var id = $('#oid').val();
         var dept_id = $('#dept').val();
+        var outtime = $('#outtime').val();
+        
 
         req = $.ajax({
             url : '/vehicles/update/dept',
             type : 'POST',
-            data : {oid : id, dept : dept_id}
+            data : {oid : id, dept : dept_id, out_time:outtime}
         });
         
     });

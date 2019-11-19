@@ -80,7 +80,7 @@
                                         <th>#</th>
                                         <th>Vehicle No</th>
                                         <th>Vendor Name</th>
-                                        <th>Vehicle Type</th>
+                                        <th>Department</th>
                                         <th>In Time</th>
                                         <th>Out Time</th>
                                         <th>Total Duration </th>
@@ -93,7 +93,7 @@
                                             <td></td>
                                             <td>{{vi.VeNO}}</td>
                                             <td>{{vi.VendorName}}</td>
-                                            <td>{{vi.vehicle_type.typename}}</td>
+                                            <td>{{vi.outside_dept.department_name}}</td>
                                             <td>{{vi.InTime}}</td>
                                             <td>{{vi.OutTime}}</td>
                                             <td>{{vi.TotalDuration}}</td>
@@ -109,7 +109,7 @@
                                         <tr class="text-center">
                                             <th>#</th>
                                             <th>Vehicle No</th>
-                                            <th>Vehicle Type</th>
+                                            <th>Department</th>
                                             <th>Out Time</th>
                                             <th>In Time</th>
                                             <th>Total Duration </th>
@@ -121,7 +121,7 @@
                                          <tr>
                                                 <td></td>
                                                 <td>{{vi.comp_timesheet.comp_vehicle_no}}</td>
-                                                <td>{{vi.comp_timesheet.comp_vehicle_type.typename}}</td>
+                                                <td>{{vi.mill_dept.department_name}}</td>
                                                 <td>{{vi.OutTime}}</td>
                                                 <td>{{vi.InTime}}</td>
                                                 <td>{{vi.duration}}</td>

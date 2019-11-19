@@ -21,10 +21,43 @@
     <div class="card">
             <h5 class="card-header">Visitors</h5>
             <div class="card-body">
-                    {% for visitor in search_visitor %}
-                    <p><strong>{{visitor.visitor_name}}</strong></p>
-                    <p class="mt-n3"> {{visitor.visitor_contact}}</p>
-                    {% endfor %}
+                    
+                    <p class="card-title lead font-italic">{{search_visitor.name}}</p>
+                    <div class="mb-3 ml-2 mt-n2 p-0">
+                        <p class="h6 font-italic">Mobile No: {{search_visitor.contact}}</p>
+                        <p class="h6 font-italic mt-n2">Place From : {{search_visitor.place_from}}</p>
+                    </div>
+                   
+                    <button data-target="#visitor_timelog" data-toggle="collapse" class="mt-n2  btn btn-info btn-sm">Show Timelog    </button>
+                    <div id="visitor_timelog" class="mt-2 collapse">
+                            <table class="table table-responsive table-sm table-hover  p-1 ml-5">
+                                    <thead class="thead thead-light">
+                                        <tr class="text-center">
+                                            <th>ID</th>
+                                            <th>ACT ID</th>
+                                            <th>Date</th>
+                                            <th>Visiting Department</th>
+                                            <th>Visiting Employee</th>
+                                            <th>Visiting Purpose</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                            {% for vt in search_visitor_timesheet %}
+                                        <tr class="text-center font-weight-normal">
+                                            
+                                            <td>{{vt.id}}</td>
+                                            <td>{{vt.activity_id}}</td>
+                                            <td>{{vt.date.strftime('%d-%m-%y')}}</td>
+                                            <td>{{vt.active.visited_dept.department_name.title()}}</td>
+                                            <td>{{vt.active.visited_employee.employee_name.title()}}</td>
+                                            <td>{{vt.active.visiting_purpose.title()}}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                    </div>
+                    
             </div>
     </div>
         {%endif%}
@@ -40,13 +73,13 @@
         <div class="card-body">
 
         
-        {% for mill in search_mill%}
-          <a  class="card-title lead font-weight-normal" href="/test-dashboard-report/mill/?comp_vehicle={{mill.id}}">{{mill.comp_vehicle_no}}</a>
+        
+          <a  class="card-title lead font-weight-normal" href="/report/vehicles/mill/?comp_vehicle={{search_mill.id}}">{{search_mill.comp_vehicle_no}}</a>
           <div class="">
-              <p class="mb-0"> Model Name : {{mill.model_name}}</p>
-              <p> Vehicle Type : {{mill.comp_vehicle_type.typename}}</p>
+              <p class="mb-0"> Model Name : {{search_mill.model_name}}</p>
+              <p> Vehicle Type : {{search_mill.comp_vehicle_type.typename}}</p>
           </div> 
-        {% endfor %}
+       
     </div>    
     </div>
         {% endif %}

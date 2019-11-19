@@ -92,8 +92,13 @@ def update_vehicle_dept():
     if request.form:
             id = request.form.get('oid')
             dept = int(request.form.get('dept'))
+            outtime = request.form.get('out_time')
+            if outtime:
+                outtime = datetime.strptime(outtime, '%H:%M').time()
             vehicle = Vehicle.query.get(id)
             vehicle.visited_department = dept
+            if outtime:
+                vehicle.OutTime = outtime  
             db.session.commit()
             return jsonify({'status':'ok'})
 
