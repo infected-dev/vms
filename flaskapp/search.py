@@ -23,7 +23,7 @@ def search_main():
                     error = 'No Result Found'
                 else:
                     search_visitor_timesheet = Timesheet_Visitor.query.filter_by(visitor_id=search_visitor.id).all()
-                print(search_visitor_timesheet)
+                    
                 search_vehicle = Vehicle.query.filter_by(VeNO=text_search).first()
                 search_mill = CompanyVehicle.query.filter_by(comp_vehicle_no=text_search.upper()).first()
                 return render_template('search-results.html',text_search=text_search, 

@@ -87,6 +87,7 @@ def update_vehicle():
                 db.session.commit()             
         return jsonify({'status': 'OK'})
 
+#Updating Department and outtime backdate
 @dataentry.route('/vehicles/update/dept', methods=['POST'])
 def update_vehicle_dept():
     if request.form:
@@ -100,8 +101,16 @@ def update_vehicle_dept():
             if outtime:
                 vehicle.OutTime = outtime  
             db.session.commit()
+            if vehicle.OutTime != None or 'none':
+                intime = vehicle.InTime
+                outtime = vehicle.OutTime
+                diff = timeobj(intime, outtime)
+                vehicle.TotalDuration = diff
+                db.session.commit()
             return jsonify({'status':'ok'})
 
+
+#Updating Deoartment of mill vehicles
 @dataentry.route('/vehicles/mill/update/dept', methods=['POST'])
 def update_mill_dept():
     if request.form:

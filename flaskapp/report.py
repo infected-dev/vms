@@ -47,7 +47,16 @@ def dashboard_vehicle():
     ## Daily Vehicles and Visitors Count ##
     query_vehicles_today = Vehicle.query.filter_by(VeEntryDate=today).count()
     query_vehicles_all = Vehicle.query.count()
-    return render_template('dashboard-vehicles.html', query_vehicles_all=query_vehicles_all, 
+
+    legend = 'Total Outside Vehicles by Date'
+    dates = [r.VeEntryDate for r in db.session.query(Vehicle.VeEntryDate).distinct()]
+    total_count = []
+    for i in dates: 
+        count = Vehicle.query.filter_by(VeEntryDate=i).count()
+        total_count.append([i.strftime("%d/%m/%Y"), count])
+
+
+    return render_template('dashboard-vehicles.html',legend=legend, total_count=total_count, query_vehicles_all=query_vehicles_all, 
         query_vehicles_today=query_vehicles_today)
 
 
@@ -114,19 +123,31 @@ def report_print():
             query = Timesheet_Visitor.query.filter_by(date=date).all()
             count = len(query)
             return render_template('report-visitors-print.html',count=count, query=query, date=date, title=title)
-        elif print_id == '9': 
-            department_id = int(request.form.get('department'))
-            department = Department.query.get(department_id)
+        elif print_id == '10':
+            title = 'Visitor Records Sorted By Department'
             query = Timesheet_Visitor.query.filter_by(date=date).all()
-            filtered_list = []
-            for i in query:
-                if i.active.visiting_department == department_id:
-                    filtered_list.append(i)
-            title = 'Visitors Records by Department'
-            count = len(filtered_list)
-           
-            return render_template('report-visitors-print.html',department=department, title=title, count=count, 
-                filtered_list=filtered_list, date=date)
+            count = len(query)
+            return render_template('report-visitors-print.html',count=count, query=query, date=date, title=title)
+        elif print_id == '9': 
+            dept_check = request.form.get('deptcheck')
+            if dept_check:
+                title = 'Visitor Records Sorted by Department'
+                query = Timesheet_Visitor.query.filter_by(date=date).all()
+                count = len(query)
+                return render_template('report-visitors-print.html',count=count, query=query, date=date, title=title)
+            else:
+                department_id = int(request.form.get('department'))
+                department = Department.query.get(department_id)
+                query = Timesheet_Visitor.query.filter_by(date=date).all()
+                filtered_list = []
+                for i in query:
+                    if i.active.visiting_department == department_id:
+                        filtered_list.append(i)
+                title = 'Visitors Records by Department'
+                count = len(filtered_list)
+            
+                return render_template('report-visitors-print.html',department=department, title=title, count=count, 
+                    filtered_list=filtered_list, date=date)
 
 
 @report.route('/print-slip', methods=['POST'])

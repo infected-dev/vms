@@ -1,26 +1,26 @@
 {% extends 'test-dashboard.html' %}
 
 {% block pagetitle %}
-Vehicle Dashboard
+Outside Vehicle Dashboard
 {% endblock %}
 <!-- End of Page Title BLock-->
 
 
 <!--Title Block-->
 {% block title %}
-DashBoard for 
+Dashboard for 
 {% endblock %}
 <!--End of Title Block-->
 
 {% block linktitle %}
- Vehicle Data 
+ Outside Vehicle Data 
 {% endblock %}
 
 {% block body %}
 <div class="row" id="vehicle_card">
         <div class="col">
                 <div class="card">
-                    <h5 class="card-header"> Vehicles Summary</h5>
+                    <h5 class="card-header"> Outside Vehicles Summary</h5>
                     <div class="card-body">
                         <div class="card-text">
                             <h4 class="card-title">Today's Count</h4>
@@ -47,7 +47,7 @@ DashBoard for
 </div>
 <script src="{{url_for('static', filename='js/chart.min.js')}}"></script>
 <script type="text/javascript">
-var ctx = document.getElementById('linechartforvisitors').getContext('2d');
+var ctx = document.getElementById('outsidevehiclechart').getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'bar',
     data: {

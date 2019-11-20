@@ -14,7 +14,7 @@
 
 {% block body %}
 <div class="row">
-    <div class="col-2">
+    <div class="col col-md-2">
             <div class="card">
                     <h5 class="card-header text-center">Print</h5>
                         <div class="btn-group-vertical p-2">
@@ -66,6 +66,11 @@
                                 <option value="{{d.id}}">{{d.department_name}}</option>
                                 {% endfor %}
                             </select>
+                            <div class="mt-2 form-check">
+                                    <input id="alldeptcheck" class="form-check-input" type="checkbox" name="deptcheck" value="1">
+                                    <label class="form-check-label" for="alldeptcheck"> Sorted by all department?</label>
+                            </div>
+                            
                             <input type="submit"  class="mt-2 btn btn-primary btn-block btn-sm" value="Print">
                               
                         </form>
@@ -98,18 +103,16 @@
             </div>
 
 
-    <div class="col mt-1">
-            <div id="allvisitor" class="card w-100" >
+    <div class="col-10 mt-1">
+            <div id="allvisitor" class="card">
                     <div class="card-header text-center">
-                        <h5 class="text-black">Siddhi Vinayak Knots & Prints Pvt. Ltd.</h5>
-                        <p class="text-muted">A-26 To A-32, "Central Park", G.I.D.C Pandesra, SURAT-394221.
-                        </p>
+                        
                         <h6 class="text-black">ALL VISITOR SLIP</h6>
                     </div>
             
                     <div class="card-body">
                         <table  id='all-visitoreport' 
-                        class=" table table-sm table-bordered table-striped ">
+                        class=" display compact table table-responsive  table-bordered table-striped ">
                             <thead class="thead-light">
                                 <tr class="">
                                     
@@ -132,13 +135,13 @@
                                 <tr>
                                     
                                     <td>{{vi.date.strftime('%d-%m-%Y')}}</td>
-                                    <td>{{vi.a_timelog.name}}</td>
+                                    <td>{{vi.a_timelog.name.title()}}</td>
                                     <td>{{vi.a_timelog.contact}}</td>
-                                    <td>{{vi.a_timelog.place_from}}</td>
+                                    <td>{{vi.a_timelog.place_from.title()}}</td>
                                     {% if vi.active.visited_dept.department_name == None %}
                                     <td>None</td>
                                     {% else %}
-                                    <td>{{vi.active.visited_employee.employee_name}}</td>
+                                    <td>{{vi.active.visited_employee.employee_name.title()}}</td>
                                     {% endif %}
 
                                     {% if vi.active.visited_dept.department_name == None %}
@@ -147,7 +150,7 @@
                                     <td>{{vi.active.visited_dept.department_name}}</td>
                                     {% endif %}
                                     
-                                    <td>{{vi.active.visiting_purpose}}</td>
+                                    <td>{{vi.active.visiting_purpose.title()}}</td>
                                     <td>{{vi.in_time}}</td>
                                     <td>{{vi.out_time}}</td>
                                     <td>{{vi.duration}}</td>
@@ -179,6 +182,7 @@
                                     <th>In Time</th>
                                     <th>Out Time</th>
                                     <th>Total Duration</th>
+                                    <th>Action</th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -195,11 +199,14 @@
 {% endblock %}
 
 {% block script %}
+
 <script type="text/javascript">
     $(document).ready(function() {
         $('#all-visitoreport').DataTable();
 } );
 </script>
+
+
 <script>
     $('.modal').on('shown.bs.modal', function() {
   $(this).find('[autofocus]').focus();

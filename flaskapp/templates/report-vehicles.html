@@ -50,7 +50,7 @@ Outside Vehicles Report
                 </div>
                 <div class="card-body">
                     <table id='all-vehiclereport'
-                        class=" table  table-sm table-bordered table-striped " style="width: 100%">
+                        class="display compact table table-sm table-bordered table-striped " style="width: 100%">
                         <thead class="">
                             <tr>
                                 
@@ -70,9 +70,9 @@ Outside Vehicles Report
                                 
                                 <td>{{v.VeEntryDate.strftime('%d-%m-%Y')    }}</td>
                                 <td>{{v.VeNO}}</td>
-                                <td>{{v.VendorName}}</td>
+                                <td>{{v.VendorName.title()}}</td>
 
-                                <td>{{v.outside_dept.department_name}}</td>
+                                <td>{{v.outside_dept.department_name.title()}}</td>
 
                                 <td> {{v.InTime}} </td>
                                 <td>{{v.OutTime}} </td>

@@ -30,7 +30,7 @@
                    
                     <button data-target="#visitor_timelog" data-toggle="collapse" class="mt-n2  btn btn-info btn-sm">Show Timelog    </button>
                     <div id="visitor_timelog" class="mt-2 collapse">
-                            <table class="table table-responsive table-sm table-hover  p-1 ml-5">
+                            <table id="visitor_log" class="table table-responsive table-sm table-hover  p-1 ml-5">
                                     <thead class="thead thead-light">
                                         <tr class="text-center">
                                             <th>ID</th>
@@ -179,3 +179,10 @@
 
 
 {% endblock %}
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#visitor_log').DataTable();
+} );
+</script>

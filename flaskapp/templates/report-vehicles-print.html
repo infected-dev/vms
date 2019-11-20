@@ -65,14 +65,22 @@
         <div class="container-fulid">
                 
                 <div class="">
-                        <div class=" text-center mb-n3">
-                            <h3 class="h4">Siddhi Vinayak Knots and Prints Pvt. Ltd.</h3>
-                            <p class="text-muted ">A-26 To A-32, "Central Park", G.I.D.C Pandesra, SURAT-394221.
-                                </p>
-                                <h5 class="text-black">{{title}}</h5>
+                        <div id="header" class="text-center">
+                                <h5 class="mb-0">Siddhi Vinayak Knots and Prints Pvt. Ltd.</h5>
+                                <p class=" mb-0 text-monospace text-muted">A-26 To A-32, "Central Park", G.I.D.C Pandesra, SURAT-394221.
+                                    </p>
+                                    <h5 class="mb-0 mt-2">{{title}}</h5>
                             
                         </div>
-                        <p class="text-left"><strong> Date: {{date.strftime('%d-%m-%Y')}}</strong></p>    
+                        <div class="mr-2 mb-2 row">
+                                <div class="text-right ml-4">
+                                       <strong> Date: {{date.strftime('%d/%m/%Y')}}</strong>
+                               </div>
+                               <div class="col text-right">
+                                      <strong >Total Count:<span class="ml-2">{{count}}
+                                       </strong>
+                               </div>
+                           </div>
                         <div class="">
                            {% if title == 'Outside Vehicle Records' %}
                             <table class="table table-sm table-bordered">
@@ -103,7 +111,7 @@
                                             <td>{{vi.InTime.strftime('%H:%M')}}</td>
                                             {% endif %}
 
-                                            {% if {vi.OutTime == None %}
+                                            {% if vi.OutTime == None %}
                                             <td></td>
                                             {% else %}
                                             <td>{{vi.OutTime.strftime('%H:%M')}}</td>
