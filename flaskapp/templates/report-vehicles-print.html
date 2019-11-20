@@ -95,8 +95,21 @@
                                             <td>{{vi.VeNO}}</td>
                                             <td>{{vi.VendorName}}</td>
                                             <td>{{vi.outside_dept.department_name}}</td>
-                                            <td>{{vi.InTime}}</td>
-                                            <td>{{vi.OutTime}}</td>
+
+
+                                            {% if vi.InTime == None %}
+                                            <td></td>
+                                            {% else %}
+                                            <td>{{vi.InTime.strftime('%H:%M')}}</td>
+                                            {% endif %}
+
+                                            {% if {vi.OutTime == None %}
+                                            <td></td>
+                                            {% else %}
+                                            <td>{{vi.OutTime.strftime('%H:%M')}}</td>
+                                            {% endif %}
+
+
                                             <td>{{vi.TotalDuration}}</td>
                                     </tr>
                                     {% endfor %}    
@@ -123,8 +136,18 @@
                                                 <td></td>
                                                 <td>{{vi.comp_timesheet.comp_vehicle_no}}</td>
                                                 <td>{{vi.mill_dept.department_name}}</td>
-                                                <td>{{vi.OutTime}}</td>
-                                                <td>{{vi.InTime}}</td>
+                                                {% if vi.OutTime == None %}
+                                                <td></td>
+                                                {% else %}
+                                                <td>{{vi.OutTime.strftime('%H:%M')}}</td>
+                                                {% endif %}
+
+
+                                                {% if vi.InTime == None %}
+                                                <td></td>
+                                                {% else %}
+                                                <td>{{vi.InTime.strftime('%H:%M')}}</td>
+                                                {% endif %}
                                                 <td>{{vi.duration}}</td>
                                         </tr>
                                         {% endfor %}    

@@ -62,11 +62,12 @@
                                     {% for vi in query %}
                                      <tr>
                                             <td></td>
+                                            
                                             <td>{{vi.a_timelog.name.title()}}</td>
                                             <td>{{vi.a_timelog.contact}}</td>
                                             <td>{{vi.a_timelog.place_from.title()}}</td>
                                             {% if vi.active.visited_employee     == None %}
-                                            <td>None</td>
+                                            <td></td>
                                             {% else %}
                                             <td> {{vi.active.visited_employee.employee_name.title()}} </td>
                                             {% endif %}
@@ -80,9 +81,23 @@
 
 
                                             <td> {{vi.active.visiting_purpose.title()}}</td>
-                                            <td>{{vi.in_time}}</td>
-                                            <td>{{vi.out_time}}</td>
+                                            <td>{{vi.in_time.strftime('%H:%M')}}</td>
+
+
+                                            {% if vi.out_time == None %}
+                                            <td></td>
+                                            {% else %}
+                                            <td>{{vi.out_time.strftime('%H:%M')}}</td>
+                                            {% endif %}
+
+
+                                            {% if vi.duration == None %}
+                                            <td></td>
+                                            {% else %}
                                             <td>{{vi.duration}}</td>
+                                            {% endif %}
+
+
                                     </tr>
                                     {% endfor %}    
                                 </tbody>
@@ -136,8 +151,20 @@
                                             {% endif %}
 
                                             <td> {{vi.active.visiting_purpose.title()}}</td>
-                                            <td>{{vi.in_time}}</td>
-                                            <td>{{vi.out_time}}</td>
+
+
+                                            {% if vi.in_time == None %}
+                                            <td></td>
+                                            {% else %}
+                                            <td>{{vi.in_time.strftime('%H:%M')}}</td>
+                                            {% endif %}
+
+
+                                            {% if vi.out_time == None %}
+                                            <td></td>
+                                            {% else %}
+                                            <td>{{vi.out_time.strftime('%H:%M')}}</td>
+                                            {% endif %}
                                             <td>{{vi.duration}}</td>
                                     </tr>
                                     {% endfor %}    
@@ -195,8 +222,20 @@
 
 
                                             <td> {{vi.active.visiting_purpose.title()}}</td>
-                                            <td>{{vi.in_time}}</td>
-                                            <td>{{vi.out_time}}</td>
+                                            {% if vi.in_time == None %}
+                                            <td></td>
+                                            {% else %}
+                                            <td>{{vi.in_time.strftime('%H:%M')}}</td>
+                                            {% endif %}
+
+
+                                            {% if vi.out_time == None %}
+                                            <td></td>
+                                            {% else %}
+                                            <td>{{vi.out_time.strftime('%H:%M')}}</td>
+                                            {% endif %}
+
+
                                             <td>{{vi.duration}}</td>
                                     </tr>
                                     {% endfor %}    

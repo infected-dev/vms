@@ -11,6 +11,11 @@
         <meta name="author" content="">
 
         <link rel="icon" href="{{url_for('static', filename='images/lax.ico')}}">
+        <link rel="image" href="{{url_for('static', filename='css/DataTables-1.10.20/images/sort_asc.png')}}">
+        <link rel="image" href="{{url_for('static', filename='css/DataTables-1.10.20/images/sort_desc.png')}}">
+        <link rel="image" href="{{url_for('static', filename='css/DataTables-1.10.20/images/sort_both.png')}}">
+        <link rel="image" href="{{url_for('static', filename='css/DataTables-1.10.20/images/sort_asc_disabled.png')}}">
+        <link rel="image" href="{{url_for('static', filename='css/DataTables-1.10.20/images/sort_desc_disabled.png')}}">
 
         <title>{% block pagetitle %} Data Entry And Reporting Application {% endblock %}</title>
 
@@ -24,7 +29,10 @@
         <link rel="stylesheet" media="print" href="{{url_for('static', filename='css/print-format.css')}}">
         <link href="{{url_for('static', filename='css/animation.css')}}" rel="stylesheet">
         <link href="{{url_for('static', filename='css/icon-set.css')}}" rel="stylesheet">
-
+        <link href="{{url_for('static', filename='css/datatables.css')}}" rel="stylesheet">
+        <link href="{{url_for('static', filename='css/datatables.min.css')}}" rel="stylesheet">
+        <link href="{{url_for('static', filename='css/datatables.min.css')}}" rel="stylesheet">
+        <link href="{{url_for('static', filename='css/jquery.dataTables.min.css')}}" rel="stylesheet">
         {% block stylesheets %}
 
         {% endblock %}
@@ -68,7 +76,26 @@
             }
 
             .dataTables_filter {
-                display: none;
+                font-style: italic;
+                font-size: medium;
+                font-weight: bold;
+                
+            }
+
+            .dataTables_wrapper .dataTables_filter input {
+                display: block;
+                width: 100%;
+                height: calc(1.5em + 0.75rem + 2px);
+                padding: 0.375rem 0.75rem;
+                font-size: 1rem;
+                font-weight: 400;
+                line-height: 1.5;
+                color: #495057;
+                background-color: #fff;
+                background-clip: padding-box;
+                border: 1px solid #ced4da;
+                border-radius: 0.25rem;
+                transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
             }
 
             #navbarSearchForm {
@@ -293,7 +320,8 @@
         <script src="{{url_for('static',filename='js/Chart.js')}}"></script>
         <script src="{{url_for('static',filename='js/Chart.min.js')}}"></script>
         <script src="{{url_for('static', filename='js/updateajax.js')}}"> </script>
-
+        <script src="{{url_for('static', filename='js/datatables.js')}}"></script>
+        <script src="{{url_for('static', filename='js/datatables.min.js')}}"></script>
 
         <!-- Icons -->
         <script>
@@ -365,7 +393,7 @@
         <script type="text/javascript">
 
             $(document).ready(function () {
-                $('#company-employee-table, #company-department-table, #all-visitoreport').
+                $('#company-employee-table, #company-department-table').
                     DataTable({
 
                         buttons: [

@@ -24,6 +24,8 @@
                         </div>
                     </div>
     </div>
+
+
     <div class="modal fade" id="datewisemodal" tabindex="-1" role="dialog" aria-labelledby="datewisemodallabel" aria-hidden="true">
             <div class="modal-dialog" role="form">
                 <div class="modal-content">
@@ -94,8 +96,10 @@
                     </div>
                 </div>
             </div>
-    <div class="col">
-            <div id="allvisitor"  class="card" >
+
+
+    <div class="col mt-1">
+            <div id="allvisitor" class="card w-100" >
                     <div class="card-header text-center">
                         <h5 class="text-black">Siddhi Vinayak Knots & Prints Pvt. Ltd.</h5>
                         <p class="text-muted">A-26 To A-32, "Central Park", G.I.D.C Pandesra, SURAT-394221.
@@ -191,6 +195,11 @@
 {% endblock %}
 
 {% block script %}
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#all-visitoreport').DataTable();
+} );
+</script>
 <script>
     $('.modal').on('shown.bs.modal', function() {
   $(this).find('[autofocus]').focus();

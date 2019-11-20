@@ -112,6 +112,7 @@ def report_print():
         elif print_id == '8':
             title = 'Visitor Records Sorted by Employee Visited'
             query = Timesheet_Visitor.query.filter_by(date=date).all()
+            count = len(query)
             return render_template('report-visitors-print.html',count=count, query=query, date=date, title=title)
         elif print_id == '9': 
             department_id = int(request.form.get('department'))
