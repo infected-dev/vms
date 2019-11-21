@@ -35,7 +35,7 @@
                                             <p class="mb-0"> Visitor Slip No:  </p>
                                     </div>
                                     <div class="col border-bottom ">
-                                                {{visitor.id}}
+                                                {{serial}}
                                     </div>
                                     <div class="col-3 mr-n3 text-right">
                                             <p class="mb-0 "> Date: </p>
@@ -82,6 +82,12 @@
                                         </div>
                                         <div class=" ml-4 col mb-3 p-0 text-left   border-bottom">
                                                 <span class=" ml-2  font-weight-normal">{{visitor.active.visiting_purpose.title()}}</span>
+                                        </div>
+                                        <div class="col-2">
+                                                <p>Place From:</p>
+                                        </div>
+                                        <div class="col border-bottom">
+                                                <span class=" ml-2 font-weight-normal">{{visitor.a_timelog.place_from.title()}}</span>
                                         </div>
                                     </div>        
                         

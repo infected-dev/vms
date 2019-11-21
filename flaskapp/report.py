@@ -154,5 +154,6 @@ def report_print():
 def printslip():
     if request.form:
         get_id = int(request.form.get('vi_id'))
+        serial = request.form.get('serialno')
         visitor = Timesheet_Visitor.query.filter_by(id=get_id).first()
-        return render_template('print-visitor-slip.html', visitor=visitor)        
+        return render_template('print-visitor-slip.html', visitor=visitor, serial=serial)        

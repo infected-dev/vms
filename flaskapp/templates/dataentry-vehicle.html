@@ -115,8 +115,9 @@ Outside Vehicle Data Entry
                                     <h5 class="card-header">Update Outside Vehicles</h5>
                                     
                                 <div class="card-body">
-                                    <table class="table table-borderless table-sm table-hover">
+                                    <table id="outsidevehicleentry" class="table table-borderless table-sm table-hover">
                                         <thead>
+                                            <th>#</th>
                                             <th>Vehicle No</th>
                                             <th>Department</th>
                                             <th>In Time</th>
@@ -126,6 +127,7 @@ Outside Vehicle Data Entry
                                         <tbody>
                                                 {% for v in today_vehicles %}
                                                 <tr id="datasectionveh{{v.VeID}}">
+                                                    <td></td>
                                                     <td><strong>{{v.VeNO}}</strong></td>
                                                     <td>{{v.outside_dept.department_name}}</td>
                                                     <td>{{v.InTime}}</td>
@@ -170,10 +172,17 @@ Outside Vehicle Data Entry
 
 {% endblock %}
 
-{% block scripts %}
-<script>
+{% block script %}
 
-
+<script type="text/javascript">
+    var addSerialNumber = function(){
+        $('#outsidevehicleentry tr').each(function(index){
+            $(this).find('td:nth-child(1)').html(index+0);
+        });
+    };
+    
+    addSerialNumber();
 </script>
+
 {% endblock %}
 

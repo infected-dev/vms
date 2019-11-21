@@ -59,7 +59,7 @@
                                 </thead>
                                 
                                 <tbody>
-                                    {% for vi in query %}
+                                    {% for vi in query |groupby('active.visited_dept.department_name') %}
                                      <tr>
                                             <td></td>
                                             
@@ -321,6 +321,8 @@
         </div>
         <script src="{{url_for('static', filename='js/jquery-3.4.js')}}"></script>
     </body>
+
+    
 <script type="text/javascript">
     var addSerialNumber = function(){
         $('table tr').each(function(index){
@@ -330,4 +332,6 @@
     
     addSerialNumber();
 </script>
+
+
 </html>

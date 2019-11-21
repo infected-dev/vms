@@ -133,7 +133,7 @@ Visitor Data Entry
                         <tbody>
                             {% for visitor in today_visitors %}
                             <tr id="datasection{{visitor.id}}">
-                                
+                                <td class=""></td>
                                 <td>{{visitor.a_timelog.name.title()}}</td>
                                 <td>{{visitor.a_timelog.contact}}</td>
                                 <td>{{visitor.a_timelog.place_from.title()}}</td>
@@ -157,6 +157,7 @@ Visitor Data Entry
 
                                 <td><form action="{{url_for('report.printslip')}}" method="POST">
                                         <input id="vi_id{{visitor.id}}" name="vi_id" type="hidden" value="{{visitor.id}}">
+                                        <input id="serialno" name="serialno" type="hidden" value="">
                                         <button attributes="{{visitor.id}}" type="submit" id="button"
                                         class="btn btn-info btn-sm">Print</button>
 
@@ -199,5 +200,23 @@ Visitor Data Entry
         });
     </script>
 
+
+<script type="text/javascript">
+    var addSerialNumber = function(){
+        $('#VisitorPostTable tr').each(function(index){
+            $(this).find('td:nth-child(1)').html(index+1);
+        });
+    };
     
+    addSerialNumber();
+</script>
+
+<script type="text/javascript">
+
+    $('form #button').click(function(){
+        var serial = $(this).closest('tr').children('td:first').text()
+        $('form #serialno').val(serial);
+    });
+
+</script>
 {% endblock %}
