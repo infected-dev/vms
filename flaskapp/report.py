@@ -113,6 +113,20 @@ def report_print():
             query = Vehicle.query.filter_by(VeEntryDate=date).all()
             count = len(query)
             return render_template('report-vehicles-print.html', query=query,count=count, title=title, date=date)
+        elif print_id == '22':
+            dept_check = request.form.get('deptcheck')
+            if dept_check:
+                 title = 'Outside Vehicle Record Sorted by Dept'
+                 query = Vehicle.query.filter_by(VeEntryDate=date).all()
+                 count = len(query)
+                 return render_template('report-vehicles-print.html', query=query,count=count, title=title, date=date)
+            else:
+                title = 'Outside Vehicle Records by Department'
+                dept_id = int(request.form.get('deptselect'))
+                query = Vehicle.query.filter_by(visited_department=dept_id).all()
+                count = len(query)
+                department = Department.query.get(dept_id)
+                return render_template('report-vehicles-print.html', query=query,count=count, title=title, date=date, department=department)
         elif print_id == '3':
             title = 'Mill Vehicle Records'
             query = CompanyTimesheet.query.filter_by(date=date).all()

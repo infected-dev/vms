@@ -16,7 +16,11 @@
             thead {display: table-header-group;}
             tfoot {display: table-header-group;}
 
-           
+           @media print{
+               body {
+                   margin : 5mm 5mm 5mm 5mm;
+               }
+           }
             
            
         </style>
@@ -59,7 +63,7 @@
                                 </thead>
                                 
                                 <tbody>
-                                    {% for vi in query |groupby('active.visited_dept.department_name') %}
+                                    {% for vi in query %}
                                      <tr>
                                             <td></td>
                                             
@@ -322,7 +326,7 @@
         <script src="{{url_for('static', filename='js/jquery-3.4.js')}}"></script>
     </body>
 
-    
+
 <script type="text/javascript">
     var addSerialNumber = function(){
         $('table tr').each(function(index){

@@ -76,12 +76,20 @@
                                 <div class="text-right ml-4">
                                        <strong> Date: {{date.strftime('%d/%m/%Y')}}</strong>
                                </div>
+                               {% if department %}
+                               <div class="ml-4 text-center">
+                                    <strong> Department : {{department.department_name}}</strong>
+                               </div>
+                               {% endif %}
                                <div class="col text-right">
                                       <strong >Total Count:<span class="ml-2">{{count}}
                                        </strong>
                                </div>
+                               
                            </div>
                         <div class="">
+
+
                            {% if title == 'Outside Vehicle Records' %}
                             <table class="table table-sm table-bordered">
                                 <thead >
@@ -125,6 +133,102 @@
                             </table>
                             {% endif %}
 
+
+                            {% if title == 'Outside Vehicle Record Sorted by Dept' %}
+                            <table class="table table-sm table-bordered">
+                                <thead >
+                                    <tr class="text-center">
+                                        <th>#</th>
+                                        <th>Vehicle No</th>
+                                        <th>Vendor Name</th>
+                                        <th>Department</th>
+                                        <th>In Time</th>
+                                        <th>Out Time</th>
+                                        <th>Total Duration </th>
+                                    </tr>
+                                </thead>
+                                
+                                <tbody>
+                                    {% for vi in query | sort(attribute='outside_dept.department_name') %}
+                                     <tr>
+                                            <td></td>
+                                            <td>{{vi.VeNO}}</td>
+                                            <td>{{vi.VendorName}}</td>
+                                            <td>{{vi.outside_dept.department_name}}</td>
+
+
+                                            {% if vi.InTime == None %}
+                                            <td></td>
+                                            {% else %}
+                                            <td>{{vi.InTime.strftime('%H:%M')}}</td>
+                                            {% endif %}
+
+                                            {% if vi.OutTime == None %}
+                                            <td></td>
+                                            {% else %}
+                                            <td>{{vi.OutTime.strftime('%H:%M')}}</td>
+                                            {% endif %}
+
+                                            {% if vi.TotalDuration == none %}
+                                            <td></td>
+                                            {% else %}
+                                            <td>{{vi.TotalDuration}}</td>
+                                            {% endif %}
+                                    </tr>
+                                    {% endfor %}    
+                                </tbody>
+                            </table>
+                            {% endif %}
+
+
+
+                            {% if title == 'Outside Vehicle Records by Department' %}
+                            <table class="table table-sm table-bordered">
+                                <thead >
+                                    <tr class="text-center">
+                                        <th>#</th>
+                                        <th>Vehicle No</th>
+                                        <th>Vendor Name</th>
+                                        <th>Department</th>
+                                        <th>In Time</th>
+                                        <th>Out Time</th>
+                                        <th>Total Duration </th>
+                                    </tr>
+                                </thead>
+                                
+                                <tbody>
+                                    {% for vi in query %}
+                                     <tr>
+                                            <td></td>
+                                            <td>{{vi.VeNO}}</td>
+                                            <td>{{vi.VendorName}}</td>
+                                            <td>{{vi.outside_dept.department_name}}</td>
+
+
+                                            {% if vi.InTime == None %}
+                                            <td></td>
+                                            {% else %}
+                                            <td>{{vi.InTime.strftime('%H:%M')}}</td>
+                                            {% endif %}
+
+                                            {% if vi.OutTime == None %}
+                                            <td></td>
+                                            {% else %}
+                                            <td>{{vi.OutTime.strftime('%H:%M')}}</td>
+                                            {% endif %}
+
+                                            {% if vi.TotalDuration == none %}
+                                            <td></td>
+                                            {% else %}
+                                            <td>{{vi.TotalDuration}}</td>
+                                            {% endif %}
+                                    </tr>
+                                    {% endfor %}    
+                                </tbody>
+                            </table>
+                            {% endif %}
+
+
                             {% if title == 'Mill Vehicle Records' %}
                             <table class="table table-sm table-bordered">
                                     <thead >
@@ -162,6 +266,8 @@
                                     </tbody>
                                 </table>
                             {% endif %}
+
+
                         </div>
                     </div>
         </div>
