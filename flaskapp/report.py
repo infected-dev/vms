@@ -124,7 +124,7 @@ def report_print():
             else:
                 title = 'Outside Vehicle Records by Department'
                 dept_id = int(request.form.get('deptselect'))
-                query = Vehicle.query.filter_by(visited_department=dept_id).all()
+                query = Vehicle.query.filter(Vehicle.VeEntryDate == date, Vehicle.visited_department == dept_id).all()
                 count = len(query)
                 department = Department.query.get(dept_id)
                 return render_template('report-vehicles-print.html', query=query,count=count, title=title, date=date, department=department)
