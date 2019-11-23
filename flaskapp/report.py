@@ -22,7 +22,8 @@ def dashboard():
     dept_count = []
     for i in departments:
         count = Activity.query.filter_by(visiting_department=i).count()
-        dept_count.append([departments[i], count])
+        if count > 0:
+            dept_count.append([departments[i], count])
 
     ## Date Wise Count Queries for charts ##
 

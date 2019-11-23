@@ -9,6 +9,7 @@ Visitor Dashboard
 {% block body %}
 
 <div class="container-fulid">
+    <!--Count for The Total Visitors each day and overall-->
     <div id="visitor_card" class="row">
         <div class="col">
             <div class="card">
@@ -37,8 +38,9 @@ Visitor Dashboard
         </div> 
     </div>
 
+
+    <!--Chart of Department Wise Count of Visitors-->
     <div class="row">
-        
         <div class="col mr-4 mt-1">
             <div class="card">
                 <h5 class="card-header">Department Wise Summary </h5>
@@ -61,13 +63,14 @@ Visitor Dashboard
 <script type="text/javascript">
 var ctx = document.getElementById('linechartforvisitors').getContext('2d');
 var myChart = new Chart(ctx, {
-    type: 'bar',
+    type: 'line',
     data: {
         labels:[
         {% for i in total_count %}
                 "{{i[0]}}",
         {% endfor %}
-        ], 
+        ],
+
         datasets: [{
             label: '{{legend}}',
             data: [
@@ -80,33 +83,39 @@ var myChart = new Chart(ctx, {
                 'rgba(255, 99, 132, 1)',
                 
             ],
-            borderWidth: 1
+            borderWidth: 2,
+            fill :'false',
+            steppedLine :'before'
+            
         }]
     },
     options: {
         scales: {
             yAxes: [{
                 ticks: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    fontColor: "black"
+
+                }
+            }], 
+            xAxes: [{
+                ticks: {
+                    fontColor: "black",
                 }
             }]
         }
+        
     }
 });
 
 </script>
 
-<script type="text/javascript">
-    
+<script>
 var deptctx = document.getElementById('barchartfordept').getContext('2d');
 var myChart = new Chart(deptctx, {
-    type: 'bar',
+    type: 'horizontalBar',
     data: {
-        labels:[
-        {% for i in dept_count %}
-                "{{i[0]}}",
-        {% endfor %}
-        ], 
+        
         datasets: [{
             label: 'Visitors by Departments',
             data: [
@@ -115,18 +124,29 @@ var myChart = new Chart(deptctx, {
                 {% endfor %}
             ],
             
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                
-            ],
-            borderWidth: 1
+           backgroundColor:'rgba(255, 130, 60, 0.6)',
+           hoverBackgroundColor : 'rgba(255,130,60,1)'  
         }]
     },
     options: {
         scales: {
             yAxes: [{
+                type : "category",
+                labels:[
+                    {% for i in dept_count %}
+                            "{{i[0]}}",
+                    {% endfor %}
+                    ],
                 ticks: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    fontColor: "blue"
+                    
+                }
+            }],
+            
+            xAxes: [{
+                ticks: {
+                    fontColor: "black"
                 }
             }]
         }

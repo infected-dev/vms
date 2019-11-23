@@ -108,7 +108,7 @@
                                     {% for vi in query %}
                                      <tr>
                                             <td></td>
-                                            <td>{{vi.VeNO}}</td>
+                                            <td>{{vi.VeNO[:2]}}-{{vi.VeNO[2:4]}}-{{vi.VeNO[4:6]}}-{{vi.VeNO[-4:]}}</td>
                                             <td>{{vi.VendorName}}</td>
                                             <td>{{vi.outside_dept.department_name}}</td>
 

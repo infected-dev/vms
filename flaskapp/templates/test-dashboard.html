@@ -7,8 +7,8 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="">
-        <meta name="author" content="">
+        <meta name="description">
+        <meta name="author">
 
         <link rel="icon" href="{{url_for('static', filename='images/lax.ico')}}">
         <link rel="image" href="{{url_for('static', filename='css/DataTables-1.10.20/images/sort_asc.png')}}">
@@ -33,6 +33,7 @@
         <link href="{{url_for('static', filename='css/datatables.min.css')}}" rel="stylesheet">
         <link href="{{url_for('static', filename='css/datatables.min.css')}}" rel="stylesheet">
         <link href="{{url_for('static', filename='css/jquery.dataTables.min.css')}}" rel="stylesheet">
+
         {% block stylesheets %}
 
         {% endblock %}
@@ -122,9 +123,11 @@
         {% block styles %}
 
         {% endblock %}
+
     </head>
 
     <body>
+
         <!-- Main Top Nav Bar -->
         <nav style="height: 60px;" class="fixed-top text-dark navbar navbar-dark bg-light flex-md-nowrap border-bottom ">
             <p style="font-weight: 400;" class="p-3 lead h5">
@@ -154,6 +157,8 @@
                 </li>
             </ul>
         </nav>
+
+
         <!-- Main Side NavBar -->
         <nav style="margin-top: 59px; " id="sidenav-main" class="collapse d-none d-md-block bg-light sidebar border-top">
             <div id="sidenav-styles" class="sidebar-sticky rounded-top accordion">
@@ -265,6 +270,8 @@
                 {% endif %}
             </div>
         </nav>
+
+
         <!--Main Section-->
         <div class="row container-fulid">
             <!-- Start of Main -->
@@ -297,13 +304,14 @@
                 {% block body %}
 
                 {% endblock %}
-
+                
 
             </main>
             <!-- End of Main -->
 
         </div>
 
+        
 
         <!-- Bootstrap core JavaScript and others
         ================================================== -->
