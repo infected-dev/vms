@@ -144,19 +144,18 @@ def delete_mill():
 
 
 #Main Page Render Function for Visitor Data Entry
-@dataentry.route('/DataentryVisitor')
+@dataentry.route('/DataentryVisitor', methods=['GET','POST'])
 def post_format():
     today_date = datetime.now().date()
     today_time = (datetime.now().time()).strftime("%H:%M")
     today_visitors = Timesheet_Visitor.query.filter_by(date=today_date).all()
-   
+    
     employees = Employee.query.all()
     types = VehicleTypes.query.all()
     visitors = Visitor.query.all()
     return render_template('dataentry-visitors.html', today_time=today_time, 
         today_date=today_date, types=types, employees=employees, 
         today_visitors=today_visitors, visitors=visitors)
-
 
 #Main Page Render Function for Outside Vehicle DataEntry
 @dataentry.route('/DataentryVehicle')

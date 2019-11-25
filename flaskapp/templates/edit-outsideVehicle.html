@@ -1,0 +1,103 @@
+{% extends 'test-dashboard.html' %}
+
+
+{% block pagetitle %}
+Edit Outside Vehicle Data 
+{% endblock %}
+
+{% block title %} Edit Outside Vehicle Data {% endblock %}
+
+
+{% block body %}
+<div class=" row ">
+        <div class="col-3 mt-3">
+            <div class="card ml-3">
+                <h4 class="card-header text-center">
+                   Back Date Data Entry
+                </h4>
+                <div class="card-body">
+                    <div class=" ml-2">
+                       
+                                        <form method="POST" action="{{url_for('edit.edit_outsideVehicle')}}">
+                                            <div class="form-group">
+                                                <label for="selected_date">Choose Date:</label>
+                                                <select id="selected_date" name="selected_date" class="form-control">
+                                                        {% for d in dates %}
+                                                        <option class="dropdown-item" value="{{d}}">{{d.strftime('%d-%m-%Y')}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                <input class="btn btn-success btn-block mt-2" type="submit" value="Get">
+                                            </div>
+                                        </form>
+                                    
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        <div class="col mt-3">
+            <div class="card">
+                <h4 class="card-header">Edit Outside Vehicle Data</h4>
+                <div class="card-body">
+            
+                                <table id="editoutsideVehicle" class="table table-borderless table-sm table-hover">
+                                    <thead>
+                                        <th>#</th>
+                                        <th>Vehicle No</th>
+                                        <th>Department</th>
+                                        <th>In Time</th>
+                                        <th>Out Time</th>
+                                        <th>Actions</th>
+                                    </thead>
+                                    <tbody>
+                                            {% for v in backdate_vehicles %}
+                                            <tr id="datasectionveh{{v.VeID}}">
+                                                <td></td>
+                                                <td><strong>{{v.VeNO}}</strong></td>
+                                                <td>{{v.outside_dept.department_name}}</td>
+                                                <td>{{v.InTime}}</td>
+                                                
+            
+                                                    <input type="hidden"
+                                                        value="{{v.VeID}}"
+                                                        name="vid"
+                                                        id="vid{{v.VeID}}">
+                                                    <td>
+                                                        <input id="outtime{{v.VeID}}"
+                                                            class="form-control form-control-sm"
+                                                            type="time"
+                                                            value="{{v.OutTime}}"
+                                                            name="outtime">
+                                                    </td>
+                                                    <td><button  attributes="{{v.VeID}}" type="submit"
+                                                            class="updatevehicles btn btn-sm btn-warning"
+                                                            value="Update">Update</button>
+                                                    </td>
+                                                    
+                                                    
+                                               
+            
+                                            </tr>
+                                            {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                </div>
+            </div>
+
+        </div>
+{% endblock %}
+
+
+{% block script %}
+
+<script type="text/javascript">
+    var addSerialNumber = function(){
+        $('#editoutsideVehicle tr').each(function(index){
+            $(this).find('td:nth-child(1)').html(index+0);
+        });
+    };
+    
+    addSerialNumber();
+</script>
+{% endblock %}

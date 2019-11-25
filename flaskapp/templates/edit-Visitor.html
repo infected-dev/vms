@@ -1,0 +1,164 @@
+{% extends 'test-dashboard.html' %}
+
+{% block pagetitle %}
+Edit Visitor Data 
+{% endblock %}
+
+{% block title %} Edit Visitor Data {% endblock %}
+
+{% block body %}
+<div class=" row ">
+        <div class="col-3 mt-3">
+            <div class="card ml-3">
+                <h4 class="card-header text-center">
+                   Back Date Data Entry
+                </h4>
+                <div class="card-body">
+                    <div class=" ml-2">
+                       
+                                        <form method="POST" action="{{url_for('edit.edit_visitor')}}">
+                                            <div class="form-group">
+                                                <label for="selected_date">Choose Date:</label>
+                                                <select id="selected_date" name="selected_date" class="form-control">
+                                                        {% for d in dates %}
+                                                        <option class="dropdown-item" value="{{d}}">{{d.strftime('%d-%m-%Y')}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                <input class="btn btn-success btn-block mt-2" type="submit" value="Get">
+                                            </div>
+                                        </form>
+                                    
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+        <div class="col mt-3">
+            <div class="card">
+                <h4 class="card-header">Update Visitor Data</h4>
+                <div class="card-body">
+                        <div class=" table-responsive ">
+                                <table id="editVisitor" class="table table-stripped table-sm">
+                                    <thead class="thead">
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Name</th>
+                                            <th>Contact</th>
+                                            <th>Place From</th>
+                                            <th>Employee</th>
+                                            <th>In Time</th>
+                                            <th>Out Time</th>
+                                            <th></th>
+                                            <th>Actions</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+            
+                                    <tbody>
+                                        {% for visitor in backdate_visitors %}
+                                        <tr id="datasection{{visitor.id}}">
+                                            <td class=""></td>
+                                            <td>{{visitor.a_timelog.name.title()}}</td>
+                                            <td>{{visitor.a_timelog.contact}}</td>
+                                            <td>{{visitor.a_timelog.place_from.title()}}</td>
+                                            <td>{{visitor.active.visited_employee.employee_name.title()}}</td>
+                                            <td>{{visitor.in_time}}</td>
+            
+                                            <td>
+                                                <input id="vi_id{{visitor.id}}" name="vi_id" type="hidden" value="{{visitor.id}}">
+                                                <input class="form-control form-control-sm" type="time"
+                                                    value="{{visitor.out_time}}" id="exittime{{visitor.id}}" name="exittime">
+                                            </td>
+                                            
+                                            <td><button attributes="{{visitor.id}}" type="submit" id="button"
+                                                    class="update btn btn-warning btn-sm">Update</button></td>
+            
+                                            
+            
+                                            <td>
+                                                   <button data-id="{{visitor.id}}" data-toggle="modal" data-target="#editmodal"
+                                                    class="btn btn-info btn-sm">Extra</button>
+                                               
+                                            </td>
+            
+            
+            
+            
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+            
+                            </div>
+                            <div class="modal fade" id="editmodal" tabindex="-1" role="dialog" aria-labelledby="deptwisemodallabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="form">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Chnage Data</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                   
+                                                    
+                                                
+                                                    
+                                                    <label class="col-form-label" for="#deptselect">Select Employee</label>
+                                                    <select class="form-control" name="empselect" id="empselect">
+                                                        {% for e in emps %}
+                                                            <option value="{{e.id}}">{{e.employee_name}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                    <input id="tid" type="hidden">  
+                                                    <input id="editbtn" type="submit"  class="mt-2 btn btn-primary btn-block btn-sm" value="Submit   ">
+                                                      
+                                               
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+        
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+
+<script>
+        $('#editmodal').on('show.bs.modal', function(e){
+            var id = $(e.relatedTarget).data('id');
+             $('#tid').val(id);
+    });
+
+    $('#editbtn').on('click', function(){
+            var id = $('#tid').val()
+            var emp = $('#empselect').val()
+            req = $.ajax({
+                url : '/editVisitor/Department',
+                type : 'POST',
+                data : {t_id : id, emp_id:emp}
+            });
+            
+            $('#editmodal').modal('hide');
+        });
+
+        
+        
+</script>
+
+<script type="text/javascript">
+    var addSerialNumber = function(){
+        $('#editVisitor  tr').each(function(index){
+            $(this).find('td:nth-child(1)').html(index+0);
+        });
+    };
+    
+    addSerialNumber();
+</script>
+
+{% endblock %}

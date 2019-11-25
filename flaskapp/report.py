@@ -113,7 +113,7 @@ def report_print():
             title = 'Outside Vehicle Records'
             query = Vehicle.query.filter_by(VeEntryDate=date).all()
             count = len(query)
-            return render_template('report-vehicles-print.html', query=query,count=count, title=title, date=date)
+            return render_template('report-vehicles-print.html',  query=query,count=count, title=title, date=date)
         elif print_id == '22':
             dept_check = request.form.get('deptcheck')
             if dept_check:

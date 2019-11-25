@@ -56,6 +56,9 @@ app.register_blueprint(dataentry_blueprint)
 from .report import report as report_blueprint
 app.register_blueprint(report_blueprint)
 
+from.editdata import edit as edit_blueprint
+app.register_blueprint(edit_blueprint)
+
 
 
 if __name__ == '__main__':
