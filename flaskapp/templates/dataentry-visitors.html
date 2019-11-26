@@ -42,26 +42,27 @@ Visitor Data Entry
 <div id="maincontainer" class="container-fulid">
 
     <!-- Start of Visitor Data Entry Form-->
+    <div class="row mb-2">
 
-    <div class="row">
 
-
-        <div class="col-3">
-            <div  class="card ml-3">
-                <h4 class="card-header text-center">Data Entry</h4>
+        <div class="col">
+                <h4 class="ml-3">Data Entry</h4>
+            <div  class="card ml-3 p-3">
+                
                 <div class="card-body p-2" >
-                    <form id="visitorform" action="/test-postformat/visitor" method="POST" class="form ">
-                        <!--Entry Date Input-->
-                        <div class="form-row form-group mb-2 ">
-                                <label class="col-form-label" for="entrydate">Date:</label>
-                                
-                                        <input type="date" class="form-control" id="date" name="entrydate" value="{{today_date}}" autofocus required>
-                                
-                            </div>
 
-                        <div class="form-row form-group mb-2">
+                    <form id="visitorform" action="/test-postformat/visitor" method="POST" class="form form">
+                        <div class="form-inline">
+                            <!--Entry Date Input-->
+                        <div class="form-group mb-2  ">
+                                <label class="sr-only col-form-label" for="entrydate">Date:</label>
+                                
+                                        <input type="date" class=" form-control " id="date" name="entrydate" value="{{today_date}}" autofocus required>
+                        </div>
+                                
+                        <div class="form-group mb-2 ">
                             <label class="sr-only" for="name">Visitor Name:</label>
-                                    <input  list="visitorlist" style="text-transform:uppercase;" placeholder="Visitor Name" class="form-control"
+                                    <input   list="visitorlist" style="text-transform:uppercase;" placeholder="Visitor Name" class="form-control"
                                     id="name" name="visitorname" required>
 
                                     <datalist id="visitorlist">
@@ -72,56 +73,71 @@ Visitor Data Entry
                                     
                                     </datalist>
                         </div>
+                            
+                     
 
                         <!-- Visitor Contact Input-->
-                        <div class="form-row form-group mb-2">
+                        <div class="form-group mb-2 ">
                             <label class="sr-only" for="visitorcontact">Contact No: </label>
                             <input id="contact" name="visitorcontact" type="tel" class="form-control"
                                 placeholder="Visitor Contact No.">
+                     
                         </div>
+                            
 
                         <!--Visitor Compnay -->
-                        <div class="form-row form-group mb-2">
+                        <div class="form-group mb-2 ">
                             <label class="sr-only" for="visitorcompnay">Company From: </label>
                             <input id=placefrom style="text-transform:uppercase;" name="visitorcompany" class="form-control"
                                 type="text" placeholder="Visitor Company" required>
                         </div>
-
-                        <!--Visiting Employee Input-->
-                        <div class="form-row form-group mb-2">
-                            <label class="sr-only">Visiting Employee</label>
-                            <select id="emp" class="form-control" name="visiting_employee">
-                                {% for emp in employees %}
-                                <option id="{{emp.id}}" value={{emp.id}}>{{emp.employee_name}}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-
-                        <!--Compnay From Input-->
-                        <div class="form-group mb-2">
+                        <div class="form-group mb-2 ">
+                                <label class="sr-only">Visiting Employee</label>
+                                <select id="emp" class="form-control" name="visiting_employee">
+                                    {% for emp in employees %}
+                                    <option id="{{emp.id}}" value={{emp.id}}>{{emp.employee_name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        
+                            <div class="form-gorup mb-2">
                             <label class="sr-only" for="visitingpurpose">Visiting Purpose: </label>
                             <input required style="text-transform:uppercase;" name="visitingpurpose" class="form-control"
                                 type="text" placeholder="Visiting Purpose">
                         </div>
-                        <div class="form-group form-row mb-2">
-                                <label class="col-form-label" for="intime">In Time:</label>
-                               
-                                        <input name="intime" class="form-control" type="time" value="{{today_time}}">
-                                
-                            </div>
-                        <div class="form-group mb-2">
-                            <input type="submit" class="btn btn-primary btn-block">
+   
+                        <!--Visiting Employee Input-->
+                        
                         </div>
-                       
+
+                        <div class="form-row">
+                               
+                                        
+                                    
+            
+                                    <!--Compnay From Input-->
+                                
+                                <div class="form-group ml-2 mb-2">
+                                        <label class="col-form-label sr-only" for="intime">In Time:</label>  
+                                        <input name="intime" class="form-control" type="time" value="{{today_time}}">
+                                    </div>
+
+                                    <div class="form-group ">
+                                            <input type="submit" class="btn btn-primary" >
+                                        </div>  
+                        </div>
+                        
                     </form>
                 </div>
             </div>
         </div>
+    </div>
 
 
-        <div class="col">
+    <div class="row ">
+        <div class="col ml-3 ">
             <div class="card">
-                <h4 class="card-header">Update Visitor Data</h4>
+                <h4 class="card-header text-center">Update Visitor Data</h4>
                 <!-- Visitor entry table Comment-->
             
                 <div class=" table-responsive card-body">
@@ -164,10 +180,6 @@ Visitor Data Entry
                                 </form>
                                    
                                 </td>
-
-
-
-
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -178,26 +190,24 @@ Visitor Data Entry
             </div>
         </div>
     </div>
-    
 </div>
-
 <!-- End of Visitor Form-->
-
-
-
-
-
 {% endblock %}
+
+
 
 {% block script %}
     <script>
         $('input[name=visitorname]').focusout(function(){
-            var val = $(this).val();
+          
+           var val = $(this).val();
            var number = $('#visitorlist [value="' + val + '"]').data('attribute');
            
            $('#contact').val(number)
            var place = $('#visitorlist [value="' + val + '"]').data('p');
            $('#placefrom').val(place)
+          
+           
         });
     </script>
 

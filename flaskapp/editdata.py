@@ -57,3 +57,22 @@ def edit_millVehicle():
         date = datetime.strptime(selected_date, '%Y-%m-%d').date()
         backdate_mill = CompanyTimesheet.query.filter_by(date=date).all()
     return render_template('edit-millVehicle.html',backdate_mill=backdate_mill)
+
+@edit.route('/editVisitorMaster', methods=['GET', 'POST'])
+def edit_visitorMaster():
+    if request.form:
+        vid = request.form['vid']
+        name = request.form['vname']
+        contact = request.form['vcontact']
+        place = request.form['vplace']
+
+        if vid:
+            visitor = Visitor.query.get(vid)
+            if name:
+                visitor.name = name
+            
+            if contact:
+                visitor.contact = contact
+            
+            if place:
+                visitor.place = place

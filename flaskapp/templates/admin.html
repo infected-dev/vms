@@ -331,18 +331,48 @@ Admin Panel
                                         <th>Name</th>
                                         <th>Contact Number</th>
                                         <th>Place From</th>
+                                        <th>Actions</th>
                                     </thead>
                                     <tbody>
                                         {% for v in visitors %}
                                         <tr>
-                                            <td>{{v.id}}</td>
-                                            <td>{{v.name}}</td>
-                                            <td>{{v.contact}}</td>
-                                            <td>{{v.place_from}}</td>
+                                            <td id="visitor_id">{{v.id}}</td>
+                                            <td id="visitor_name">{{v.name}}</td>
+                                            <td id="visitor_contact">{{v.contact}}</td>
+                                            <td id="visitor_place">{{v.place_from}}</td>
+                                            <td>
+                                                <button class="btn btn-primary btn-warning" data-toggle="modal" data-target="#editvisitor" >Edit</button>
+                                            </td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>
                                 </table>
+                                <div class="modal fade" id="editvisitor" tabindex="-1" role="dialog" aria-labelledby="personwisemodal" aria-hidden="true">
+                                        <div class="modal-dialog" role="form">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Edit Vistor Master </h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form class="form-row" action="#" method="POST">
+                                                        <label class=" mb-2 h6 col-form-label" for="#name">Name</label>
+                                                        <input id="name" type="text" class="form-control" name="name" autofocus>
+
+                                                        <label class=" mb-2 h6 col-form-label" for="#contact">Contact</label>
+                                                        <input id="contact" type="number" class="form-control" name="contact">
+
+                                                        <label class=" mb-2 h6 col-form-label" for="#contact">Place From</label>
+                                                        <input id="place" type="text" class="form-control" name="place">
+
+                                                        <input type="submit"  class="mt-2 btn btn-primary btn-block btn-sm" value="Print">
+                                                          
+                                                    </form>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                             </div>
                         </div>
 
@@ -351,4 +381,18 @@ Admin Panel
 </div>  
             </div>
               
+{% endblock %}
+
+{% block script %}
+    <script>
+        $('#editvisitor').on('show.bs.modal', function(){
+            var vname = $('#visitor_name').html()
+            var vcontact = $('#visitor_contact').html()
+            var vplace = $('#visitor_place').html()
+
+            $('#name').val(vname)
+            $('#contact').val(vcontact)
+            $('#place').val(vplace)
+        })
+    </script>
 {% endblock %}

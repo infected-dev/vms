@@ -9,6 +9,7 @@ login_manager = LoginManager()
 
 
 
+
 app = Flask(__name__)
 
 
@@ -18,6 +19,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 
 db.init_app(app)
+
 
 
 login_manager.init_app(app)
