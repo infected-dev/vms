@@ -8,18 +8,19 @@ from . import db
 edit = Blueprint('edit', __name__)
 
 
+#Main Page Render for Editing vistor data
 @edit.route('/editVistor', methods=['GET','POST'])
 def edit_visitor():
     backdate_visitors = ''
-    dates = [r.date for r in db.session.query(Timesheet_Visitor.date).distinct()]
     emps = Employee.query.all()
     if request.form:
         selected_date = request.form.get('selected_date')
         date = datetime.strptime(selected_date, '%Y-%m-%d').date()
         backdate_visitors = Timesheet_Visitor.query.filter_by(date=date).all()
-    return render_template('edit-Visitor.html', backdate_visitors=backdate_visitors, dates=dates, emps=emps)
+    return render_template('edit-Visitor.html', backdate_visitors=backdate_visitors,emps=emps)
 
 
+#Editing department route for visitor
 @edit.route('/editVisitor/Department', methods=['POST'])
 def edit_visitordepart():
     if request.form:
@@ -35,24 +36,24 @@ def edit_visitordepart():
         db.session.commit()
         return jsonify({'status':'ok'})
 
+
+#Main Page Render for Outside Vehicles
 @edit.route('/editOutsidevehicle', methods=['GET','POST'])
 def edit_outsideVehicle():
     backdate_vehicles = ''
-    dates = [r.VeEntryDate for r in db.session.query(Vehicle.VeEntryDate).distinct()]
     if request.form:
         selected_date = request.form.get('selected_date')
         date = datetime.strptime(selected_date, '%Y-%m-%d').date()
         backdate_vehicles = Vehicle.query.filter_by(VeEntryDate=date).all()
-    return render_template('edit-outsideVehicle.html', dates=dates, backdate_vehicles=backdate_vehicles)
+    return render_template('edit-outsideVehicle.html',  backdate_vehicles=backdate_vehicles)
 
 
+#Main Page Render for Mill Vehicles
 @edit.route('/editMillVehicle', methods=['GET','POST'])
 def edit_millVehicle():
     backdate_mill = ''
-    dates = [r.date for r in db.session.query(CompanyTimesheet.date).distinct()]
     if request.form:
         selected_date = request.form.get('selected_date')
         date = datetime.strptime(selected_date, '%Y-%m-%d').date()
         backdate_mill = CompanyTimesheet.query.filter_by(date=date).all()
-        print(backdate_mill)
-    return render_template('edit-millVehicle.html', dates=dates, backdate_mill=backdate_mill)
+    return render_template('edit-millVehicle.html',backdate_mill=backdate_mill)

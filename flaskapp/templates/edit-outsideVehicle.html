@@ -21,11 +21,7 @@ Edit Outside Vehicle Data
                                         <form method="POST" action="{{url_for('edit.edit_outsideVehicle')}}">
                                             <div class="form-group">
                                                 <label for="selected_date">Choose Date:</label>
-                                                <select id="selected_date" name="selected_date" class="form-control">
-                                                        {% for d in dates %}
-                                                        <option class="dropdown-item" value="{{d}}">{{d.strftime('%d-%m-%Y')}}</option>
-                                                        {% endfor %}
-                                                    </select>
+                                                <input class="form-control" type="date" name="selected_date">
                                                 <input class="btn btn-success btn-block mt-2" type="submit" value="Get">
                                             </div>
                                         </form>
