@@ -77,6 +77,7 @@ class Timesheet_Visitor(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     visitor_id = db.Column(db.Integer, db.ForeignKey('visitor.id'))
     activity_id = db.Column(db.Integer, db.ForeignKey('activity.id'))
+    extras = db.Column(db.Integer, default=0)
     date = db.Column(db.Date)
     in_time = db.Column(db.Time)
     out_time = db.Column(db.Time)

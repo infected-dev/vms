@@ -45,96 +45,89 @@ Visitor Data Entry
     <div class="row mb-2">
 
 
-        <div class="col">
-                <h4 class="ml-3">Data Entry</h4>
-            <div  class="card ml-3 p-3">
-                
+        <div class="col-3 ">
+               
+            <div  class="card ">
+                <h4 class=" card-header text-center">Data Entry</h4>
                 <div class="card-body p-2" >
 
-                    <form id="visitorform" action="/test-postformat/visitor" method="POST" class="form form">
-                        <div class="form-inline">
-                            <!--Entry Date Input-->
-                        <div class="form-group mb-2  ">
-                                <label class="sr-only col-form-label" for="entrydate">Date:</label>
+                    <form id="visitorform" action="/test-postformat/visitor" method="POST" class="form ">
+                        <!--Entry Date Input-->
+                        <div class="form-row form-group mb-2 ">
+                                <label class="col-form-label" for="entrydate">Date:</label>
                                 
-                                        <input type="date" class=" form-control " id="date" name="entrydate" value="{{today_date}}" autofocus required>
-                        </div>
+                                        <input type="date" class="form-control" id="date" name="entrydate" value="2019-11-27" autofocus="" required="">
                                 
-                        <div class="form-group mb-2 ">
-                            <label class="sr-only" for="name">Visitor Name:</label>
-                                    <input   list="visitorlist" style="text-transform:uppercase;" placeholder="Visitor Name" class="form-control"
-                                    id="name" name="visitorname" required>
-
-                                    <datalist id="visitorlist">
-                                        
-                                        {% for v in visitors %}
-                                            <option id="vilist{{v.id}}" data-p="{{v.place_from}}" data-attribute="{{v.contact}}" value="{{v.name}}">{{v.id}}-{{v.contact}} </option>
-                                        {% endfor %}
-                                    
-                                    </datalist>
-                        </div>
-                            
-                     
-
-                        <!-- Visitor Contact Input-->
-                        <div class="form-group mb-2 ">
-                            <label class="sr-only" for="visitorcontact">Contact No: </label>
-                            <input id="contact" name="visitorcontact" type="tel" class="form-control"
-                                placeholder="Visitor Contact No.">
-                     
-                        </div>
-                            
-
-                        <!--Visitor Compnay -->
-                        <div class="form-group mb-2 ">
-                            <label class="sr-only" for="visitorcompnay">Company From: </label>
-                            <input id=placefrom style="text-transform:uppercase;" name="visitorcompany" class="form-control"
-                                type="text" placeholder="Visitor Company" required>
-                        </div>
-                        <div class="form-group mb-2 ">
-                                <label class="sr-only">Visiting Employee</label>
-                                <select id="emp" class="form-control" name="visiting_employee">
-                                    {% for emp in employees %}
-                                    <option id="{{emp.id}}" value={{emp.id}}>{{emp.employee_name}}</option>
-                                    {% endfor %}
-                                </select>
                             </div>
-                        
-                            <div class="form-gorup mb-2">
-                            <label class="sr-only" for="visitingpurpose">Visiting Purpose: </label>
-                            <input required style="text-transform:uppercase;" name="visitingpurpose" class="form-control"
-                                type="text" placeholder="Visiting Purpose">
+        
+                        <div class="form-row form-group mb-2">
+                            <label class="sr-only" for="name">Visitor Name:</label>
+                                    <input list="visitorlist" style="text-transform:uppercase;" placeholder="Visitor Name" class="form-control" id="name" name="visitorname" required="">
+                                    <datalist id="visitorlist"> 
+
+                                            {% for v in visitors %}
+                                                <option id="vilist{{v.id}}" data-p="{{v.place_from}}" data-attribute="{{v.contact}}" value="{{v.name}}">{{v.id}}-{{v.contact}} </option>
+                                            {% endfor %}
+    
+                                        </datalist>
                         </div>
-   
+                        
+                        
+                        <!-- Visitor Contact Input-->
+                        <div class="form-row form-group mb-2">
+                            <label class="sr-only" for="visitorcontact">Contact No: </label>
+                            <input id="contact" name="visitorcontact" type="tel" class="form-control" placeholder="Visitor Contact No." maxlength="10">
+                        </div>
+        
+                        <!--Visitor Compnay -->
+                        <div class="form-row form-group mb-2">
+                            <label class="sr-only" for="visitorcompnay">Company From: </label>
+                            <input id="placefrom" style="text-transform:uppercase;" name="visitorcompany" class="form-control" type="text" placeholder="Visitor Company" required="">
+                        </div>
+        
                         <!--Visiting Employee Input-->
-                        
+                        <div class="form-row form-group mb-2">
+                            <label class="sr-only">Visiting Employee</label>
+                            <select id="emp" class="form-control" name="visiting_employee">
+                                    {% for emp in employees %}	                             
+                                        <option value={{emp.id}}>{{emp.employee_name}}</option>	                       
+                                    {% endfor %}
+                            </select>
+                        </div>
+        
+                        <!--Compnay From Input-->
+                        <div class="form-group mb-2">
+                            <label class="sr-only" for="visitingpurpose">Visiting Purpose: </label>
+                            <input required style="text-transform:uppercase;" name="visitingpurpose" class="form-control" type="text" placeholder="Visiting Purpose">
                         </div>
 
-                        <div class="form-row">
-                               
-                                        
-                                    
-            
-                                    <!--Compnay From Input-->
+
+                        <div class="form-row form-group mb-2">
+                            <label class="sr-only" for="extras">Extra:</label>
+                            <input id="extras" name="extras" class="form-control" type="number" placeholder="EXTRAS" >
+                        </div>
+
+                        <div class="form-group form-row mb-2">
                                 
-                                <div class="form-group ml-2 mb-2">
-                                        <label class="col-form-label sr-only" for="intime">In Time:</label>  
-                                        <input name="intime" class="form-control" type="time" value="{{today_time}}">
-                                    </div>
-
-                                    <div class="form-group ">
-                                            <input type="submit" class="btn btn-primary" >
-                                        </div>  
+                                <label class="col-form-label" for="intime">In Time:</label>
+                               
+                                        <input name="intime" class="form-control" type="time" value="10:31">
+                                
+                            </div>
+                       
+                        <div class="form-group mb-2">
+                            <input type="submit" class="btn btn-primary btn-block">
                         </div>
-                        
+                       
                     </form>
+
                 </div>
             </div>
         </div>
-    </div>
+    
 
 
-    <div class="row ">
+   
         <div class="col ml-3 ">
             <div class="card">
                 <h4 class="card-header text-center">Update Visitor Data</h4>
@@ -151,6 +144,11 @@ Visitor Data Entry
                             <tr id="datasection{{visitor.id}}">
                                 <td class=""></td>
                                 <td>{{visitor.a_timelog.name.title()}}</td>
+                                {% if visitor.extras == 0 or None %}
+                                    <td>{{visitor.extras}}</td>
+                                {% else %}
+                                    <td>+{{visitor.extras}}</td>
+                                {% endif %}
                                 <td>{{visitor.a_timelog.contact}}</td>
                                 <td>{{visitor.a_timelog.place_from.title()}}</td>
                                 <td>{{visitor.active.visited_employee.employee_name.title()}}</td>
@@ -189,7 +187,7 @@ Visitor Data Entry
            
             </div>
         </div>
-    </div>
+    
 </div>
 <!-- End of Visitor Form-->
 {% endblock %}

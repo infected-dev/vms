@@ -335,13 +335,13 @@ Admin Panel
                                     </thead>
                                     <tbody>
                                         {% for v in visitors %}
-                                        <tr>
-                                            <td id="visitor_id">{{v.id}}</td>
-                                            <td id="visitor_name">{{v.name}}</td>
-                                            <td id="visitor_contact">{{v.contact}}</td>
-                                            <td id="visitor_place">{{v.place_from}}</td>
+                                        <tr id="datarow{{v.id}}">
+                                            <td id="visitor_id{{v.id}}">{{v.id}}</td>
+                                            <td id="visitor_name{{v.id}}">{{v.name}}</td>
+                                            <td id="visitor_contact{{v.id}}">{{v.contact}}</td>
+                                            <td id="visitor_place{{v.id}}">{{v.place_from}}</td>
                                             <td>
-                                                <button class="btn btn-primary btn-warning" data-toggle="modal" data-target="#editvisitor" >Edit</button>
+                                                <button data-id="{{v.id}}" class="btn btn-primary btn-warning" data-toggle="modal" data-target="#editvisitor" >Edit</button>
                                             </td>
                                         </tr>
                                         {% endfor %}
@@ -355,7 +355,9 @@ Admin Panel
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <form class="form-row" action="#" method="POST">
+                                                   
+                                                        <input id="vid" type="hidden" name="vid">
+
                                                         <label class=" mb-2 h6 col-form-label" for="#name">Name</label>
                                                         <input id="name" type="text" class="form-control" name="name" autofocus>
 
@@ -365,9 +367,9 @@ Admin Panel
                                                         <label class=" mb-2 h6 col-form-label" for="#contact">Place From</label>
                                                         <input id="place" type="text" class="form-control" name="place">
 
-                                                        <input type="submit"  class="mt-2 btn btn-primary btn-block btn-sm" value="Print">
+                                                        <input id="veditbtn" type="submit"  class="mt-2 btn btn-primary btn-block btn-sm" value="Submit">
                                                           
-                                                    </form>
+                                                    
                                                     
                                                 </div>
                                             </div>
@@ -385,14 +387,34 @@ Admin Panel
 
 {% block script %}
     <script>
-        $('#editvisitor').on('show.bs.modal', function(){
-            var vname = $('#visitor_name').html()
-            var vcontact = $('#visitor_contact').html()
-            var vplace = $('#visitor_place').html()
+        $('#editvisitor').on('show.bs.modal', function(e){
+            var id = $(e.relatedTarget).data('id')
+            var vname = $('#visitor_name' + id).html()
+            var vcontact = $('#visitor_contact' + id ).html()
+            var vplace = $('#visitor_place'+ id ).html()
 
+            $('#vid').val(id)
             $('#name').val(vname)
             $('#contact').val(vcontact)
             $('#place').val(vplace)
+
+        
         })
+
+        $(' #veditbtn').on('click', function(){
+            var vid = $('#vid').val()
+            var vname = $('#name').val()
+            var vcontact = $('#contact').val()
+            var vplace = $('#place').val()
+            
+            req = $.ajax({
+                url:'/editVisitorMaster',
+                type:'POST',
+                data:{
+                    vname:vname, vcontact:vcontact, vplace:vplace,vid:vid
+                }
+            });
+          $('#editvisitor').modal('hide')
+        });
     </script>
 {% endblock %}

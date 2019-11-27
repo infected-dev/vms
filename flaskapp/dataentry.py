@@ -208,8 +208,10 @@ def visitors_post():
 
        date = datetime.strptime(request.form.get('entrydate'), '%Y-%m-%d').date()
        time = datetime.strptime(request.form.get('intime'), '%H:%M').time()
-
-       timelog = Timesheet_Visitor(visitor_id=visitor.id, activity_id=activity.id, date=date, in_time=time)
+       extras = 0
+       if request.form.get('extras'):
+           extras = int(request.form.get('extras'))
+       timelog = Timesheet_Visitor(visitor_id=visitor.id, activity_id=activity.id, extras=extras , date=date, in_time=time)
        db.session.add(timelog)
        db.session.commit()
        return redirect(url_for('dataentry.post_format'))    

@@ -27,8 +27,13 @@ def edit_visitordepart():
         emp_id = int(request.form.get('emp_id'))
         emp = Employee.query.get(emp_id)
         emp_dept = emp.department_id
+
         time_id = int(request.form.get('t_id'))
         timesheet_id = Timesheet_Visitor.query.get(time_id)
+
+        extra = int(request.form.get('extras'))
+        timesheet_id.extras = extra
+        
         activity_id = timesheet_id.activity_id
         activity = Activity.query.get(activity_id)
         activity.visiting_employee = emp_id
@@ -58,21 +63,24 @@ def edit_millVehicle():
         backdate_mill = CompanyTimesheet.query.filter_by(date=date).all()
     return render_template('edit-millVehicle.html',backdate_mill=backdate_mill)
 
-@edit.route('/editVisitorMaster', methods=['GET', 'POST'])
+@edit.route('/editVisitorMaster', methods=['POST'])
 def edit_visitorMaster():
     if request.form:
-        vid = request.form['vid']
-        name = request.form['vname']
-        contact = request.form['vcontact']
-        place = request.form['vplace']
-
-        if vid:
-            visitor = Visitor.query.get(vid)
-            if name:
-                visitor.name = name
+        vid = request.form.get('vid')
+        name = request.form.get('vname')
+        contact = request.form.get('vcontact')
+        place = request.form.get('vplace')
+        visitor = Visitor.query.get(vid)
+        
+        if name:
+            visitor.name = name
+            db.session.commit()
             
-            if contact:
-                visitor.contact = contact
+        if contact:
+            visitor.contact = contact
+            db.session.commit()
             
-            if place:
-                visitor.place = place
+        if place:
+            visitor.place_from = place
+            db.session.commit()
+    return jsonify({'status':'ok'})

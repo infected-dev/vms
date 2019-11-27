@@ -19,7 +19,10 @@
            @media print{
                body {
                    margin : 5mm 5mm 5mm 5mm;
+                   
+                   
                }
+               
            }
             
            
@@ -41,8 +44,10 @@
                                     <strong> Date: {{date.strftime('%d/%m/%Y')}}</strong>
                             </div>
                             <div class="col text-right">
-                                   <strong >Total Count:<span class="ml-2">{{count}}
+                                   <strong >Visitor Count:<span class="ml-1">{{count}}
                                     </strong>
+                                    <strong class="ml-2">Extras:<span class="ml-1">{{count_extra}}</span></strong>
+                                    <strong class="ml-2">Total:<span class="ml-1">{{count+count_extra}}  </span></strong>
                             </div>
                         </div>
                         <div id='tableclass' class="m">
@@ -51,6 +56,7 @@
                                     <tr class="text-center">
                                         <th>#</th>
                                         <th>Visitor Name</th>
+                                        
                                         <th>Contact No</th>
                                         <th>Company/From</th>
                                         <th>Visiting Employee</th>
@@ -67,7 +73,14 @@
                                      <tr>
                                             <td></td>
                                             
+                                            
+                                            
+                                            {% if vi.extras  %}
+                                            <td>{{vi.a_timelog.name.title()}}+{{vi.extras}}</td>
+                                                
+                                            {% else %}
                                             <td>{{vi.a_timelog.name.title()}}</td>
+                                            {% endif %}
                                             <td>{{vi.a_timelog.contact}}</td>
                                             <td>{{vi.a_timelog.place_from.title()}}</td>
                                             {% if vi.active.visited_employee     == None %}
@@ -131,6 +144,7 @@
                                     <tr class="text-center">
                                         <th>#</th>
                                         <th>Visitor Name</th>
+                                        <th>Extras</th>
                                         <th>Contact No</th>
                                         <th>Company/From</th>
                                         <th>Visiting Employee</th>
@@ -146,6 +160,11 @@
                                      <tr>
                                             <td></td>
                                             <td>{{vi.a_timelog.name.title()}}</td>
+                                            {% if vi.extras == 0 %}
+                                                <td></td>
+                                            {% else %}
+                                                <td>+{{vi.extras}}</td>
+                                            {% endif %}
                                             <td>{{vi.a_timelog.contact}}</td>
                                             <td>{{vi.a_timelog.place_from.title()}}</td>
                                             {% if vi.active.visited_employee     == None %}
@@ -193,6 +212,7 @@
                                     <tr class="text-center">
                                         <th>#</th>
                                         <th>Visitor Name</th>
+                                        <th>Extras</th>
                                         <th>Contact No</th>
                                         <th>Company/From</th>
                                         <th>Visiting Employee</th>
@@ -209,6 +229,11 @@
                                      <tr>
                                             <td></td>
                                             <td>{{vi.a_timelog.name.title()}}</td>
+                                            {% if vi.extras == 0 %}
+                                                <td></td>
+                                            {% else %}
+                                                <td>+{{vi.extras}}</td>
+                                            {% endif %}
                                             <td>{{vi.a_timelog.contact}}</td>
                                             <td>{{vi.a_timelog.place_from.title()}}</td>
                                             {% if vi.active.visited_employee     == None %}
@@ -265,6 +290,7 @@
                                     <tr class="text-center">
                                         <th>#</th>
                                         <th>Visitor Name</th>
+                                        <th>Extras</th>
                                         <th>Contact No</th>
                                         <th>Company/From</th>
                                         <th>Visiting Employee</th>
@@ -283,6 +309,11 @@
                                            
                                             <td></td>
                                             <td>{{vi.a_timelog.name.title()}}</td>
+                                            {% if vi.extras == 0 %}
+                                                <td></td>
+                                            {% else %}
+                                                <td>+{{vi.extras}}</td>
+                                            {% endif %}
                                             <td>{{vi.a_timelog.contact}}</td>
                                             <td>{{vi.a_timelog.place_from.title()}}</td>
                                             {% if vi.active.visited_employee     == None %}

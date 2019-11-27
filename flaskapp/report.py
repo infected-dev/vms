@@ -108,7 +108,13 @@ def report_print():
             title = 'Visitor Records'
             query = Timesheet_Visitor.query.filter_by(date=date).all()
             count = len(query)
-            return render_template('report-visitors-print.html',count=count, query=query, date=date, title=title)
+            count_extra = 0
+            for i in query:
+                if i.extras is not None :
+                    a = i.extras
+                    count_extra = count_extra + a
+
+            return render_template('report-visitors-print.html',count=count, query=query, date=date, title=title, count_extra=count_extra)
         elif print_id == '2':
             title = 'Outside Vehicle Records'
             query = Vehicle.query.filter_by(VeEntryDate=date).all()

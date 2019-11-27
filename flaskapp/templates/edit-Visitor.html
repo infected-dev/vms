@@ -41,6 +41,7 @@ Edit Visitor Data
                                         <tr>
                                             <th>#</th>
                                             <th>Name</th>
+                                            <th>Extra</th>
                                             <th>Contact</th>
                                             <th>Place From</th>
                                             <th>Employee</th>
@@ -57,6 +58,7 @@ Edit Visitor Data
                                         <tr id="datasection{{visitor.id}}">
                                             <td class=""></td>
                                             <td>{{visitor.a_timelog.name.title()}}</td>
+                                            <td>{{visitor.extras}}</td>
                                             <td>{{visitor.a_timelog.contact}}</td>
                                             <td>{{visitor.a_timelog.place_from.title()}}</td>
                                             <td>{{visitor.active.visited_employee.employee_name.title()}}</td>
@@ -99,7 +101,8 @@ Edit Visitor Data
                                                    
                                                     
                                                 
-                                                    
+                                                    <label class="col-form-label" for="#extras">Extra</label>
+                                                    <input type="number" class="form-control" id="extras" name="extras">
                                                     <label class="col-form-label" for="#deptselect">Select Employee</label>
                                                     <select class="form-control" name="empselect" id="empselect">
                                                         {% for e in emps %}
@@ -134,10 +137,11 @@ Edit Visitor Data
     $('#editbtn').on('click', function(){
             var id = $('#tid').val()
             var emp = $('#empselect').val()
+            var extra = $('#extras').val()
             req = $.ajax({
                 url : '/editVisitor/Department',
                 type : 'POST',
-                data : {t_id : id, emp_id:emp}
+                data : {t_id : id, emp_id:emp, extras:extra}
             });
             
             $('#editmodal').modal('hide');

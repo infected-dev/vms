@@ -118,6 +118,7 @@
                                     
                                     <th>Entry date</th>
                                     <th>Visitor Name</th>
+                                    <th>Extra</th>
                                     <th>Contact Number</th>
                                     <th>Visitor Company</th>
                                     <th>Visiting Person</th>
@@ -136,6 +137,7 @@
                                     
                                     <td>{{vi.date.strftime('%d-%m-%Y')}}</td>
                                     <td>{{vi.a_timelog.name.title()}}</td>
+                                    <td>{{vi.extras}}</td>
                                     <td>{{vi.a_timelog.contact}}</td>
                                     <td>{{vi.a_timelog.place_from.title()}}</td>
                                     {% if vi.active.visited_dept.department_name == None %}
@@ -174,6 +176,7 @@
                                     
                                     <th>Entry date</th>
                                     <th>Visitor Name</th>
+                                    <th>Extra</th>
                                     <th>Contact Number</th>
                                     <th>Visitor Company</th>
                                     <th>Visiting Department</th>

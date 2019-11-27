@@ -13,9 +13,9 @@
 
     table, th, td
         {
-        
+            font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
         border: 1px solid black;
-        font-size: 12px;
+        font-size: 13px;
        
         }
       
