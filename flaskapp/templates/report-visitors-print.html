@@ -8,9 +8,10 @@
         <style>
            
             body{
-                margin-top: 15px;
+               
                 margin-left: 5px;
                 margin-right: 5px;
+                font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
 
             }
             thead {display: table-header-group;}
@@ -34,7 +35,7 @@
                 <div class="printclass">
                         <div id="header" class="text-center">
                             <h5 class="mb-0">Siddhi Vinayak Knots and Prints Pvt. Ltd.</h5>
-                            <p class=" mb-0 text-monospace text-muted">A-26 To A-32, "Central Park", G.I.D.C Pandesra, SURAT-394221.
+                            <p class=" mb-0 text-muted">A-26 To A-32, "Central Park", G.I.D.C Pandesra, SURAT-394221.
                                 </p>
                                 <h5 class="mb-0 mt-2">{{title}}</h5>
                         </div>
@@ -81,6 +82,7 @@
                                             {% else %}
                                             <td>{{vi.a_timelog.name.title()}}</td>
                                             {% endif %}
+
                                             <td>{{vi.a_timelog.contact}}</td>
                                             <td>{{vi.a_timelog.place_from.title()}}</td>
                                             {% if vi.active.visited_employee     == None %}
@@ -123,28 +125,23 @@
                         {% endif %}
 
             {% if title == 'Visitors Records by Department' %}
-                        <div class="mr-2 row mb-3 border-bottom ml-2">
-                            <div class=" col">
-                                    <strong>Department: {{department.department_name}} </strong> 
-                            </div>
-                            <div class="col-2 text-right mr-n5">
-                                    <strong> Date: {{date.strftime('%d/%m/%Y')}}</strong>
-                            </div>
-                            <div class="col-2 text-right">
-                                   <strong >Total Count:<span class="ml-2">{{count}}
-                                    </strong>
-                            </div>
-                             
-                            
-                            
-                    </div> 
+            <div class="mr-2 mb-2 row">
+                <div class="text-right ml-4">
+                       <strong> Date: {{date.strftime('%d/%m/%Y')}}</strong>
+               </div>
+               <div class="col text-right">
+                      <strong >Visitor Count:<span class="ml-1">{{count}}
+                       </strong>
+                       
+               </div>
+           </div>
                         <div id='tableclass' class="">
                             <table class="table table-sm table-bordered">
                                 <thead >
                                     <tr class="text-center">
                                         <th>#</th>
                                         <th>Visitor Name</th>
-                                        <th>Extras</th>
+                                        
                                         <th>Contact No</th>
                                         <th>Company/From</th>
                                         <th>Visiting Employee</th>
@@ -159,11 +156,11 @@
                                     {% for vi in filtered_list %}
                                      <tr>
                                             <td></td>
-                                            <td>{{vi.a_timelog.name.title()}}</td>
-                                            {% if vi.extras == 0 %}
-                                                <td></td>
+                                            {% if vi.extras  %}
+                                            <td>{{vi.a_timelog.name.title()}}+{{vi.extras}}</td>
+                                                
                                             {% else %}
-                                                <td>+{{vi.extras}}</td>
+                                            <td>{{vi.a_timelog.name.title()}}</td>
                                             {% endif %}
                                             <td>{{vi.a_timelog.contact}}</td>
                                             <td>{{vi.a_timelog.place_from.title()}}</td>
@@ -212,7 +209,7 @@
                                     <tr class="text-center">
                                         <th>#</th>
                                         <th>Visitor Name</th>
-                                        <th>Extras</th>
+                                       
                                         <th>Contact No</th>
                                         <th>Company/From</th>
                                         <th>Visiting Employee</th>
@@ -228,11 +225,11 @@
                                     {% for vi in query | sort(attribute='active.visited_employee.employee_name') %}
                                      <tr>
                                             <td></td>
-                                            <td>{{vi.a_timelog.name.title()}}</td>
-                                            {% if vi.extras == 0 %}
-                                                <td></td>
+                                            {% if vi.extras  %}
+                                            <td>{{vi.a_timelog.name.title()}}+{{vi.extras}}</td>
+                                                
                                             {% else %}
-                                                <td>+{{vi.extras}}</td>
+                                            <td>{{vi.a_timelog.name.title()}}</td>
                                             {% endif %}
                                             <td>{{vi.a_timelog.contact}}</td>
                                             <td>{{vi.a_timelog.place_from.title()}}</td>
@@ -290,7 +287,7 @@
                                     <tr class="text-center">
                                         <th>#</th>
                                         <th>Visitor Name</th>
-                                        <th>Extras</th>
+                                        
                                         <th>Contact No</th>
                                         <th>Company/From</th>
                                         <th>Visiting Employee</th>
@@ -308,11 +305,11 @@
                                      <tr>
                                            
                                             <td></td>
-                                            <td>{{vi.a_timelog.name.title()}}</td>
-                                            {% if vi.extras == 0 %}
-                                                <td></td>
+                                            {% if vi.extras  %}
+                                            <td>{{vi.a_timelog.name.title()}}+{{vi.extras}}</td>
+                                                
                                             {% else %}
-                                                <td>+{{vi.extras}}</td>
+                                            <td>{{vi.a_timelog.name.title()}}</td>
                                             {% endif %}
                                             <td>{{vi.a_timelog.contact}}</td>
                                             <td>{{vi.a_timelog.place_from.title()}}</td>

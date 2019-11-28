@@ -143,11 +143,17 @@ def report_print():
             title = 'Visitor Records Sorted by Employee Visited'
             query = Timesheet_Visitor.query.filter_by(date=date).all()
             count = len(query)
-            return render_template('report-visitors-print.html',count=count, query=query, date=date, title=title)
+            count_extra = 0
+            for i in query:
+                if i.extras is not None :
+                    a = i.extras
+                    count_extra = count_extra + a
+            return render_template('report-visitors-print.html',count=count, query=query, date=date, title=title, count_extra=count_extra)
         elif print_id == '10':
             title = 'Visitor Records Sorted By Department'
             query = Timesheet_Visitor.query.filter_by(date=date).all()
             count = len(query)
+            
             return render_template('report-visitors-print.html',count=count, query=query, date=date, title=title)
         elif print_id == '9': 
             dept_check = request.form.get('deptcheck')
@@ -155,18 +161,20 @@ def report_print():
                 title = 'Visitor Records Sorted by Department'
                 query = Timesheet_Visitor.query.filter_by(date=date).all()
                 count = len(query)
+                
                 return render_template('report-visitors-print.html',count=count, query=query, date=date, title=title)
             else:
                 department_id = int(request.form.get('department'))
                 department = Department.query.get(department_id)
                 query = Timesheet_Visitor.query.filter_by(date=date).all()
+                count_extra = 0
+               
                 filtered_list = []
                 for i in query:
                     if i.active.visiting_department == department_id:
                         filtered_list.append(i)
                 title = 'Visitors Records by Department'
                 count = len(filtered_list)
-            
                 return render_template('report-visitors-print.html',department=department, title=title, count=count, 
                     filtered_list=filtered_list, date=date)
 
