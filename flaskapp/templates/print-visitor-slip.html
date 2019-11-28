@@ -51,7 +51,11 @@
                                     <p class="">Visitor's Name:</p>
                             </div>
                             <div class="col p-0 mb-3  border-bottom">
+                                    {% if visitor.extras %}
+                                    <span class=" ml-3 font-weight-normal">{{visitor.a_timelog.name.title()}} +{{visitor.extras}} - {{visitor.a_timelog.contact}}</span>
+                                    {% else %}
                                     <span class=" ml-3 font-weight-normal">{{visitor.a_timelog.name.title()}} - {{visitor.a_timelog.contact}}</span>
+                                    {% endif %}
                             </div>
                         </div>
 

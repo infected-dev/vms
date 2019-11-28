@@ -16,8 +16,7 @@ def search_main():
             redirect(url_for('dataentry.post_format'))
        else:
                 error = ''
-                text_search = text_search.strip('+')
-                search_visitor = Visitor.query.filter((Visitor.name == text_search) | (Visitor.contact == text_search)).first()
+                search_visitor = Visitor.query.filter((Visitor.name.like('%{}%'.format(text_search)))| (Visitor.contact == text_search)).first()
                 search_visitor_timesheet = ''
                 if search_visitor == None:
                     error = 'No Result Found'
