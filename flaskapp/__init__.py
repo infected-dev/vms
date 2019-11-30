@@ -17,7 +17,7 @@ app = Flask(__name__)
 
 
 app.config['SECRET_KEY'] = 'laxmikapatihume'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'db.sqlite3') 
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'demodb.sqlite3') 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 

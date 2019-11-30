@@ -42,6 +42,7 @@ def dashboard():
     return render_template('dashboard-visitors.html',legend=legend, total_count=total_count, 
         query_visitors_all=query_visitors_all, query_visitors_today=query_visitors_today, dept_count=dept_count)
 
+
 @report.route('/dashbaord/vehicles')
 def dashboard_vehicle():
     today = datetime.now().date()
@@ -73,12 +74,14 @@ def report_main():
     return render_template('report-visitors.html',departments=departments, date=date.strftime('%d-%b-%Y')
     , visitors=visitors, vehicles=vehicles, error=error)
 
+
 @report.route('/report/vehicles')
 def report_vehicles():
     depts = Department.query.all()
     query_vehicles_outside = Vehicle.query.all()
     return render_template('report-vehicles.html',query_vehicles_outside=query_vehicles_outside, 
        depts=depts)
+
 
 @report.route('/report/vehicles/mill/')
 def mill_report():
@@ -96,6 +99,7 @@ def mill_report():
     query_comp_vehicles = CompanyVehicle.query.all()
     return render_template('report-mill.html',depts=depts, query_comp_vehicles=query_comp_vehicles, 
         query_vehicles_mill=query_vehicles_mill)
+
 
 @report.route('/print-report', methods=['POST'])
 def report_print():
@@ -185,4 +189,15 @@ def printslip():
         get_id = int(request.form.get('vi_id'))
         serial = request.form.get('serialno')
         visitor = Timesheet_Visitor.query.filter_by(id=get_id).first()
-        return render_template('print-visitor-slip.html', visitor=visitor, serial=serial)        
+        return render_template('print-visitor-slip.html', visitor=visitor, serial=serial)
+
+
+@report.route('/frequentVisitors')
+def frequent_visitor():
+    freq = []
+    visitors = Visitor.query.all()
+    for i in visitors:
+        if len(i.a_timesheet) >= 2:
+            freq.append([i.id,i.name,i.place_from,len(i.a_timesheet)])
+
+    return render_template('report-visitor-freq.html', freq=freq)        

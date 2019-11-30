@@ -1,0 +1,61 @@
+{% extends 'test-dashboard.html' %}
+
+{% block pagetitle %}
+    Frequent Visitors
+{% endblock %}
+
+{% block title %}Frequent  {% endblock %}
+
+{% block linktitle %} Visitors {% endblock %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <h4 class="card-header">Frequent Visitors</h4>
+                <div class="card-body">
+                    <div>
+                        <table id="FreqVisitor" class="table table-sm ">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Place From</th>
+                                    <th>Visits</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {% for i in freq %}
+                                <tr>
+                                    <td><a href="/search?text-search={{i[1]}}">{{i[1]}}</a></td>
+                                    <td>{{i[2].title()}}</td>
+                                    <td>{{i[3]}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                      </div>
+                </div>
+        </div>
+        
+    </div>
+
+
+</div>
+
+{% endblock %}
+
+{% block script %}
+    <script>
+            $(document).ready(function() {
+                var t = $('#FreqVisitor').DataTable({
+                    "paging" : true,
+                    "order" :[[2,"desc"]]
+                    
+                });
+        
+        
+        } );
+    </script>
+{% endblock %}
