@@ -82,7 +82,12 @@
                 
                 
             }
-
+            table.dataTable thead .sorting:after{
+                content: none;
+            }
+            table.dataTable thead .sorting:before{
+                content: none;
+            }
             .dataTables_wrapper .dataTables_filter input {
                 display: block;
                 width: 100%;
@@ -116,6 +121,10 @@
             .sidebar-heading span {
                 color: whitesmoke;
 
+            }
+
+            h3{
+                font-style: italic;
             }
         </style>
 
@@ -167,7 +176,7 @@
                     class="hvr-sweep-to-bottom  sidebar-heading d-flex justify-content-between align-items-center px-3 mt-1 mb-1 text-muted">
 
                     <a data-target="#manage-links" data-toggle="collapse"
-                        class="mt-4 d-flex align-items-center text-muted p-1 text-decoration-none" href="#">
+                        class=" d-flex align-items-center text-muted p-1 text-decoration-none" href="#">
                         <span style="font-size: 1.25rem;"> Manage</span>
                         <i style="color:wheat;" class=" ml-3 fas fa-angle-down fa-2x "></i>
                     </a>
@@ -264,8 +273,13 @@
                         </a>
                        
                     </li>
-                    <ul class=" nav-item m-3">
+
+                    <ul class=" nav-item ">
                         <li class=" text-white "><a href="{{url_for('report.frequent_visitor')}}" class="text-white">Frequent</a></li>
+                    </ul>
+
+                    <ul class=" nav-item mt-1">
+                        <li class=" text-white "><a href="{{url_for('report.department_visitors')}}" class="text-white">Department</a></li>
                     </ul>
 
                     <li class="hvr-underline-from-center nav-item">
@@ -369,6 +383,8 @@
         <script src="{{url_for('static', filename='js/updateajax.js')}}"> </script>
         <script src="{{url_for('static', filename='js/datatables.js')}}"></script>
         <script src="{{url_for('static', filename='js/datatables.min.js')}}"></script>
+        <script src="{{url_for('static', filename='js/moment.js')}}"></script>
+
 
         <!-- Icons -->
         <script>

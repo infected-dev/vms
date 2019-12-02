@@ -30,9 +30,6 @@ def edit_visitordepart():
 
         time_id = int(request.form.get('t_id'))
         timesheet_id = Timesheet_Visitor.query.get(time_id)
-
-        extra = int(request.form.get('extras'))
-        timesheet_id.extras = extra
         
         activity_id = timesheet_id.activity_id
         activity = Activity.query.get(activity_id)

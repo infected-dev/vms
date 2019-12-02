@@ -101,8 +101,7 @@ Edit Visitor Data
                                                    
                                                     
                                                 
-                                                    <label class="col-form-label" for="#extras">Extra</label>
-                                                    <input type="number" class="form-control" id="extras" name="extras">
+                                                   
                                                     <label class="col-form-label" for="#deptselect">Select Employee</label>
                                                     <select class="form-control" name="empselect" id="empselect">
                                                         {% for e in emps %}
@@ -137,14 +136,14 @@ Edit Visitor Data
     $('#editbtn').on('click', function(){
             var id = $('#tid').val()
             var emp = $('#empselect').val()
-            var extra = $('#extras').val()
             req = $.ajax({
                 url : '/editVisitor/Department',
                 type : 'POST',
-                data : {t_id : id, emp_id:emp, extras:extra}
+                data : {t_id : id, emp_id:emp}
             });
             
             $('#editmodal').modal('hide');
+            location.reload(true);
         });
 
         

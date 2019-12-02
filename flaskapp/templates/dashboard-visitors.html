@@ -76,7 +76,9 @@ var myChart = new Chart(ctx, {
             label: '{{legend}}',
             data: [
                 {% for i in total_count %}
-                    {{i[1]}},
+                   { t: new Date("{{i[0]}}"),
+                    y : {{i[1]}}
+                   },
                 {% endfor %}
             ],
             
@@ -86,7 +88,7 @@ var myChart = new Chart(ctx, {
             ],
             borderWidth: 2,
             fill :'false',
-            steppedLine :'before'
+            steppedLine :'after'
             
         }]
     },
@@ -100,6 +102,8 @@ var myChart = new Chart(ctx, {
                 }
             }], 
             xAxes: [{
+               
+                valueFormatString: "DD-MMM" ,
                 ticks: {
                     fontColor: "black",
                 }

@@ -200,4 +200,22 @@ def frequent_visitor():
         if len(i.a_timesheet) >= 2:
             freq.append([i.id,i.name,i.place_from,len(i.a_timesheet)])
 
-    return render_template('report-visitor-freq.html', freq=freq)        
+    return render_template('report-visitor-freq.html', freq=freq)
+
+@report.route('/departmentVisitors', methods=['GET','POST'])
+def department_visitors():
+    timesheet = Timesheet_Visitor.query.all()
+    timelog = []
+    department = Department.query.all()
+    count = 0
+    dept_name = '' 
+    if request.form:
+        dept_id = int(request.form.get('dept_id'))
+        dept_name = Department.query.get(dept_id)
+        dept_name = dept_name.department_name
+        for i in timesheet:
+           if i.active.visiting_department == dept_id:
+               timelog.append(i)    
+               
+    count = len(timelog)
+    return render_template('report-visitor-dept.html', department=department, timelog=timelog, count=count, dept_name=dept_name)
